@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QList>
 #include <QDebug>
 
 namespace Ui {
@@ -18,17 +19,33 @@ private:
     void setStartingParameters();
     void placePiecesOnBoard();
 
+    bool isItCheck;
+    bool isItCheckMate;
 
-    bool whiteMove;       //checking whetver its white or black time to play
-    int numberOfMoves;
+
+    bool whiteMove;       //checking whether its white or black time to play
+    int numberOfMove;
+    bool action;          //checking whether player click on the button for the first time(choosing figure) or for the second time(choosing place to move)
+
+
+    void getFigureName(QPushButton *button);
+    QString currentFigure;
+
+    QVector <QString> possibleMoves;
+
+
+
+
+
 
     //PIECES
     QVector <QString> whiteFigures;
     QVector <QString> blackFigures;
     QVector <QString> blueFigures;      //blue figures used for showing possbile moves and colision system
-    
+
     QVector <QPushButton*> whiteFiguresButtons;
     QVector <QPushButton*> blackFiguresButtons;
+    void renderFiguresPosition();
 
     //white
     QPushButton *whitePoon1;
@@ -78,9 +95,12 @@ private:
     void enableBlackButtons();
     void enableWhiteButtons_shorter(QPushButton *button);
     void enableBlackButtons_shorter(QPushButton *button);
+    void enableProtectingFigures();
 
 
-    void on_any_button_clicked(QPushButton *button);    //line 48
+    void on_any_button_clicked(QPushButton *button);    //line 107
+    QPushButton *currentFigureButton;       //cleaners
+    QString currentFigureStyleSheet;
 private slots:
     void on_startGameButton_clicked();
 

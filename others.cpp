@@ -3,8 +3,11 @@
 
 void Widget::setStartingParameters()
 {
-    whiteMove = true;
-    numberOfMoves = 0;
+    numberOfMove = 1;
+    whiteMove = true; 
+    action = false;
+    isItCheck = false;
+    isItCheckMate = false;
 
 
 
@@ -94,6 +97,8 @@ void Widget::setStartingParameters()
     blueFigures.push_back(whiteQueen_blueField);
     blueFigures.push_back(blackKing_blueField);
     blueFigures.push_back(whiteKing_blueField);
+
+
 }
 
 void Widget::placePiecesOnBoard()
@@ -177,6 +182,46 @@ void Widget::placePiecesOnBoard()
     blackRook2 = ui->h8;
     blackQueen = ui->d8;
     blackKing  = ui->e8;
+
+
+    whitePoon2 =nullptr;
+    //adding pointers of pieces to vectors
+
+    //whiteFiguresButtons
+    whiteFiguresButtons.push_back(whitePoon1);
+    whiteFiguresButtons.push_back(whitePoon2);
+    whiteFiguresButtons.push_back(whitePoon3);
+    whiteFiguresButtons.push_back(whitePoon4);
+    whiteFiguresButtons.push_back(whitePoon5);
+    whiteFiguresButtons.push_back(whitePoon6);
+    whiteFiguresButtons.push_back(whitePoon7);
+    whiteFiguresButtons.push_back(whitePoon8);
+    whiteFiguresButtons.push_back(whiteKnight1);
+    whiteFiguresButtons.push_back(whiteKnight2);
+    whiteFiguresButtons.push_back(whiteBishop1);
+    whiteFiguresButtons.push_back(whiteBishop2);
+    whiteFiguresButtons.push_back(whiteRook1);
+    whiteFiguresButtons.push_back(whiteRook2);
+    whiteFiguresButtons.push_back(whiteQueen);
+    whiteFiguresButtons.push_back(whiteKing);
+
+    //blackFiguresButtons
+    blackFiguresButtons.push_back(blackPoon1);
+    blackFiguresButtons.push_back(blackPoon2);
+    blackFiguresButtons.push_back(blackPoon3);
+    blackFiguresButtons.push_back(blackPoon4);
+    blackFiguresButtons.push_back(blackPoon5);
+    blackFiguresButtons.push_back(blackPoon6);
+    blackFiguresButtons.push_back(blackPoon7);
+    blackFiguresButtons.push_back(blackPoon8);
+    blackFiguresButtons.push_back(blackKnight1);
+    blackFiguresButtons.push_back(blackKnight2);
+    blackFiguresButtons.push_back(blackBishop1);
+    blackFiguresButtons.push_back(blackBishop2);
+    blackFiguresButtons.push_back(blackRook1);
+    blackFiguresButtons.push_back(blackRook2);
+    blackFiguresButtons.push_back(blackQueen);
+    blackFiguresButtons.push_back(blackKing);
 }
 
 

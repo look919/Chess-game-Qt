@@ -10,6 +10,7 @@ Widget::Widget(QWidget *parent) :
 
     setStartingParameters();
     placePiecesOnBoard();
+    renderFiguresPosition();
 }
 
 void Widget::on_startGameButton_clicked(){

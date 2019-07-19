@@ -29,7 +29,8 @@ SOURCES += \
     widget-game-process.cpp \
     buttons-manipulations.cpp \
     others.cpp \
-    main.cpp
+    main.cpp \
+    figures.cpp
 
 HEADERS += \
         widget.h
