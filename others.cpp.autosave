@@ -94,6 +94,29 @@ void Widget::setStartingParameters()
     blueFigures.push_back(whiteQueen_blueField);
     blueFigures.push_back(blackKing_blueField);
     blueFigures.push_back(whiteKing_blueField);
+    
+    
+    
+    //whiteFiguresButtons&blackFiguresButtons
+
+    whiteFiguresButtons.push_back(whitePoon1);
+    whiteFiguresButtons.push_back(whitePoon2);
+    whiteFiguresButtons.push_back(whitePoon3);
+    whiteFiguresButtons.push_back(whitePoon4);
+    whiteFiguresButtons.push_back(whitePoon5);
+    whiteFiguresButtons.push_back(whitePoon6);
+    whiteFiguresButtons.push_back(whitePoon7);
+    whiteFiguresButtons.push_back(whitePoon8);
+    whiteFiguresButtons.push_back(whiteKnight1);
+    whiteFiguresButtons.push_back(whiteKnight2);
+    whiteFiguresButtons.push_back(whiteBishop1);
+    whiteFiguresButtons.push_back(whiteBishop2);
+    whiteFiguresButtons.push_back(whiteRook1);
+    whiteFiguresButtons.push_back(whiteRook2);
+    whiteFiguresButtons.push_back(whiteQueen);
+    whiteFiguresButtons.push_back(whiteKing);
+    
+    
 }
 
 void Widget::placePiecesOnBoard()

@@ -26,8 +26,11 @@ private:
     QVector <QString> whiteFigures;
     QVector <QString> blackFigures;
     QVector <QString> blueFigures;      //blue figures used for showing possbile moves and colision system
+    
+    QVector <QPushButton*> whiteFiguresButtons;
+    QVector <QPushButton*> blackFiguresButtons;
 
-
+    //white
     QPushButton *whitePoon1;
     QPushButton *whitePoon2;
     QPushButton *whitePoon3;
@@ -46,7 +49,7 @@ private:
     QPushButton *whiteQueen;
     QPushButton *whiteKing;
 
-
+    //black
     QPushButton *blackPoon1;
     QPushButton *blackPoon2;
     QPushButton *blackPoon3;
