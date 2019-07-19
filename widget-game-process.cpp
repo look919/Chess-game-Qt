@@ -7,6 +7,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     setStartingParameters();
+    placePiecesOnBoard();
 }
 
 void Widget::on_startGameButton_clicked(){

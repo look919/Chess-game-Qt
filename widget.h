@@ -16,6 +16,7 @@ public:
 private:
     Ui::Widget *ui;
     void setStartingParameters();
+    void placePiecesOnBoard();
 
 
 

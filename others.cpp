@@ -96,6 +96,49 @@ void Widget::setStartingParameters()
     blueFigures.push_back(whiteKing_blueField);
 }
 
+void Widget::placePiecesOnBoard()
+{
+    //white poons
+    ui->a2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-greenField.png);"));
+    ui->b2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-whiteField.png);"));
+    ui->c2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-greenField.png);"));
+    ui->d2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-whiteField.png);"));
+    ui->e2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-greenField.png);"));
+    ui->f2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-whiteField.png);"));
+    ui->g2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-greenField.png);"));
+    ui->h2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-whiteField.png);"));
+    //white figures
+    ui->c1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteBishop-whiteField.png);"));
+    ui->f1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteBishop-greenField.png);"));
+    ui->b1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKnight-greenField.png);"));
+    ui->g1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKnight-whiteField.png);"));
+
+    ui->a1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteRook-whiteField.png);"));
+    ui->h1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteRook-greenField.png);"));
+    ui->d1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteQueen-greenField.png);"));
+    ui->e1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKing-whiteField.png);"));
+
+    //black poons
+    ui->b7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
+    ui->a7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-whiteField.png);"));
+    ui->d7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
+    ui->c7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-whiteField.png);"));
+    ui->f7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
+    ui->e7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-whiteField.png);"));
+    ui->h7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
+    ui->g7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-whiteField.png);"));
+    //black figures
+    ui->f8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackBishop-whiteField.png);"));
+    ui->c8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackBishop-greenField.png);"));
+    ui->g8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKnight-greenField.png);"));
+    ui->b8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKnight-whiteField.png);"));
+
+    ui->h8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackRook-whiteField.png);"));
+    ui->a8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackRook-greenField.png);"));
+    ui->d8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackQueen-whiteField.png);"));
+    ui->e8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKing-greenField.png);"));
+}
+
 
 Widget::~Widget()
 {
