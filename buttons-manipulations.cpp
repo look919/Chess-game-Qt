@@ -1,7 +1,66 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces)
+{
+    if(currentFigure=="Knight"|| currentFigure=="King"){
+        for(int i=0; i<possibleMoves.size();i++){
 
+           convertStringToButton(possibleMoves.at(i));
+           checkIfThereIsAPiece(requiredButton,color);
+
+           if(ifExist==true){
+               possibleMoves.remove(i);
+               i-=1;
+               ifExist=false;
+           }
+        }
+        button->setEnabled(true);
+    }
+    //NEED to copy the rest for bishop&rook
+}
+void Widget::checkIfThereIsAPiece(QPushButton *button, QString color)
+{
+    ifExist = false;
+    if(color == "none")
+    {
+        for(int i=0;i<blackFiguresButtons.size();i++){
+            if(button == blackFiguresButtons.at(i)){
+                ifExist=true;
+                break;
+            }
+        }
+        for(int i=0;i<whiteFiguresButtons.size();i++){
+            if(button == whiteFiguresButtons.at(i)){
+                ifExist=true;
+                break;
+            }
+        }
+        for(int i=0;i<blueFigures.size();i++){
+            if(button->styleSheet()==blueFigures.at(i)){
+                ifExist=true;
+                break;
+            }
+        }
+    }
+    else if(color=="white")
+    {
+        for(int i=0;i<whiteFiguresButtons.size();i++){
+            if(button == whiteFiguresButtons.at(i)){
+                ifExist=true;
+                break;
+            }
+        }
+    }
+    else if(color=="black"){
+        for(int i=0;i<blackFiguresButtons.size();i++){
+            if(button == blackFiguresButtons.at(i)){
+                ifExist=true;
+                break;
+            }
+        }
+    }
+}
 void Widget::convertStringToButton(QString coords)
 {
     requiredButton = nullptr;
@@ -295,4 +354,298 @@ void Widget::enableBlackButtons_shorter(QPushButton *button)
 void Widget::enableProtectingFigures()
 {
 
+}
+
+
+void Widget::matchCoordinates()                             //function that enable permitted moves buttons
+{
+    for(int i=0;i<possibleMoves.size();i++){
+        if(ui->a1->objectName()==possibleMoves.at(i)){
+            ui->a1->setEnabled(true);
+            showPermittedMoves(ui->a1);
+        }
+        else if(ui->b1->objectName()==possibleMoves.at(i)){
+            ui->b1->setEnabled(true);
+            showPermittedMoves(ui->b1);
+        }
+        else if(ui->c1->objectName()==possibleMoves.at(i)){
+            ui->c1->setEnabled(true);
+            showPermittedMoves(ui->c1);
+        }
+        else if(ui->d1->objectName()==possibleMoves.at(i)){
+            ui->d1->setEnabled(true);
+            showPermittedMoves(ui->d1);
+        }
+        else if(ui->e1->objectName()==possibleMoves.at(i)){
+            ui->e1->setEnabled(true);
+            showPermittedMoves(ui->e1);
+        }
+        else if(ui->f1->objectName()==possibleMoves.at(i)){
+            ui->f1->setEnabled(true);
+            showPermittedMoves(ui->f1);
+        }
+        else if(ui->g1->objectName()==possibleMoves.at(i)){
+            ui->g1->setEnabled(true);
+            showPermittedMoves(ui->g1);
+        }
+        else if(ui->h1->objectName()==possibleMoves.at(i)){
+            ui->h1->setEnabled(true);
+            showPermittedMoves(ui->h1);
+        }
+        else if(ui->a2->objectName()==possibleMoves.at(i)){
+            ui->a2->setEnabled(true);
+            showPermittedMoves(ui->a2);
+        }
+        else if(ui->b2->objectName()==possibleMoves.at(i)){
+            ui->b2->setEnabled(true);
+            showPermittedMoves(ui->b2);
+        }
+        else if(ui->c2->objectName()==possibleMoves.at(i)){
+            ui->c2->setEnabled(true);
+            showPermittedMoves(ui->c2);
+        }
+        else if(ui->d2->objectName()==possibleMoves.at(i)){
+            ui->d2->setEnabled(true);
+            showPermittedMoves(ui->d2);
+        }
+        else if(ui->e2->objectName()==possibleMoves.at(i)){
+            ui->e2->setEnabled(true);
+            showPermittedMoves(ui->e2);
+        }
+        else if(ui->f2->objectName()==possibleMoves.at(i)){
+            ui->f2->setEnabled(true);
+            showPermittedMoves(ui->f2);
+        }
+        else if(ui->g2->objectName()==possibleMoves.at(i)){
+            ui->g2->setEnabled(true);
+            showPermittedMoves(ui->g2);
+        }
+        else if(ui->h2->objectName()==possibleMoves.at(i)){
+            ui->h2->setEnabled(true);
+            showPermittedMoves(ui->h2);
+        }
+        else if(ui->a3->objectName()==possibleMoves.at(i)){
+            ui->a3->setEnabled(true);
+            showPermittedMoves(ui->a3);
+        }
+        else if(ui->b3->objectName()==possibleMoves.at(i)){
+            ui->b3->setEnabled(true);
+            showPermittedMoves(ui->b3);
+        }
+        else if(ui->c3->objectName()==possibleMoves.at(i)){
+            ui->c3->setEnabled(true);
+            showPermittedMoves(ui->c3);
+        }
+        else if(ui->d3->objectName()==possibleMoves.at(i)){
+            ui->d3->setEnabled(true);
+            showPermittedMoves(ui->d3);
+        }
+        else if(ui->e3->objectName()==possibleMoves.at(i)){
+            ui->e3->setEnabled(true);
+            showPermittedMoves(ui->e3);
+        }
+        else if(ui->f3->objectName()==possibleMoves.at(i)){
+            ui->f3->setEnabled(true);
+            showPermittedMoves(ui->f3);
+        }
+        else if(ui->g3->objectName()==possibleMoves.at(i)){
+            ui->g3->setEnabled(true);
+            showPermittedMoves(ui->g3);
+        }
+        else if(ui->h3->objectName()==possibleMoves.at(i)){
+            ui->h3->setEnabled(true);
+            showPermittedMoves(ui->h3);
+        }
+        else if(ui->a4->objectName()==possibleMoves.at(i)){
+            ui->a4->setEnabled(true);
+            showPermittedMoves(ui->a4);
+        }
+        else if(ui->b4->objectName()==possibleMoves.at(i)){
+            ui->b4->setEnabled(true);
+            showPermittedMoves(ui->b4);
+        }
+        else if(ui->c4->objectName()==possibleMoves.at(i)){
+            ui->c4->setEnabled(true);
+            showPermittedMoves(ui->c4);
+        }
+        else if(ui->d4->objectName()==possibleMoves.at(i)){
+            ui->d4->setEnabled(true);
+            showPermittedMoves(ui->d4);
+        }
+        else if(ui->e4->objectName()==possibleMoves.at(i)){
+            ui->e4->setEnabled(true);
+            showPermittedMoves(ui->e4);
+        }
+        else if(ui->f4->objectName()==possibleMoves.at(i)){
+            ui->f4->setEnabled(true);
+            showPermittedMoves(ui->f4);
+        }
+        else if(ui->g4->objectName()==possibleMoves.at(i)){
+            ui->g4->setEnabled(true);
+            showPermittedMoves(ui->g4);
+        }
+        else if(ui->h4->objectName()==possibleMoves.at(i)){
+            ui->h4->setEnabled(true);
+            showPermittedMoves(ui->h4);
+        }
+        else if(ui->a5->objectName()==possibleMoves.at(i)){
+            ui->a5->setEnabled(true);
+            showPermittedMoves(ui->a5);
+        }
+        else if(ui->b5->objectName()==possibleMoves.at(i)){
+            ui->b5->setEnabled(true);
+            showPermittedMoves(ui->b5);
+        }
+        else if(ui->c5->objectName()==possibleMoves.at(i)){
+            ui->c5->setEnabled(true);
+            showPermittedMoves(ui->c5);
+        }
+        else if(ui->d5->objectName()==possibleMoves.at(i)){
+            ui->d5->setEnabled(true);
+            showPermittedMoves(ui->d5);
+        }
+        else if(ui->e5->objectName()==possibleMoves.at(i)){
+            ui->e5->setEnabled(true);
+            showPermittedMoves(ui->e5);
+        }
+        else if(ui->f5->objectName()==possibleMoves.at(i)){
+            ui->f5->setEnabled(true);
+            showPermittedMoves(ui->f5);
+        }
+        else if(ui->g5->objectName()==possibleMoves.at(i)){
+            ui->g5->setEnabled(true);
+            showPermittedMoves(ui->g5);
+        }
+        else if(ui->h5->objectName()==possibleMoves.at(i)){
+            ui->h5->setEnabled(true);
+            showPermittedMoves(ui->h5);
+        }
+        else if(ui->a6->objectName()==possibleMoves.at(i)){
+            ui->a6->setEnabled(true);
+            showPermittedMoves(ui->a6);
+        }
+        else if(ui->b6->objectName()==possibleMoves.at(i)){
+            ui->b6->setEnabled(true);
+            showPermittedMoves(ui->b6);
+        }
+        else if(ui->c6->objectName()==possibleMoves.at(i)){
+            ui->c6->setEnabled(true);
+            showPermittedMoves(ui->c6);
+        }
+        else if(ui->d6->objectName()==possibleMoves.at(i)){
+            ui->d6->setEnabled(true);
+            showPermittedMoves(ui->d6);
+        }
+        else if(ui->e6->objectName()==possibleMoves.at(i)){
+            ui->e6->setEnabled(true);
+            showPermittedMoves(ui->e6);
+        }
+        else if(ui->f6->objectName()==possibleMoves.at(i)){
+            ui->f6->setEnabled(true);
+            showPermittedMoves(ui->f6);
+        }
+        else if(ui->g6->objectName()==possibleMoves.at(i)){
+            ui->g6->setEnabled(true);
+            showPermittedMoves(ui->g6);
+        }
+        else if(ui->h6->objectName()==possibleMoves.at(i)){
+            ui->h6->setEnabled(true);
+            showPermittedMoves(ui->h6);
+        }
+        else if(ui->a7->objectName()==possibleMoves.at(i)){
+            ui->a7->setEnabled(true);
+            showPermittedMoves(ui->a7);
+        }
+        else if(ui->b7->objectName()==possibleMoves.at(i)){
+            ui->b7->setEnabled(true);
+            showPermittedMoves(ui->b7);
+        }
+        else if(ui->c7->objectName()==possibleMoves.at(i)){
+            ui->c7->setEnabled(true);
+            showPermittedMoves(ui->c7);
+        }
+        else if(ui->d7->objectName()==possibleMoves.at(i)){
+            ui->d7->setEnabled(true);
+            showPermittedMoves(ui->d7);
+        }
+        else if(ui->e7->objectName()==possibleMoves.at(i)){
+            ui->e7->setEnabled(true);
+            showPermittedMoves(ui->e7);
+        }
+        else if(ui->f7->objectName()==possibleMoves.at(i)){
+            ui->f7->setEnabled(true);
+            showPermittedMoves(ui->f7);
+        }
+        else if(ui->g7->objectName()==possibleMoves.at(i)){
+            ui->g7->setEnabled(true);
+            showPermittedMoves(ui->g7);
+        }
+        else if(ui->h7->objectName()==possibleMoves.at(i)){
+            ui->h7->setEnabled(true);
+            showPermittedMoves(ui->h7);
+        }
+        else if(ui->a8->objectName()==possibleMoves.at(i)){
+            ui->a8->setEnabled(true);
+            showPermittedMoves(ui->a8);
+        }
+        else if(ui->b8->objectName()==possibleMoves.at(i)){
+            ui->b8->setEnabled(true);
+            showPermittedMoves(ui->b8);
+        }
+        else if(ui->c8->objectName()==possibleMoves.at(i)){
+            ui->c8->setEnabled(true);
+            showPermittedMoves(ui->c8);
+        }
+        else if(ui->d8->objectName()==possibleMoves.at(i)){
+            ui->d8->setEnabled(true);
+            showPermittedMoves(ui->d8);
+        }
+        else if(ui->e8->objectName()==possibleMoves.at(i)){
+            ui->e8->setEnabled(true);
+            showPermittedMoves(ui->e8);
+        }
+        else if(ui->f8->objectName()==possibleMoves.at(i)){
+            ui->f8->setEnabled(true);
+            showPermittedMoves(ui->f8);
+        }
+        else if(ui->g8->objectName()==possibleMoves.at(i)){
+            ui->g8->setEnabled(true);
+            showPermittedMoves(ui->g8);
+        }
+        else if(ui->h8->objectName()==possibleMoves.at(i)){
+            ui->h8->setEnabled(true);
+            showPermittedMoves(ui->h8);
+        }
+    }
+}
+void Widget::showPermittedMoves(QPushButton *button)
+{
+    if(button->styleSheet()=="background-color: #035623;\nborder: 1px solid black;" && button->isEnabled()==true) button->setStyleSheet("background-color: #7092be;\nborder: 1px solid black;");
+    else if(button->styleSheet()=="background-color: white;\nborder: 1px solid black;"&& button->isEnabled()==true) button->setStyleSheet("background-color: #7092be;\nborder: 1px solid black;");
+
+    else if(button->styleSheet()=="background-image: url(:/img/whitePoon-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whitePoon-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whitePoon-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whitePoon-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackPoon-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackPoon-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackPoon-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackPoon-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteBishop-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteBishop-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackBishop-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackBishop-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKnight-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKnight-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackKnight-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackKnight-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
+
+    else if(button->styleSheet()=="background-image: url(:/img/whiteRook-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteRook-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteRook-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteRook-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackRook-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackRook-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackRook-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackRook-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteQueen-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteQueen-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackQueen-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackQueen-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKing-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteKing-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKing-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/whiteKing-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackKing-whiteField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackKing-blueField.png);");
+    else if(button->styleSheet()=="background-image: url(:/img/blackKing-greenField.png);"&& button->isEnabled()==true) button->setStyleSheet("background-image: url(:/img/blackKing-blueField.png);");
 }

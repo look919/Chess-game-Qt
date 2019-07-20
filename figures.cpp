@@ -47,6 +47,156 @@ void Widget::poonMovement(QPushButton *button)
 
 }
 
+void Widget::knightMovement(QPushButton *button)
+{
+    disableAllButons();
+
+    QString left;                           //tracking position
+    QString right;
+    QString left_further;
+    QString right_further;
+    QString up;
+    QString down;
+    QString up_further;
+    QString down_further;
+    if(button->objectName()[0]=='a'){
+        left="x";
+        left_further="x";
+        right="b";
+        right_further="c";
+    } else if(button->objectName()[0]=='b'){
+        left="a";
+        left_further="x";
+        right="c";
+        right_further="d";
+    } else if(button->objectName()[0]=='c'){
+        left="b";
+        left_further="a";
+        right="d";
+        right_further="e";
+    } else if(button->objectName()[0]=='d'){
+        left="c";
+        left_further="b";
+        right="e";
+        right_further="f";
+    } else if(button->objectName()[0]=='e'){
+        left="d";
+        left_further="c";
+        right="f";
+        right_further="g";
+    } else if(button->objectName()[0]=='f'){
+        left="e";
+        left_further="d";
+        right="g";
+        right_further="h";
+    } else if(button->objectName()[0]=='g'){
+        left="f";
+        left_further="e";
+        right="h";
+        right_further="x";
+    } else if(button->objectName()[0]=='h'){
+        left="g";
+        left_further="f";
+        right="x";
+        right_further="x";
+    }
+    if(button->objectName()[1]=='1'){
+        up="2";
+        up_further="3";
+        down="x";
+        down_further="x";
+    } else if(button->objectName()[1]=='2'){
+        up="3";
+        up_further="4";
+        down="1";
+        down_further="x";
+    } else if(button->objectName()[1]=='3'){
+        up="4";
+        up_further="5";
+        down="2";
+        down_further="1";
+    } else if(button->objectName()[1]=='4'){
+        up="5";
+        up_further="6";
+        down="3";
+        down_further="2";
+    } else if(button->objectName()[1]=='5'){
+        up="6";
+        up_further="7";
+        down="4";
+        down_further="3";
+    } else if(button->objectName()[1]=='6'){
+        up="7";
+        up_further="8";
+        down="5";
+        down_further="4";
+    } else if(button->objectName()[1]=='7'){
+        up="8";
+        up_further="x";
+        down="6";
+        down_further="5";
+    } else if(button->objectName()[1]=='8'){
+        up="x";
+        up_further="x";
+        down="7";
+        down_further="6";
+    }
+
+    QString coords;
+    coords=left+down_further;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=left_further+down;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=left_further+up;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=left+up_further;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=right+down_further;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=right_further+down;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=right_further+up;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+    coords=right+up_further;
+    if(coords[0]!='x' && coords[1]!='x'){
+        //if pinned function
+        possibleMoves.push_back(coords);
+    }
+
+    if(whiteMove)
+    {
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
+
+
+    }
+    else if(!whiteMove)
+    {
+
+    }
+}
+
 void Widget::renderFiguresPosition()
 {
     if(whiteMove)

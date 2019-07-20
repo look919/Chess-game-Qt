@@ -40,6 +40,15 @@ private:
     void poonColision(QPushButton *button);
     void poonTaking(QPushButton *button);
 
+    void knightMovement(QPushButton *button);
+
+
+
+    void matchCoordinates();
+    void showPermittedMoves(QPushButton *button);
+    void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false);
+    void checkIfThereIsAPiece(QPushButton *button, QString color="none");
+    bool ifExist;
 
 
     //PIECES
