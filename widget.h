@@ -28,13 +28,17 @@ private:
     bool action;          //checking whether player click on the button for the first time(choosing figure) or for the second time(choosing place to move)
 
 
-
+    //figures.cpp
     void getFigureName(QPushButton *button);
     QString currentFigure;
 
+    QVector <QString> possibleMoves;
+    QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
 
 
-
+    void poonMovement(QPushButton *button);
+    void poonColision(QPushButton *button);
+    void poonTaking(QPushButton *button);
 
 
 
@@ -45,6 +49,7 @@ private:
 
     QVector <QPushButton*> whiteFiguresButtons;
     QVector <QPushButton*> blackFiguresButtons;
+    void renderFiguresPosition();
 
     //white
     QPushButton *whitePoon1;

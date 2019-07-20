@@ -276,7 +276,6 @@ void Widget::enableBlackButtons()
 void Widget::enableWhiteButtons_shorter(QPushButton *button)
 {
     for(int i=0; i<whiteFiguresButtons.size();i++){
-        qDebug()<<whiteFiguresButtons.at(i);
         if(button == whiteFiguresButtons.at(i)){
             button->setEnabled(true);
             break;
