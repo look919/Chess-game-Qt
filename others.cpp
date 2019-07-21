@@ -8,6 +8,7 @@ void Widget::setStartingParameters()
     action = false;
     isItCheck = false;
     isItCheckMate = false;
+    ui->startGameButton->setEnabled(true);
 
 
 

@@ -31,24 +31,22 @@ void Widget::getFigureName(QPushButton *button)
     }
 }
 
-void Widget::poonMovement(QPushButton *button)
+void Widget::poonMovementWhite(QPushButton *button)
 {
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-    if(whiteMove)
-    {
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
-        button->setEnabled(true);
 
-        if(button->objectName()[1]=="2"){
+    button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
+    button->setEnabled(true);
 
-        }
+    if(button->objectName()[1]=="2"){                   //FIRST MOVE
+        possibleMoves.push_back(objectName()[1]+"3");
+        possibleMoves.push_back(objectName()[1]+"4");
+        
+        poonColision(button);                           //There i realize pusbacking moves in this case
+        poonTaking(button,"black");
     }
-    else if(!whiteMove)
-    {
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
-        button->setEnabled(true);
-    }
+
 
 }
 
@@ -57,13 +55,76 @@ void Widget::poonColision(QPushButton *button)
     if(whiteMove)
     {
         if(button->objectName()[1]=="2"){
-
-
+            convertStringToButton(button->objectName()[0]+"3");
+            checkIfThereIsAPiece(requiredButton);
+            
+             if(ifExist == true){
+                 ifExist=false;
+                 blockMove(button->objectName()[0]+"3");
+                 blockMove(button->objectName()[0]+"4");
+             }
+             else{
+                 convertStringToButton(button->objectName()[0]+"4");
+                 checkIfThereIsAPiece(requiredButton);                
+                     if(ifExist == true){
+                         ifExist = false;
+                         blockMove(button->objectName()[0]+"4");
+                     }
+             }
+        } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="5" || button->objectName()[1]=="6" || button->objectName()[1]=="7"){
+            QChar firstCord = button->objectName()[0];
+            
+            char secondCord = 'x';
+            if(button->objectName()[1]=="3") secondCord='4';
+            else if(button->objectName()[1]=="4") secondCord='5';
+            else if(button->objectName()[1]=="5") secondCord='6';
+            else if(button->objectName()[1]=="6") secondCord='7';
+            else if(button->objectName()[1]=="7") secondCord='8';
+            
+            convertStringToButton(firstCord+secondCord);
+            checkIfThereIsAPiece(requiredButton);
+            if(ifExist == true){
+                ifExist = false;
+                blockMove(firstCord+secondCord);
+            }
         }
     }
     else if(!whiteMove)
     {
-
+        if(button->objectName()[1]=="7"){
+            convertStringToButton(button->objectName()[0]+"6");
+            checkIfThereIsAPiece(requiredButton);
+            
+             if(ifExist == true){
+                 ifExist=false;
+                 blockMove(button->objectName()[0]+"6");
+                 blockMove(button->objectName()[0]+"5");
+             }
+             else{
+                 convertStringToButton(button->objectName()[0]+"5");
+                 checkIfThereIsAPiece(requiredButton);                
+                     if(ifExist == true){
+                         ifExist = false;
+                         blockMove(button->objectName()[0]+"5");
+                     }
+             }
+        } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="5" || button->objectName()[1]=="6" || button->objectName()[1]=="7"){
+            QChar firstCord = button->objectName()[0];
+            
+            char secondCord = 'x';
+            if(button->objectName()[1]=="6") secondCord='5';
+            else if(button->objectName()[1]=="5") secondCord='4';
+            else if(button->objectName()[1]=="4") secondCord='3';
+            else if(button->objectName()[1]=="3") secondCord='2';
+            else if(button->objectName()[1]=="2") secondCord='1';
+            
+            convertStringToButton(firstCord+secondCord);
+            checkIfThereIsAPiece(requiredButton);
+            if(ifExist == true){
+                ifExist = false;
+                blockMove(firstCord+secondCord);
+            }
+        }
     }
 }
 

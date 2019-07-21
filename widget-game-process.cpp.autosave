@@ -11,8 +11,7 @@ Widget::Widget(QWidget *parent) :
     setStartingParameters();
     placePiecesOnBoard();
     setFiguresPosition();
-    qDebug()<<ui->startGameButton->isEnabled();
-    ui->startGameButton->setEnabled(true);
+
 }
 
 void Widget::on_startGameButton_clicked(){

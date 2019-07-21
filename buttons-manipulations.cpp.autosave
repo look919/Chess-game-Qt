@@ -109,12 +109,6 @@ void Widget::checkIfThereIsAPiece(QPushButton *button, QString color)
                 break;
             }
         }
-        for(int i=0;i<blueFigures.size();i++){
-            if(button->styleSheet()==blueFigures.at(i)){
-                ifExist=true;
-                break;
-            }
-        }
     }
     else if(color=="white")
     {

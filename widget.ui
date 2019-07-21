@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Widget</class>
  <widget class="QWidget" name="Widget">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -2306,6 +2309,9 @@ border: 1px solid black;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="startGameButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>547</x>
@@ -2314,11 +2320,20 @@ border: 1px solid black;</string>
      <height>60</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>60</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <family>MV Boli</family>
      <pointsize>11</pointsize>
     </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:#070f35;color:white;border: 1px solid blue; border-radius: 25px;</string>
@@ -2439,6 +2454,28 @@ background-color:#070f35;
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="empty">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>130</y>
+     <width>1</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1</width>
+     <height>1</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>empty</string>
    </property>
   </widget>
  </widget>
