@@ -129,8 +129,289 @@ void Widget::convertStringToButton(QString coords)
     else if(ui->g8->objectName()==coords)     requiredButton= ui->g8;
     else if(ui->h8->objectName()==coords)     requiredButton= ui->h8;
 }
+void Widget::cleanCoordinates()     //brings back the right background color from blue after move;
+{
+    for(int i=0;i<possibleMoves.size();i++){
 
+    if(ui->a1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a1);
+    }
+    else if(ui->b1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b1);
+    }
+    else if(ui->c1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c1);
+    }
+    else if(ui->d1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d1);
+    }
+    else if(ui->e1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e1);
+    }
+    else if(ui->f1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f1);
+    }
+    else if(ui->g1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g1);
+    }
+    else if(ui->h1->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h1);
+    }
+    else if(ui->a2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a2);
+    }
+    else if(ui->b2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b2);
+    }
+    else if(ui->c2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c2);
+    }
+    else if(ui->d2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d2);
+    }
+    else if(ui->e2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e2);
+    }
+    else if(ui->f2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f2);
+    }
+    else if(ui->g2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g2);
+    }
+    else if(ui->h2->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h2);
+    }
+    else if(ui->a3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a3);
+    }
+    else if(ui->b3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b3);
+    }
+    else if(ui->c3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c3);
+    }
+    else if(ui->d3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d3);
+    }
+    else if(ui->e3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e3);
+    }
+    else if(ui->f3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f3);
+    }
+    else if(ui->g3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g3);
+    }
+    else if(ui->h3->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h3);
+    }
+    else if(ui->a4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a4);
+    }
+    else if(ui->b4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b4);
+    }
+    else if(ui->c4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c4);
+    }
+    else if(ui->d4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d4);
+    }
+    else if(ui->e4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e4);
+    }
+    else if(ui->f4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f4);
+    }
+    else if(ui->g4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g4);
+    }
+    else if(ui->h4->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h4);
+    }
+    else if(ui->a5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a5);
+    }
+    else if(ui->b5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b5);
+    }
+    else if(ui->c5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c5);
+    }
+    else if(ui->d5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d5);
+    }
+    else if(ui->e5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e5);
+    }
+    else if(ui->f5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f5);
+    }
+    else if(ui->g5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g5);
+    }
+    else if(ui->h5->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h5);
+    }
+    else if(ui->a6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a6);
+    }
+    else if(ui->b6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b6);
+    }
+    else if(ui->c6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c6);
+    }
+    else if(ui->d6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d6);
+    }
+    else if(ui->e6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e6);
+    }
+    else if(ui->f6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f6);
+    }
+    else if(ui->g6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g6);
+    }
+    else if(ui->h6->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h6);
+    }
+    else if(ui->a7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a7);
+    }
+    else if(ui->b7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b7);
+    }
+    else if(ui->c7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c7);
+    }
+    else if(ui->d7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d7);
+    }
+    else if(ui->e7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e7);
+    }
+    else if(ui->f7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f7);
+    }
+    else if(ui->g7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g7);
+    }
+    else if(ui->h7->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h7);
+    }
+    else if(ui->a8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->a8);
+    }
+    else if(ui->b8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->b8);
+    }
+    else if(ui->c8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->c8);
+    }
+    else if(ui->d8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->d8);
+    }
+    else if(ui->e8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->e8);
+    }
+    else if(ui->f8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->f8);
+    }
+    else if(ui->g8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->g8);
+    }
+    else if(ui->h8->objectName()==possibleMoves.at(i)){
+        cleanCoordinates_shorter(ui->h8);
+    }
 
+}
+
+}
+
+void Widget::cleanCoordinates_shorter(QPushButton *button)
+{
+    if(button->styleSheet()=="background-color: #7092be;\nborder: 1px solid black;" && button->font().bold()==true){        //GREEN FIELD
+        button->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+    else if(button->styleSheet()=="background-color: #7092be;\nborder: 1px solid black;"){                                  //WHITE FIELD
+        button->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }
+
+    else if(button->styleSheet()=="background-image: url(:/img/whitePoon-blueField.png);" && button->font().bold()==true){  //POONS
+        button->setStyleSheet("background-image: url(:/img/whitePoon-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whitePoon-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whitePoon-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackPoon-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackPoon-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackPoon-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackPoon-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteBishop-blueField.png);" && button->font().bold()==true){  //BISHOPS
+        button->setStyleSheet("background-image: url(:/img/whiteBishop-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteBishop-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whiteBishop-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackBishop-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackBishop-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackBishop-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackBishop-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKnight-blueField.png);" && button->font().bold()==true){  //KNIGHTS
+        button->setStyleSheet("background-image: url(:/img/whiteKnight-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKnight-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whiteKnight-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackKnight-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackKnight-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackKnight-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackKnight-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteRook-blueField.png);" && button->font().bold()==true){  //ROOKS
+        button->setStyleSheet("background-image: url(:/img/whiteRook-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteRook-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whiteRook-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackRook-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackRook-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackRook-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackRook-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteQueen-blueField.png);" && button->font().bold()==true){  //QUEEN
+        button->setStyleSheet("background-image: url(:/img/whiteQueen-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteQueen-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whiteQueen-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackQueen-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackQueen-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackQueen-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackQueen-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKing-blueField.png);" && button->font().bold()==true){  //KING
+        button->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/whiteKing-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackKing-blueField.png);" && button->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+    }
+    else if(button->styleSheet()=="background-image: url(:/img/blackKing-blueField.png);"){
+        button->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+    }
+}
 void Widget::disableAllButons()
 {
     ui->a1->setEnabled(false);

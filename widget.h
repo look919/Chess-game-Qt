@@ -49,6 +49,8 @@ private:
     void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false);
     void checkIfThereIsAPiece(QPushButton *button, QString color="none");
     bool ifExist;
+    void cleanCoordinates();
+    void cleanCoordinates_shorter(QPushButton *button);
 
 
     //PIECES

@@ -189,12 +189,15 @@ void Widget::knightMovement(QPushButton *button)
         button->setEnabled(true);
         button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
 
-
     }
     else if(!whiteMove)
     {
-
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
     }
+
+    colision(button,"white");
+    matchCoordinates();
 }
 
 void Widget::renderFiguresPosition()
