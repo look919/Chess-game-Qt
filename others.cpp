@@ -140,8 +140,6 @@ void Widget::setFiguresPosition()
 
 void Widget::switchPlayers(QPushButton *button)
 {
-    QString text;
-
     if(whiteMove)
     {
         if(numberOfMove ==30 || numberOfMove == 60){
@@ -226,7 +224,6 @@ void Widget::switchPlayers(QPushButton *button)
         disableAllButons();
         enableBlackButtons();
         whiteMove = false;
-        qDebug()<<2;
 
         possibleMoves.clear();
         possibleMovesStorage.clear();

@@ -39,18 +39,20 @@ private:
 
     QVector <QString> possibleMoves;
     QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
-    void blockMove(QString keyword);
+
 
     QString coords;
-    void poonMovement(QPushButton *button);
+    void poonMovementWhite(QPushButton *button);    //seperating those two functions to make code cleaner
+    void poonMovementBlack(QPushButton *button);
     void poonColision(QPushButton *button);
-    void poonTaking(QPushButton *button);
+    void poonTaking(QPushButton *button, QString color);
+    bool enPassant;
 
 
     void knightMovement(QPushButton *button);
 
 
-
+    //buttons-manipulations
     void matchCoordinates();
     void showPermittedMoves(QPushButton *button);
     void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false);
@@ -62,13 +64,14 @@ private:
     QPushButton *currentFigureButton;       //cleaners
     QString currentFigureStyleSheet;
     void move(QPushButton *button, QString figure);
+    void blockMove(QString keyword);
     void switchPlayers(QPushButton *button);
     QString matchHistory_white;
     QString matchHistory_black;
     QString matchHistory_numberOfMove;
+    QString text;                                   //needed for match history and en passant move
 
 
-    //buttons-manipulations
     QPushButton *requiredButton;
     void convertStringToButton(QString coords);
     void disableAllButons();

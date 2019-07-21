@@ -11,8 +11,7 @@ Widget::Widget(QWidget *parent) :
     setStartingParameters();
     placePiecesOnBoard();
     setFiguresPosition();
-    qDebug()<<ui->startGameButton->isEnabled();
-    ui->startGameButton->setEnabled(true);
+
 }
 
 void Widget::on_startGameButton_clicked(){
@@ -23,7 +22,6 @@ void Widget::on_startGameButton_clicked(){
 
 void Widget::on_any_button_clicked(QPushButton *button)
 {
-    if(whiteMove) qDebug()<<whiteFiguresButtons;
     if(!action)                     //1st pressing
     {
         if(isItCheck){                      //GOTTA MOVE THAT LATER
@@ -33,13 +31,15 @@ void Widget::on_any_button_clicked(QPushButton *button)
 
         action=true;
         currentFigureButton=button;          //needed to clean the field after move
+        currentFigureStyleSheet=button->styleSheet();
 
         getFigureName(button);              //setting currentFigure
 
         if(currentFigure=="King"){
            // kingMovement(button);
         } else if(currentFigure == "poon"){
-           // poonMovement(button);
+            if(whiteMove) poonMovementWhite(button);
+            else if(!whiteMove) poonMovementBlack(button);
         } else if(currentFigure == "Knight"){
             knightMovement(button);
         } else if(currentFigure == "Bishop"){
@@ -64,13 +64,24 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
                else {
                    //move(button,"whiteKing");
-                  // isKingChecked();
                   // switchPlayers("black",button);
                }
            }
            else if(currentFigure == "poon")
            {
-
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else if(enPassant){
+                   //todo
+               }
+               else if (button->objectName()[1]=="8") {
+                   //todo
+               }
+               else{
+                   move(button,"whitePoon");
+                   switchPlayers(button);
+               }
            }
            else if (currentFigure == "Knight")
            {
@@ -98,7 +109,13 @@ void Widget::on_any_button_clicked(QPushButton *button)
            }
            else if(currentFigure == "poon")
            {
-
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"blackPoon");
+                   switchPlayers(button);
+               }
            }
            else if (currentFigure == "Knight")
            {

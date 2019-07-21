@@ -31,25 +31,183 @@ void Widget::getFigureName(QPushButton *button)
     }
 }
 
-void Widget::poonMovement(QPushButton *button)
+void Widget::poonMovementWhite(QPushButton *button)
 {
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-    if(whiteMove)
-    {
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
-        button->setEnabled(true);
 
-        if(button->objectName()[1]=="2"){
+    button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
+    button->setEnabled(true);
 
+    if(button->objectName()[1]=="2"){                   //FIRST MOVE
+        possibleMoves.push_back(button->objectName()[0]+"3");
+        possibleMoves.push_back(button->objectName()[0]+"4");
+
+        poonColision(button);
+        poonTaking(button,"black");
+
+        qDebug()<<possibleMoves;
+    } else if(button->objectName()[1]=="5"){            //EN PASSANT
+        possibleMoves.push_back(button->objectName()[0]+"6");
+        poonColision(button);
+        poonTaking(button,"black");
+
+
+        QChar poonCanTakeOnLeft = button->objectName()[0];
+        QString left;
+        QString right;
+        char secondCord='7';
+        char thirdCord='5';
+        QString enter = " \n";
+
+        if(poonCanTakeOnLeft == 'a'){
+            left="x";
+            right="b";
         }
-    }
-    else if(!whiteMove)
-    {
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
-        button->setEnabled(true);
+        else if(poonCanTakeOnLeft == 'b'){
+            left="a";
+            right="c";
+        }
+        else if(poonCanTakeOnLeft == 'c'){
+            left="b";
+            right="d";
+        }
+        else if(poonCanTakeOnLeft == 'd'){
+            left="c";
+            right="e";
+        }
+        else if(poonCanTakeOnLeft == 'e'){
+            left="d";
+            right="f";
+        }
+        else if(poonCanTakeOnLeft == 'f'){
+            left="e";
+            right="g";
+        }
+        else if(poonCanTakeOnLeft == 'g'){
+            left="f";
+            right="h";
+        }
+        else if(poonCanTakeOnLeft == 'h'){
+            left="g";
+            right="x";
+        }
+
+        QString fullname_left = left+secondCord+"-"+left+thirdCord+enter;
+        QString fullname_right = right+secondCord+"-"+right+thirdCord+enter;
+
+        QString enpassant_left=left+"6";
+        QString enpassant_right=right+"6";
+
+        if(text == fullname_right){
+            possibleMoves.push_back(enpassant_right);
+            enPassant = true;
+        }else if(text == fullname_left){
+            possibleMoves.push_back(enpassant_left);
+            enPassant = true;
+        }
+    } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="6"|| button->objectName()[1]=="7"){
+
+        QChar secondChar;
+        if(button->objectName()[1]=="3") secondChar='4';
+        else if(button->objectName()[1]=="4") secondChar='5';
+        else if(button->objectName()[1]=="6") secondChar='7';
+        else if(button->objectName()[1]=="6") secondChar='8';
+
+        possibleMoves.push_back(button->objectName()[0]+secondChar);
+        poonColision(button);
+        poonTaking(button,"black");
     }
 
+    matchCoordinates();
+}
+
+void Widget::poonMovementBlack(QPushButton *button)
+{
+    disableAllButons();                                      //disable all buttons in order to enable only permitted moves
+
+
+    button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
+    button->setEnabled(true);
+
+    if(button->objectName()[1]=="7"){                   //FIRST MOVE
+        possibleMoves.push_back(button->objectName()[0]+"6");
+        possibleMoves.push_back(button->objectName()[0]+"5");
+
+        poonColision(button);
+        poonTaking(button,"white");
+    } else if(button->objectName()[1]=="4"){         //EN PASSANT
+        possibleMoves.push_back(button->objectName()[0]+"3");
+        poonColision(button);
+        poonTaking(button,"white");
+
+
+        QChar poonCanTakeOnLeft = button->objectName()[0];
+        QString left;
+        QString right;
+        char secondCord='2';
+        char thirdCord='4';
+        QString enter = " \n";
+
+        if(poonCanTakeOnLeft == 'a'){
+            left="x";
+            right="b";
+        }
+        else if(poonCanTakeOnLeft == 'b'){
+            left="a";
+            right="c";
+        }
+        else if(poonCanTakeOnLeft == 'c'){
+            left="b";
+            right="d";
+        }
+        else if(poonCanTakeOnLeft == 'd'){
+            left="c";
+            right="e";
+        }
+        else if(poonCanTakeOnLeft == 'e'){
+            left="d";
+            right="f";
+        }
+        else if(poonCanTakeOnLeft == 'f'){
+            left="e";
+            right="g";
+        }
+        else if(poonCanTakeOnLeft == 'g'){
+            left="f";
+            right="h";
+        }
+        else if(poonCanTakeOnLeft == 'h'){
+            left="g";
+            right="x";
+        }
+
+        QString fullname_left = left+secondCord+"-"+left+thirdCord+enter;
+        QString fullname_right = right+secondCord+"-"+right+thirdCord+enter;
+
+        QString enpassant_left=left+"3";
+        QString enpassant_right=right+"3";
+
+        if(text == fullname_right){
+            possibleMoves.push_back(enpassant_right);
+            enPassant = true;
+        }else if(text == fullname_left){
+            possibleMoves.push_back(enpassant_left);
+            enPassant = true;
+        }
+    } else if(button->objectName()[1]=="3" || button->objectName()[1]=="5" || button->objectName()[1]=="6"|| button->objectName()[1]=="2"){
+
+        QChar secondChar;
+        if(button->objectName()[1]=="6") secondChar='5';
+        else if(button->objectName()[1]=="5") secondChar='4';
+        else if(button->objectName()[1]=="3") secondChar='2';
+        else if(button->objectName()[1]=="2") secondChar='1';
+
+        possibleMoves.push_back(button->objectName()[0]+secondChar);
+        poonColision(button);
+        poonTaking(button,"white");
+    }
+    matchCoordinates();
 }
 
 void Widget::poonColision(QPushButton *button)
@@ -57,13 +215,153 @@ void Widget::poonColision(QPushButton *button)
     if(whiteMove)
     {
         if(button->objectName()[1]=="2"){
+            convertStringToButton(button->objectName()[0]+"3");
+            checkIfThereIsAPiece(requiredButton);
+            qDebug()<<ifExist<<requiredButton;
+             if(ifExist == true){
+                 ifExist=false;
+                 blockMove(button->objectName()[0]+"3");
+                 blockMove(button->objectName()[0]+"4");
+             }
+             else{
+                 convertStringToButton(button->objectName()[0]+"4");
+                 checkIfThereIsAPiece(requiredButton);
+                 qDebug()<<ifExist<<requiredButton;
+                     if(ifExist == true){
+                         ifExist = false;
+                         blockMove(button->objectName()[0]+"4");
+                     }
+             }
+        } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="5" || button->objectName()[1]=="6" || button->objectName()[1]=="7"){
+            QChar firstCord = button->objectName()[0];
 
+            char secondCord = 'x';
+            if(button->objectName()[1]=="3") secondCord='4';
+            else if(button->objectName()[1]=="4") secondCord='5';
+            else if(button->objectName()[1]=="5") secondCord='6';
+            else if(button->objectName()[1]=="6") secondCord='7';
+            else if(button->objectName()[1]=="7") secondCord='8';
 
+            convertStringToButton(firstCord+secondCord);
+            checkIfThereIsAPiece(requiredButton);
+            if(ifExist == true){
+                ifExist = false;
+                blockMove(firstCord+secondCord);
+            }
         }
     }
     else if(!whiteMove)
     {
+        if(button->objectName()[1]=="7"){
+            convertStringToButton(button->objectName()[0]+"6");
+            checkIfThereIsAPiece(requiredButton);
 
+             if(ifExist == true){
+                 ifExist=false;
+                 blockMove(button->objectName()[0]+"6");
+                 blockMove(button->objectName()[0]+"5");
+             }
+             else{
+                 convertStringToButton(button->objectName()[0]+"5");
+                 checkIfThereIsAPiece(requiredButton);
+                     if(ifExist == true){
+                         ifExist = false;
+                         blockMove(button->objectName()[0]+"5");
+                     }
+             }
+        } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="5" || button->objectName()[1]=="6" || button->objectName()[1]=="7"){
+            QChar firstCord = button->objectName()[0];
+
+            char secondCord = 'x';
+            if(button->objectName()[1]=="6") secondCord='5';
+            else if(button->objectName()[1]=="5") secondCord='4';
+            else if(button->objectName()[1]=="4") secondCord='3';
+            else if(button->objectName()[1]=="3") secondCord='2';
+            else if(button->objectName()[1]=="2") secondCord='1';
+
+            convertStringToButton(firstCord+secondCord);
+            checkIfThereIsAPiece(requiredButton);
+            if(ifExist == true){
+                ifExist = false;
+                blockMove(firstCord+secondCord);
+            }
+        }
+    }
+}
+void Widget::poonTaking(QPushButton *button, QString color)
+{
+    QChar poonCanTakeOnLeft = button->objectName()[0];
+    QChar poonCanTakeOnRight = button->objectName()[0];
+    if(poonCanTakeOnLeft == 'a'){
+        poonCanTakeOnLeft='x';
+        poonCanTakeOnRight='b';
+    }
+    else if(poonCanTakeOnLeft == 'b'){
+        poonCanTakeOnLeft='a';
+        poonCanTakeOnRight='c';
+    }
+    else if(poonCanTakeOnLeft == 'c'){
+        poonCanTakeOnLeft='b';
+        poonCanTakeOnRight='d';
+    }
+    else if(poonCanTakeOnLeft == 'd'){
+        poonCanTakeOnLeft='c';
+        poonCanTakeOnRight='e';
+    }
+    else if(poonCanTakeOnLeft == 'e'){
+        poonCanTakeOnLeft='d';
+        poonCanTakeOnRight='f';
+    }
+    else if(poonCanTakeOnLeft == 'f'){
+        poonCanTakeOnLeft='e';
+        poonCanTakeOnRight='g';
+    }
+    else if(poonCanTakeOnLeft == 'g'){
+        poonCanTakeOnLeft='f';
+        poonCanTakeOnRight='h';
+    }
+    else if(poonCanTakeOnLeft == 'h'){
+        poonCanTakeOnLeft='g';
+        poonCanTakeOnRight='x';
+    }
+
+    char secondCord='x';
+    if(whiteMove)
+    {
+        if(button->objectName()[1]=="2") secondCord='3';
+        else if(button->objectName()[1]=="3") secondCord='4';
+        else if(button->objectName()[1]=="4") secondCord='5';
+        else if(button->objectName()[1]=="5") secondCord='6';
+        else if(button->objectName()[1]=="6") secondCord='7';
+        else if(button->objectName()[1]=="7") secondCord='8';
+    }
+    else if(!whiteMove)
+    {
+        if(button->objectName()[1]=="7") secondCord='6';
+        else if(button->objectName()[1]=="6") secondCord='5';
+        else if(button->objectName()[1]=="5") secondCord='4';
+        else if(button->objectName()[1]=="4") secondCord='3';
+        else if(button->objectName()[1]=="3") secondCord='2';
+        else if(button->objectName()[1]=="2") secondCord='1';
+    }
+
+    coords = poonCanTakeOnLeft+secondCord;
+    if(coords[0] != 'x' && coords[1] != 'x') {
+        convertStringToButton(coords);
+        checkIfThereIsAPiece(requiredButton,color);
+        if(ifExist==true) {
+            ifExist=false;
+            possibleMoves.push_back(coords);
+        }
+    }
+    coords = poonCanTakeOnRight+secondCord;
+    if(coords[0] != 'x' && coords[1] != 'x') {
+        convertStringToButton(coords);
+        checkIfThereIsAPiece(requiredButton,color);
+        if(ifExist==true) {
+            ifExist=false;
+            possibleMoves.push_back(coords);
+        }
     }
 }
 
