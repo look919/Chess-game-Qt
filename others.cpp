@@ -12,65 +12,6 @@ void Widget::setStartingParameters()
 
 
 
-    //Adding pieces to vectors
-    QString whitePoon_whiteField = "background-image: url(:/img/whitePoon-whiteField.png);";
-    QString whitePoon_greenField = "background-image: url(:/img/whitePoon-greenField.png);";
-    QString whiteBishop_whiteField = "background-image: url(:/img/whiteBishop-whiteField.png);";
-    QString whiteBishop_greenField = "background-image: url(:/img/whiteBishop-greenField.png);";
-    QString whiteKnight_whiteField ="background-image: url(:/img/whiteKnight-whiteField.png);";
-    QString whiteKnight_greenField ="background-image: url(:/img/whiteKnight-greenField.png);";
-
-    QString whiteRook_whiteField = "background-image: url(:/img/whiteRook-whiteField.png);";
-    QString whiteRook_greenField = "background-image: url(:/img/whiteRook-greenField.png);";
-    QString whiteQueen_whiteField = "background-image: url(:/img/whiteQueen-whiteField.png);";
-    QString whiteQueen_greenField = "background-image: url(:/img/whiteQueen-greenField.png);";
-    QString whiteKing_whiteField =  "background-image: url(:/img/whiteKing-whiteField.png);";
-    QString whiteKing_greenField =  "background-image: url(:/img/whiteKing-greenField.png);";
-    QString whiteKing_redField =  "background-image: url(:/img/whiteKing-redField.png);";
-
-    whiteFigures.push_back(whitePoon_whiteField);
-    whiteFigures.push_back(whitePoon_greenField);
-    whiteFigures.push_back(whiteBishop_whiteField);
-    whiteFigures.push_back(whiteBishop_greenField);
-    whiteFigures.push_back(whiteKnight_whiteField);
-    whiteFigures.push_back(whiteKnight_greenField);
-    whiteFigures.push_back(whiteRook_whiteField);
-    whiteFigures.push_back(whiteRook_greenField);
-    whiteFigures.push_back(whiteQueen_whiteField);
-    whiteFigures.push_back(whiteQueen_greenField);
-    whiteFigures.push_back(whiteKing_whiteField);
-    whiteFigures.push_back(whiteKing_greenField);
-    whiteFigures.push_back(whiteKing_redField);
-
-    QString blackPoon_whiteField = "background-image: url(:/img/blackPoon-whiteField.png);";
-    QString blackPoon_greenField = "background-image: url(:/img/blackPoon-greenField.png);";
-    QString blackBishop_whiteField = "background-image: url(:/img/blackBishop-whiteField.png);";
-    QString blackBishop_greenField = "background-image: url(:/img/blackBishop-greenField.png);";
-    QString blackKnight_whiteField ="background-image: url(:/img/blackKnight-whiteField.png);";
-    QString blackKnight_greenField ="background-image: url(:/img/blackKnight-greenField.png);";
-
-    QString blackRook_whiteField = "background-image: url(:/img/blackRook-whiteField.png);";
-    QString blackRook_greenField = "background-image: url(:/img/blackRook-greenField.png);";
-    QString blackQueen_whiteField = "background-image: url(:/img/blackQueen-whiteField.png);";
-    QString blackQueen_greenField = "background-image: url(:/img/blackQueen-greenField.png);";
-    QString blackKing_whiteField =  "background-image: url(:/img/blackKing-whiteField.png);";
-    QString blackKing_greenField =  "background-image: url(:/img/blackKing-greenField.png);";
-    QString blackKing_redField =  "background-image: url(:/img/blackKing-redField.png);";
-
-    blackFigures.push_back(blackPoon_whiteField);
-    blackFigures.push_back(blackPoon_greenField);
-    blackFigures.push_back(blackBishop_whiteField);
-    blackFigures.push_back(blackBishop_greenField);
-    blackFigures.push_back(blackKnight_whiteField);
-    blackFigures.push_back(blackKnight_greenField);
-    blackFigures.push_back(blackRook_whiteField);
-    blackFigures.push_back(blackRook_greenField);
-    blackFigures.push_back(blackQueen_whiteField);
-    blackFigures.push_back(blackQueen_greenField);
-    blackFigures.push_back(blackKing_whiteField);
-    blackFigures.push_back(blackKing_greenField);
-    blackFigures.push_back(blackKing_redField);
-
     QString blackPoon_blueField = "background-image: url(:/img/blackPoon-blueField.png);";
     QString whitePoon_blueField = "background-image: url(:/img/blackPoon-blueField.png);";
     QString blackBishop_blueField = "background-image: url(:/img/blackBishop-blueField.png);";
@@ -113,14 +54,6 @@ void Widget::placePiecesOnBoard()
     ui->g2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-greenField.png);"));
     ui->h2->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-whiteField.png);"));
 
-    whitePoon1 = ui->a2;
-    whitePoon2 = ui->b2;
-    whitePoon3 = ui->c2;
-    whitePoon4 = ui->d2;
-    whitePoon5 = ui->e2;
-    whitePoon6 = ui->f2;
-    whitePoon7 = ui->g2;
-    whitePoon8 = ui->h2;
 
     //white figures
     ui->c1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteBishop-whiteField.png);"));
@@ -128,20 +61,13 @@ void Widget::placePiecesOnBoard()
     ui->b1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKnight-greenField.png);"));
     ui->g1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKnight-whiteField.png);"));
 
-    whiteKnight1 = ui->b1;
-    whiteKnight2 = ui->g1;
-    whiteBishop1 = ui->c1;
-    whiteBishop2 = ui->f1;
 
     ui->a1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteRook-whiteField.png);"));
     ui->h1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteRook-greenField.png);"));
     ui->d1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteQueen-greenField.png);"));
     ui->e1->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whiteKing-whiteField.png);"));
 
-    whiteRook1 = ui->a1;
-    whiteRook2 = ui->h1;
-    whiteQueen = ui->d1;
-    whiteKing  = ui->e1;
+
 
     //black poons
     ui->b7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
@@ -153,36 +79,197 @@ void Widget::placePiecesOnBoard()
     ui->h7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-greenField.png);"));
     ui->g7->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-whiteField.png);"));
 
-    blackPoon1 = ui->a7;
-    blackPoon2 = ui->b7;
-    blackPoon3 = ui->c7;
-    blackPoon4 = ui->d7;
-    blackPoon5 = ui->e7;
-    blackPoon6 = ui->f7;
-    blackPoon7 = ui->g7;
-    blackPoon8 = ui->h7;
-
     //black figures
     ui->f8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackBishop-whiteField.png);"));
     ui->c8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackBishop-greenField.png);"));
     ui->g8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKnight-greenField.png);"));
     ui->b8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKnight-whiteField.png);"));
 
-    blackKnight1 = ui->b8;
-    blackKnight2 = ui->g8;
-    blackBishop1 = ui->c8;
-    blackBishop2 = ui->f8;
+
 
     ui->h8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackRook-whiteField.png);"));
     ui->a8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackRook-greenField.png);"));
     ui->d8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackQueen-whiteField.png);"));
     ui->e8->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackKing-greenField.png);"));
 
-    blackRook1 = ui->a8;
-    blackRook2 = ui->h8;
-    blackQueen = ui->d8;
-    blackKing  = ui->e8;
 
+
+}
+
+void Widget::setFiguresPosition()
+{
+        whiteFiguresButtons.clear();
+        //whiteFiguresButtons
+        whiteFiguresButtons.push_back(ui->a2);
+        whiteFiguresButtons.push_back(ui->b2);
+        whiteFiguresButtons.push_back(ui->c2);
+        whiteFiguresButtons.push_back(ui->d2);
+        whiteFiguresButtons.push_back(ui->e2);
+        whiteFiguresButtons.push_back(ui->f2);
+        whiteFiguresButtons.push_back(ui->g2);
+        whiteFiguresButtons.push_back(ui->h2);
+        whiteFiguresButtons.push_back(ui->b1);
+        whiteFiguresButtons.push_back(ui->g1);
+        whiteFiguresButtons.push_back(ui->c1);
+        whiteFiguresButtons.push_back(ui->f1);
+        whiteFiguresButtons.push_back(ui->a1);
+        whiteFiguresButtons.push_back(ui->h1);
+        whiteFiguresButtons.push_back(ui->d1);
+        whiteFiguresButtons.push_back(ui->e1);
+
+        blackFiguresButtons.clear();
+        //blackFiguresButtons
+        blackFiguresButtons.push_back(ui->a7);
+        blackFiguresButtons.push_back(ui->b7);
+        blackFiguresButtons.push_back(ui->c7);
+        blackFiguresButtons.push_back(ui->d7);
+        blackFiguresButtons.push_back(ui->e7);
+        blackFiguresButtons.push_back(ui->f7);
+        blackFiguresButtons.push_back(ui->g7);
+        blackFiguresButtons.push_back(ui->h7);
+        blackFiguresButtons.push_back(ui->b8);
+        blackFiguresButtons.push_back(ui->g8);
+        blackFiguresButtons.push_back(ui->c8);
+        blackFiguresButtons.push_back(ui->f8);
+        blackFiguresButtons.push_back(ui->a8);
+        blackFiguresButtons.push_back(ui->h8);
+        blackFiguresButtons.push_back(ui->d8);
+        blackFiguresButtons.push_back(ui->e8);
+}
+
+void Widget::switchPlayers(QPushButton *button)
+{
+    QString text;
+
+    if(whiteMove)
+    {
+        if(numberOfMove ==30 || numberOfMove == 60){
+            ui->gameHistory_black->clear();
+            ui->gameHistory_white->clear();
+            ui->gameHistory_numberOfMove->clear();
+            matchHistory_black.clear();
+            matchHistory_white.clear();
+            matchHistory_numberOfMove.clear();
+
+            text ="\n";
+            matchHistory_black+=text;
+            ui->gameHistory_black->setText(matchHistory_black);
+            ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+
+            matchHistory_white+=text;
+            ui->gameHistory_white->setText(matchHistory_white);
+            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+
+            matchHistory_numberOfMove+=text;
+            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+        }
+
+        if(currentFigure == "poon"){                                                        //Setting information about last move on the board
+                text=QString("%1.\n").arg(numberOfMove);
+
+                matchHistory_numberOfMove +=text;
+                ui->gameHistory_numberOfMove->setText(text);
+                ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+                text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+                matchHistory_white+= text;
+                ui->gameHistory_white->setText(matchHistory_white);
+                ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+
+
+            }
+        else if(currentFigure == "Knight"){
+
+                text=QString("%1.\n").arg(numberOfMove);
+                matchHistory_numberOfMove+=text;
+                ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+                ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+                text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+                matchHistory_white+=text;
+                ui->gameHistory_white->setText(matchHistory_white);
+                ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+
+            }
+        else if(currentFigure == "King" && (coords=="short" || coords == "long")){
+
+            text=QString("%1.\n").arg(numberOfMove);
+
+            matchHistory_numberOfMove+=text;
+            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+            if(coords=="short") text = QString("O-O\n");
+            if(coords=="long") text = QString("O-O-O\n");
+
+            matchHistory_white+=text;
+            ui->gameHistory_white->setText(matchHistory_white);
+            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+        }
+        else
+        {
+            text=QString("%1.\n").arg(numberOfMove);
+            matchHistory_numberOfMove+=text;
+            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+            text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
+            matchHistory_white+=text;
+            ui->gameHistory_white->setText(matchHistory_white);
+            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+        }
+
+        ui->startGameButton->setText("Black move!");
+
+        disableAllButons();
+        enableBlackButtons();
+        whiteMove = false;
+        qDebug()<<2;
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
+    }
+    else if(!whiteMove)
+    {
+        if(currentFigure == "poon"){                                                        //Setting information about last move on the board
+               text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+               matchHistory_black+=text;
+               ui->gameHistory_black->setText(matchHistory_black);
+               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+            }
+        else if(currentFigure == "Knight"){
+               text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+               matchHistory_black+=text;
+               ui->gameHistory_black->setText(matchHistory_black);
+               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+            }
+        else if(currentFigure == "King" && (coords=="short" || coords == "long")){
+
+            if(coords=="short") text = "O-O\n";
+            if(coords=="long") text = "O-O-O\n";
+
+            matchHistory_black+=text;
+            ui->gameHistory_black->setText(matchHistory_black);
+            ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+        }
+        else
+            {
+               text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
+               matchHistory_black+=text;
+               ui->gameHistory_black->setText(matchHistory_black);
+               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+            }
+
+        ui->startGameButton->setText("White move!");
+        numberOfMove++;
+        disableAllButons();
+        enableWhiteButtons();
+        whiteMove = true;
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
+    }
 }
 
 

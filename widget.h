@@ -22,6 +22,11 @@ private:
     bool isItCheck;
     bool isItCheckMate;
 
+    //PIECES
+    QVector <QString> blueFigures;      //blue figures used for showing possbile moves and colision system
+    QVector <QPushButton*> whiteFiguresButtons;
+    QVector <QPushButton*> blackFiguresButtons;
+    void setFiguresPosition();
 
     bool whiteMove;       //checking whether its white or black time to play
     int numberOfMove;
@@ -35,10 +40,11 @@ private:
     QVector <QString> possibleMoves;
     QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
 
-
+    QString coords;
     void poonMovement(QPushButton *button);
     void poonColision(QPushButton *button);
     void poonTaking(QPushButton *button);
+
 
     void knightMovement(QPushButton *button);
 
@@ -51,55 +57,14 @@ private:
     bool ifExist;
     void cleanCoordinates();
     void cleanCoordinates_shorter(QPushButton *button);
-
-
-    //PIECES
-    QVector <QString> whiteFigures;
-    QVector <QString> blackFigures;
-    QVector <QString> blueFigures;      //blue figures used for showing possbile moves and colision system
-
-    QVector <QPushButton*> whiteFiguresButtons;
-    QVector <QPushButton*> blackFiguresButtons;
-    void renderFiguresPosition();
-
-    //white
-    QPushButton *whitePoon1;
-    QPushButton *whitePoon2;
-    QPushButton *whitePoon3;
-    QPushButton *whitePoon4;
-    QPushButton *whitePoon5;
-    QPushButton *whitePoon6;
-    QPushButton *whitePoon7;
-    QPushButton *whitePoon8;
-
-    QPushButton *whiteKnight1;
-    QPushButton *whiteKnight2;
-    QPushButton *whiteBishop1;
-    QPushButton *whiteBishop2;
-    QPushButton *whiteRook1;
-    QPushButton *whiteRook2;
-    QPushButton *whiteQueen;
-    QPushButton *whiteKing;
-
-    //black
-    QPushButton *blackPoon1;
-    QPushButton *blackPoon2;
-    QPushButton *blackPoon3;
-    QPushButton *blackPoon4;
-    QPushButton *blackPoon5;
-    QPushButton *blackPoon6;
-    QPushButton *blackPoon7;
-    QPushButton *blackPoon8;
-
-    QPushButton *blackKnight1;
-    QPushButton *blackKnight2;
-    QPushButton *blackBishop1;
-    QPushButton *blackBishop2;
-    QPushButton *blackRook1;
-    QPushButton *blackRook2;
-    QPushButton *blackQueen;
-    QPushButton *blackKing;
-
+    void goBack(QPushButton *button);
+    QPushButton *currentFigureButton;       //cleaners
+    QString currentFigureStyleSheet;
+    void move(QPushButton *button, QString figure);
+    void switchPlayers(QPushButton *button);
+    QString matchHistory_white;
+    QString matchHistory_black;
+    QString matchHistory_numberOfMove;
 
 
     //buttons-manipulations
@@ -114,8 +79,7 @@ private:
 
 
     void on_any_button_clicked(QPushButton *button);    //line 107
-    QPushButton *currentFigureButton;       //cleaners
-    QString currentFigureStyleSheet;
+
 private slots:
     void on_startGameButton_clicked();
 

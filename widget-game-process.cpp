@@ -10,7 +10,7 @@ Widget::Widget(QWidget *parent) :
 
     setStartingParameters();
     placePiecesOnBoard();
-    renderFiguresPosition();
+    setFiguresPosition();
 }
 
 void Widget::on_startGameButton_clicked(){
@@ -21,9 +21,10 @@ void Widget::on_startGameButton_clicked(){
 
 void Widget::on_any_button_clicked(QPushButton *button)
 {
+    if(whiteMove) qDebug()<<whiteFiguresButtons;
     if(!action)                     //1st pressing
     {
-        if(isItCheck){                      //if we have check on the board, pieces that cannot help are blocked
+        if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
             enableProtectingFigures();
         }
@@ -52,5 +53,62 @@ void Widget::on_any_button_clicked(QPushButton *button)
     {
        action=false;
        cleanCoordinates();
+
+       if(whiteMove)
+       {
+           if(currentFigure == "King")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   //move(button,"whiteKing");
+                  // isKingChecked();
+                  // switchPlayers("black",button);
+               }
+           }
+           else if(currentFigure == "poon")
+           {
+
+           }
+           else if (currentFigure == "Knight")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"whiteKnight");
+                   switchPlayers(button);
+               }
+           }
+       }
+       else if(!whiteMove)
+       {
+           if(currentFigure == "King")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   //move(button,"whiteKing");
+                  // isKingChecked();
+                  // switchPlayers("black",button);
+               }
+           }
+           else if(currentFigure == "poon")
+           {
+
+           }
+           else if (currentFigure == "Knight")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"blackKnight");
+                   switchPlayers(button);
+               }
+           }
+       }
     }
 }

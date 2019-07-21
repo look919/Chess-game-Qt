@@ -142,7 +142,6 @@ void Widget::knightMovement(QPushButton *button)
         down_further="6";
     }
 
-    QString coords;
     coords=left+down_further;
     if(coords[0]!='x' && coords[1]!='x'){
         //if pinned function
@@ -188,60 +187,17 @@ void Widget::knightMovement(QPushButton *button)
     {
         button->setEnabled(true);
         button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
-
+        colision(button,"white");
+        matchCoordinates();
     }
     else if(!whiteMove)
     {
         button->setEnabled(true);
         button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
+        colision(button,"black");
+        matchCoordinates();
     }
 
-    colision(button,"white");
-    matchCoordinates();
+
 }
 
-void Widget::renderFiguresPosition()
-{
-    if(whiteMove)
-    {
-        whiteFiguresButtons.clear();
-        //whiteFiguresButtons
-        whiteFiguresButtons.push_back(whitePoon1);
-        whiteFiguresButtons.push_back(whitePoon2);
-        whiteFiguresButtons.push_back(whitePoon3);
-        whiteFiguresButtons.push_back(whitePoon4);
-        whiteFiguresButtons.push_back(whitePoon5);
-        whiteFiguresButtons.push_back(whitePoon6);
-        whiteFiguresButtons.push_back(whitePoon7);
-        whiteFiguresButtons.push_back(whitePoon8);
-        whiteFiguresButtons.push_back(whiteKnight1);
-        whiteFiguresButtons.push_back(whiteKnight2);
-        whiteFiguresButtons.push_back(whiteBishop1);
-        whiteFiguresButtons.push_back(whiteBishop2);
-        whiteFiguresButtons.push_back(whiteRook1);
-        whiteFiguresButtons.push_back(whiteRook2);
-        whiteFiguresButtons.push_back(whiteQueen);
-        whiteFiguresButtons.push_back(whiteKing);
-    }
-    else if(!whiteMove)
-    {
-        blackFiguresButtons.clear();
-        //blackFiguresButtons
-        blackFiguresButtons.push_back(blackPoon1);
-        blackFiguresButtons.push_back(blackPoon2);
-        blackFiguresButtons.push_back(blackPoon3);
-        blackFiguresButtons.push_back(blackPoon4);
-        blackFiguresButtons.push_back(blackPoon5);
-        blackFiguresButtons.push_back(blackPoon6);
-        blackFiguresButtons.push_back(blackPoon7);
-        blackFiguresButtons.push_back(blackPoon8);
-        blackFiguresButtons.push_back(blackKnight1);
-        blackFiguresButtons.push_back(blackKnight2);
-        blackFiguresButtons.push_back(blackBishop1);
-        blackFiguresButtons.push_back(blackBishop2);
-        blackFiguresButtons.push_back(blackRook1);
-        blackFiguresButtons.push_back(blackRook2);
-        blackFiguresButtons.push_back(blackQueen);
-        blackFiguresButtons.push_back(blackKing);
-    }
-}

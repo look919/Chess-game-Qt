@@ -1,6 +1,68 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+void Widget::move(QPushButton *button, QString figure)
+{
+    if(button->font().bold() == true && currentFigureButton->font().bold() == true){                               //CASUAL MOVES
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == false && currentFigureButton->font().bold() == true){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == true && currentFigureButton->font().bold() == false){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == false && currentFigureButton->font().bold() == false){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }
+    if(whiteMove){
+        for(int i=0; i<whiteFiguresButtons.size();i++)                      //replacing position of piece in vector
+        {
+            if(currentFigureButton == whiteFiguresButtons.at(i))
+            {
+                whiteFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<blackFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(button== blackFiguresButtons.at(j))
+            {
+                blackFiguresButtons.remove(j);
+                break;
+            }
+        }
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0; i<blackFiguresButtons.size();i++)
+        {
+            if(currentFigureButton == blackFiguresButtons.at(i))
+            {
+                blackFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<whiteFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(button== whiteFiguresButtons.at(j))
+            {
+                whiteFiguresButtons.remove(j);
+                break;
+            }
+        }
+    }
+
+}
+
+
+
 void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces)
 {
     if(currentFigure=="Knight"|| currentFigure=="King"){
@@ -412,6 +474,23 @@ void Widget::cleanCoordinates_shorter(QPushButton *button)
         button->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
     }
 }
+
+void Widget::goBack(QPushButton *button)
+{
+    disableAllButons();
+    if(whiteMove) enableWhiteButtons();
+    else if(!whiteMove) enableBlackButtons();
+
+    possibleMoves.clear();
+    possibleMovesStorage.clear();
+    cleanCoordinates();
+    button->setStyleSheet(currentFigureStyleSheet);
+    currentFigureStyleSheet = "";
+}
+
+
+
+
 void Widget::disableAllButons()
 {
     ui->a1->setEnabled(false);
