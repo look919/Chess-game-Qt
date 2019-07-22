@@ -46,7 +46,10 @@ private:
     void poonMovementBlack(QPushButton *button);
     void poonColision(QPushButton *button);
     void poonTaking(QPushButton *button, QString color);
+    void enPassantMove(QPushButton *button, QString figure, QString cordNumber);
     bool enPassant;
+    QString enPassantLeft;
+    QString enPassantRight;
 
 
     void knightMovement(QPushButton *button);

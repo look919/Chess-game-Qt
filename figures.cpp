@@ -46,7 +46,6 @@ void Widget::poonMovementWhite(QPushButton *button)
         poonColision(button);
         poonTaking(button,"black");
 
-        qDebug()<<possibleMoves;
     } else if(button->objectName()[1]=="5"){            //EN PASSANT
         possibleMoves.push_back(button->objectName()[0]+"6");
         poonColision(button);
@@ -96,14 +95,14 @@ void Widget::poonMovementWhite(QPushButton *button)
         QString fullname_left = left+secondCord+"-"+left+thirdCord+enter;
         QString fullname_right = right+secondCord+"-"+right+thirdCord+enter;
 
-        QString enpassant_left=left+"6";
-        QString enpassant_right=right+"6";
+        enPassantLeft = left+"6";
+        enPassantRight = right+"6";
 
         if(text == fullname_right){
-            possibleMoves.push_back(enpassant_right);
+            possibleMoves.push_back(enPassantRight);
             enPassant = true;
-        }else if(text == fullname_left){
-            possibleMoves.push_back(enpassant_left);
+        } else if(text == fullname_left){
+            possibleMoves.push_back(enPassantLeft);
             enPassant = true;
         }
     } else if(button->objectName()[1]=="3" || button->objectName()[1]=="4" || button->objectName()[1]=="6"|| button->objectName()[1]=="7"){
@@ -185,14 +184,14 @@ void Widget::poonMovementBlack(QPushButton *button)
         QString fullname_left = left+secondCord+"-"+left+thirdCord+enter;
         QString fullname_right = right+secondCord+"-"+right+thirdCord+enter;
 
-        QString enpassant_left=left+"3";
-        QString enpassant_right=right+"3";
+        enPassantLeft = left+"3";
+        enPassantRight = right+"3";
 
         if(text == fullname_right){
-            possibleMoves.push_back(enpassant_right);
+            possibleMoves.push_back(enPassantRight);
             enPassant = true;
-        }else if(text == fullname_left){
-            possibleMoves.push_back(enpassant_left);
+        } else if(text == fullname_left){
+            possibleMoves.push_back(enPassantLeft);
             enPassant = true;
         }
     } else if(button->objectName()[1]=="3" || button->objectName()[1]=="5" || button->objectName()[1]=="6"|| button->objectName()[1]=="2"){
@@ -217,7 +216,6 @@ void Widget::poonColision(QPushButton *button)
         if(button->objectName()[1]=="2"){
             convertStringToButton(button->objectName()[0]+"3");
             checkIfThereIsAPiece(requiredButton);
-            qDebug()<<ifExist<<requiredButton;
              if(ifExist == true){
                  ifExist=false;
                  blockMove(button->objectName()[0]+"3");
@@ -226,7 +224,6 @@ void Widget::poonColision(QPushButton *button)
              else{
                  convertStringToButton(button->objectName()[0]+"4");
                  checkIfThereIsAPiece(requiredButton);
-                 qDebug()<<ifExist<<requiredButton;
                      if(ifExist == true){
                          ifExist = false;
                          blockMove(button->objectName()[0]+"4");

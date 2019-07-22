@@ -8,7 +8,7 @@ void Widget::setStartingParameters()
     action = false;
     isItCheck = false;
     isItCheckMate = false;
-    ui->startGameButton->setEnabled(true);
+    enPassant = false;
 
 
 
@@ -168,7 +168,7 @@ void Widget::switchPlayers(QPushButton *button)
                 text=QString("%1.\n").arg(numberOfMove);
 
                 matchHistory_numberOfMove +=text;
-                ui->gameHistory_numberOfMove->setText(text);
+                ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
                 ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
 
                 text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());

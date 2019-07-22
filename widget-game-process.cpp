@@ -24,6 +24,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
 {
     if(!action)                     //1st pressing
     {
+        if(numberOfMove == 7) qDebug()<<whiteFiguresButtons<<blackFiguresButtons;
         if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
             enableProtectingFigures();
@@ -72,8 +73,10 @@ void Widget::on_any_button_clicked(QPushButton *button)
                if(currentFigureButton == button){
                     goBack(button);
                }
-               else if(enPassant){
-                   //todo
+               else if(enPassant && (button->objectName() == enPassantLeft || button->objectName()==enPassantRight)){
+                    enPassant = false;
+                    enPassantMove(button,"whitePoon","5");
+                    switchPlayers(button);
                }
                else if (button->objectName()[1]=="8") {
                    //todo
@@ -111,6 +114,13 @@ void Widget::on_any_button_clicked(QPushButton *button)
            {
                if(currentFigureButton == button){
                     goBack(button);
+               }else if(enPassant && (button->objectName() == enPassantLeft || button->objectName()==enPassantRight)){
+                   enPassant = false;
+                   enPassantMove(button,"blackPoon","4");
+                   switchPlayers(button);
+              }
+               else if (button->objectName()[1]=="1") {
+                  //todo
                }
                else {
                    move(button,"blackPoon");

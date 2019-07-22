@@ -62,6 +62,77 @@ void Widget::move(QPushButton *button, QString figure)
 
 }
 
+void Widget::enPassantMove(QPushButton *button, QString figure, QString cordNumber)
+{
+    if(button->font().bold() == true && currentFigureButton->font().bold() == true){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        convertStringToButton(button->objectName()[0]+cordNumber);
+        requiredButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == false && currentFigureButton->font().bold() == true){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        convertStringToButton(button->objectName()[0]+cordNumber);
+        requiredButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == true && currentFigureButton->font().bold() == false){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        convertStringToButton(button->objectName()[0]+cordNumber);
+        requiredButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+    else if(button->font().bold() == false && currentFigureButton->font().bold() == false){
+        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        convertStringToButton(button->objectName()[0]+cordNumber);
+        requiredButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+
+
+    if(whiteMove){
+        for(int i=0; i<whiteFiguresButtons.size();i++)                      //replacing position of piece in vector
+        {
+            if(currentFigureButton == whiteFiguresButtons.at(i))
+            {
+                whiteFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<blackFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(requiredButton == blackFiguresButtons.at(j))
+            {
+                blackFiguresButtons.replace(j,ui->empty);                   //using replacing instead of deleting to avoid index changes
+                break;
+            }
+        }
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0; i<blackFiguresButtons.size();i++)
+        {
+            if(currentFigureButton == blackFiguresButtons.at(i))
+            {
+                blackFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<whiteFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(requiredButton == whiteFiguresButtons.at(j))
+            {
+                whiteFiguresButtons.replace(j,ui->empty);                              //using replacing instead of deleting to avoid index changes
+                break;
+            }
+        }
+    }
+
+    enPassantLeft = "";
+    enPassantRight = "";
+}
 void Widget::blockMove(QString keyword)
 {
     for(int i=0;i<possibleMoves.size();i++){
