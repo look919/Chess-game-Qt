@@ -24,7 +24,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
 {
     if(!action)                     //1st pressing
     {
-        if(numberOfMove == 7) qDebug()<<whiteFiguresButtons<<blackFiguresButtons;
+        if(numberOfMove == 4) qDebug()<<whiteFiguresButtons.at(8);
         if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
             enableProtectingFigures();
@@ -46,7 +46,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
         } else if(currentFigure == "Bishop"){
             bishopMovement(button);
         } else if(currentFigure == "Rook"){
-           // rookMovement(button);
+            rookMovement(button);
         } else if(currentFigure == "Queen"){
            // queenMovement(button);
         }
@@ -107,6 +107,16 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
                }
            }
+           else if (currentFigure == "Rook")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"whiteRook");
+                   switchPlayers(button);
+               }
+           }
        }
        else if(!whiteMove)
        {
@@ -145,6 +155,26 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
                else {
                    move(button,"blackKnight");
+                   switchPlayers(button);
+               }
+           }
+           else if (currentFigure == "Bishop")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"blackBishop");
+                   switchPlayers(button);
+               }
+           }
+           else if (currentFigure == "Rook")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"blackRook");
                    switchPlayers(button);
                }
            }
