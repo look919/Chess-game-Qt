@@ -30,13 +30,16 @@ SOURCES += \
     buttons-manipulations.cpp \
     others.cpp \
     main.cpp \
-    figures.cpp
+    figures.cpp \
+    promotepawn.cpp
 
 HEADERS += \
-        widget.h
+        widget.h \
+    promotepawn.h
 
 FORMS += \
-        widget.ui
+        widget.ui \
+    promotepawn.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

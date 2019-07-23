@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include "promotepawn.h"
 #include <QPushButton>
 #include <QList>
 #include <QDebug>
@@ -46,6 +47,7 @@ private:
     void poonMovementBlack(QPushButton *button);
     void poonColision(QPushButton *button);
     void poonTaking(QPushButton *button, QString color);
+    void poonPromotion(QPushButton *button, QString figureColor);
     void enPassantMove(QPushButton *button, QString figure, QString cordNumber);
     bool enPassant;
     QString enPassantLeft;
@@ -53,6 +55,10 @@ private:
 
 
     void knightMovement(QPushButton *button);
+    void bishopMovement(QPushButton *button);
+    void rookMovement(QPushButton *button);
+    void queenMovement(QPushButton *button);
+    void kingMovement(QPushButton *button);
 
 
     //buttons-manipulations

@@ -111,7 +111,7 @@ void Widget::poonMovementWhite(QPushButton *button)
         if(button->objectName()[1]=="3") secondChar='4';
         else if(button->objectName()[1]=="4") secondChar='5';
         else if(button->objectName()[1]=="6") secondChar='7';
-        else if(button->objectName()[1]=="6") secondChar='8';
+        else if(button->objectName()[1]=="7") secondChar='8';
 
         possibleMoves.push_back(button->objectName()[0]+secondChar);
         poonColision(button);
@@ -194,7 +194,7 @@ void Widget::poonMovementBlack(QPushButton *button)
             possibleMoves.push_back(enPassantLeft);
             enPassant = true;
         }
-    } else if(button->objectName()[1]=="3" || button->objectName()[1]=="5" || button->objectName()[1]=="6"|| button->objectName()[1]=="2"){
+    } else if(button->objectName()[1]=="6" || button->objectName()[1]=="5" || button->objectName()[1]=="3"|| button->objectName()[1]=="2"){
 
         QChar secondChar;
         if(button->objectName()[1]=="6") secondChar='5';
@@ -361,6 +361,41 @@ void Widget::poonTaking(QPushButton *button, QString color)
         }
     }
 }
+void Widget::poonPromotion(QPushButton *button, QString figureColor)
+{
+    PromotePawn promotion(this);
+    if(whiteMove) promotion.color="white";
+    else promotion.color="black";
+    promotion.setModal(true);
+    promotion.exec();
+
+    if(promotion.choosenFigure=="Queen" && button->font().bold() == true ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Queen" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == true ){
+        button->setStyleSheet(("background-image: url(:/img/"+figureColor+"Rook-greenField.png);"));
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Rook-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == true ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == true ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+    }
+
+}
 
 void Widget::knightMovement(QPushButton *button)
 {
@@ -513,6 +548,240 @@ void Widget::knightMovement(QPushButton *button)
         matchCoordinates();
     }
 
+
+}
+
+void Widget::bishopMovement(QPushButton *button)
+{
+    disableAllButons();
+
+    char up;
+    char down;
+    char left;
+    char right;
+
+    if(button->objectName()[0]=='a'){
+        left='x';
+        right='b';
+    } else if(button->objectName()[0]=='b'){
+        left='a';
+        right='c';
+    } else if(button->objectName()[0]=='c'){
+        left='b';
+        right='d';
+    } else if(button->objectName()[0]=='d'){
+        left='c';
+        right='e';
+    } else if(button->objectName()[0]=='e'){
+        left='d';
+        right='f';
+    } else if(button->objectName()[0]=='f'){
+        left='e';
+        right='g';
+    } else if(button->objectName()[0]=='g'){
+        left='f';
+        right='h';
+    } else if(button->objectName()[0]=='h'){
+        left='g';
+        right='x';
+    } else{
+        left='x';
+        right='x';
+    }
+
+    if(button->objectName()[1]=='1'){
+        down='x';
+        up='2';
+    } else if(button->objectName()[1]=='2'){
+        down='1';
+        up='3';
+    } else if(button->objectName()[1]=='3'){
+        down='2';
+        up='4';
+    } else if(button->objectName()[1]=='4'){
+        down='3';
+        up='5';
+    } else if(button->objectName()[1]=='5'){
+        down='4';
+        up='6';
+    } else if(button->objectName()[1]=='6'){
+        down='5';
+        up='7';
+    } else if(button->objectName()[1]=='7'){
+        down='6';
+        up='8';
+    } else if(button->objectName()[1]=='8'){
+        down='7';
+        up='x';
+    } else{
+        down='x';
+        up='x';
+    }
+
+    QString firstCord;
+    QString secondCord;
+    char storageUp=up;
+    char storageDown=down;
+    char storageLeft=left;
+    char storageRight=right;
+
+    if(whiteMove)
+    {
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+
+        if(up!='x' && right!='x'){
+            for(char i=right;i<='h';i++){
+                firstCord=i;
+                secondCord=up;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                up++;
+                coords="right";
+                if(up=='9') break;
+            }
+            colision(button,"white",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+        if(down!='x' && right!='x'){
+            for(char i=right;i<='h';i++){
+                firstCord=i;
+                secondCord=down;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                down--;
+                coords="right";
+                if(down=='0') break;
+            }
+            colision(button,"white",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+       if(up!='x' && left!='x'){
+            for(char i=left;i>='a';i--){
+                firstCord=i;
+                secondCord=up;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                up++;
+                coords="left";
+                if(up=='9') break;
+            }
+            colision(button,"white",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+
+        if(down!='x' && left!='x'){
+            for(char i=left;i>='a';i--){
+                firstCord=i;
+                secondCord=down;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                down--;
+                coords="left";
+                if(down=='0') break;
+            }
+            colision(button,"white",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+
+        for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
+            possibleMoves.push_back(possibleMovesStorage.at(i));
+        }
+    }
+    else if(!whiteMove)
+    {
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
+
+        if(up!='x' && right!='x'){
+            for(char i=right;i<='h';i++){
+                firstCord=i;
+                secondCord=up;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                up++;
+                coords="right";
+                if(up=='9') break;
+            }
+            colision(button,"black",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+        if(down!='x' && right!='x'){
+            for(char i=right;i<='h';i++){
+                firstCord=i;
+                secondCord=down;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                down--;
+                coords="right";
+                if(down=='0') break;
+            }
+            colision(button,"black",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+       if(up!='x' && left!='x'){
+            for(char i=left;i>='a';i--){
+                firstCord=i;
+                secondCord=up;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                up++;
+                coords="left";
+                if(up=='9') break;
+            }
+            colision(button,"black",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+
+        if(down!='x' && left!='x'){
+            for(char i=left;i>='a';i--){
+                firstCord=i;
+                secondCord=down;
+                coords=firstCord+secondCord;
+                possibleMoves.push_back(coords);
+                down--;
+                coords="left";
+                if(down=='0') break;
+            }
+            colision(button,"black",true);
+            up=storageUp;
+            down=storageDown;
+            left=storageLeft;
+            right=storageRight;
+        }
+
+        for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
+            possibleMoves.push_back(possibleMovesStorage.at(i));
+        }
+    }
+
+    matchCoordinates();
+    possibleMovesStorage.clear();
+}
+
+void Widget::rookMovement(QPushButton *button)
+{
 
 }
 

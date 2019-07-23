@@ -44,7 +44,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
         } else if(currentFigure == "Knight"){
             knightMovement(button);
         } else if(currentFigure == "Bishop"){
-           // bishopMovement(button);
+            bishopMovement(button);
         } else if(currentFigure == "Rook"){
            // rookMovement(button);
         } else if(currentFigure == "Queen"){
@@ -71,15 +71,16 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if(currentFigure == "poon")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else if(enPassant && (button->objectName() == enPassantLeft || button->objectName()==enPassantRight)){
-                    enPassant = false;
-                    enPassantMove(button,"whitePoon","5");
-                    switchPlayers(button);
+                   enPassant = false;
+                   enPassantMove(button,"whitePoon","5");
+                   switchPlayers(button);
                }
                else if (button->objectName()[1]=="8") {
-                   //todo
+                   poonPromotion(button,"white");//to repair
+                   switchPlayers(button);
                }
                else{
                    move(button,"whitePoon");
@@ -93,6 +94,16 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
                else {
                    move(button,"whiteKnight");
+                   switchPlayers(button);
+               }
+           }
+           else if (currentFigure == "Bishop")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"whiteBishop");
                    switchPlayers(button);
                }
            }

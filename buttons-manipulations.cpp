@@ -158,10 +158,65 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
         }
         button->setEnabled(true);
     }
-    else if(currentFigure=="bishop" || currentFigure=="rook"){
+    else if(currentFigure=="Bishop"|| currentFigure=="Rook" || currentFigure=="Queen")
+    {
+        bool blocking=false;
 
+        for(int i=0; i<possibleMoves.size();i++){
+            if(blocking==false){
+                convertStringToButton(possibleMoves.at(i));
+                checkIfThereIsAPiece(requiredButton,color);
+
+                if(ifExist==true){
+                    possibleMoves.remove(i);
+                    blocking=true;
+                    i-=1;
+                    ifExist=false;
+                }else{
+                    if(colisionWithOpponentPieces==true){
+                        if(color=="white"){
+
+                            checkIfThereIsAPiece(requiredButton,"black");                      //WHITE
+                            if(ifExist==true){
+                                blocking=true;
+                                ifExist=false;
+                            }
+                        } else {
+                            checkIfThereIsAPiece(requiredButton,"white");                      //BLACK
+
+                            if(ifExist==true){
+                                blocking=true;
+                                ifExist=false;
+                            }
+                        }
+                    }
+               }
+
+            } else{
+
+                if(coords=="up" || coords == "down"){
+                        while(possibleMoves.at(i)[1]!='1' && possibleMoves.at(i)[1]!='8'){
+                            possibleMoves.remove(i);
+                        }
+                        if(possibleMoves.at(i)[1]!='1' || possibleMoves.at(i)[1]!='8') possibleMoves.remove(i);
+                        blocking=false;
+                }
+                else if(coords=="left" || coords == "right"){
+                    while(possibleMoves.at(i)[0]!='a' && possibleMoves.at(i)[0]!='h'){
+                        if(i>=possibleMoves.size()-1) break;                                            //VERY IMPORTANT STUFF IN BISHOP MOVEMENT
+                            possibleMoves.remove(i);
+                        }
+                        if(possibleMoves.at(i)[0]!='a' || possibleMoves.at(i)[0]!='h') possibleMoves.remove(i);
+                        blocking=false;
+                    }
+
+            }
+        }
+        for(int i=0; i<possibleMoves.size();i++){
+            possibleMovesStorage.push_back(possibleMoves.at(i));           //coping valid moves to memory
+        }
+        possibleMoves.clear();
     }
-    //NEED to copy the rest for bishop&rook
 }
 void Widget::checkIfThereIsAPiece(QPushButton *button, QString color)
 {
