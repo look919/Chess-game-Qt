@@ -6,7 +6,13 @@ void Widget::getFigureName(QPushButton *button)
     if(whiteMove){                                          //WHITE
         for(int i=0; i<whiteFiguresButtons.size();i++){
             if(button == whiteFiguresButtons.at(i)){
-                if(i<=7) currentFigure = "poon";            //getting info which piece is choosen
+                if(i<=7) {
+                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
+                    else if(button->text()=="R") currentFigure = "Rook";
+                    else if(button->text()=="B") currentFigure = "Bishop";
+                    else if(button->text()=="N") currentFigure = "Knight";
+                    else currentFigure ="poon"; //to repiar
+                }
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
@@ -19,7 +25,13 @@ void Widget::getFigureName(QPushButton *button)
     else{                                                   //BLACK
         for(int i=0; i<blackFiguresButtons.size();i++){
             if(button == blackFiguresButtons.at(i)){
-                if(i<=7) currentFigure = "poon";             //getting info which piece is choosen
+                if(i<=7) {
+                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
+                    else if(button->text()=="R") currentFigure = "Rook";
+                    else if(button->text()=="B") currentFigure = "Bishop";
+                    else if(button->text()=="N") currentFigure = "Knight";
+                    else currentFigure ="poon";
+                }
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
@@ -361,41 +373,7 @@ void Widget::poonTaking(QPushButton *button, QString color)
         }
     }
 }
-void Widget::poonPromotion(QPushButton *button, QString figureColor)
-{
-    PromotePawn promotion(this);
-    if(whiteMove) promotion.color="white";
-    else promotion.color="black";
-    promotion.setModal(true);
-    promotion.exec();
 
-    if(promotion.choosenFigure=="Queen" && button->font().bold() == true ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Queen" && button->font().bold() == false ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == true ){
-        button->setStyleSheet(("background-image: url(:/img/"+figureColor+"Rook-greenField.png);"));
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == false ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Rook-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == true ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == false ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == true ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == false ){
-        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }
-
-}
 
 void Widget::knightMovement(QPushButton *button)
 {

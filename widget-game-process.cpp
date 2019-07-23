@@ -79,7 +79,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
                }
                else if (button->objectName()[1]=="8") {
-                   poonPromotion(button,"white");//to repair
+                   poonPromotion(button,"white");
                    switchPlayers(button);
                }
                else{
@@ -151,7 +151,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
               }
                else if (button->objectName()[1]=="1") {
-                  //todo
+                   poonPromotion(button,"black");
+                   switchPlayers(button);
                }
                else {
                    move(button,"blackPoon");

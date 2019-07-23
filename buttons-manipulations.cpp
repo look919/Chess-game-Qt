@@ -133,6 +133,128 @@ void Widget::enPassantMove(QPushButton *button, QString figure, QString cordNumb
     enPassantLeft = "";
     enPassantRight = "";
 }
+
+void Widget::poonPromotion(QPushButton *button, QString figureColor)
+{
+    PromotePawn promotion(this);
+    if(whiteMove) promotion.color="white";
+    else promotion.color="black";
+    promotion.setModal(true);
+    promotion.exec();
+
+    if(promotion.choosenFigure=="Queen" && button->font().bold() == true && currentFigureButton->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("Q");
+    }else if(promotion.choosenFigure=="Queen" && button->font().bold() == true){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("Q");
+    }
+    else if(promotion.choosenFigure=="Queen" && button->font().bold() == false && currentFigureButton->font().bold()==false){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("Q");
+    }else if(promotion.choosenFigure=="Queen" && button->font().bold() == false){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Queen-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("Q");
+    }
+    else if(promotion.choosenFigure=="Rook" && button->font().bold() == true && currentFigureButton->font().bold()==true){
+        button->setStyleSheet(("background-image: url(:/img/"+figureColor+"Rook-greenField.png);"));
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("R");
+    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == true ){
+        button->setStyleSheet(("background-image: url(:/img/"+figureColor+"Rook-greenField.png);"));
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("R");
+    }
+    else if(promotion.choosenFigure=="Rook" && button->font().bold() == false && currentFigureButton->font().bold()==false){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Rook-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("R");
+    }else if(promotion.choosenFigure=="Rook" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Rook-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("R");
+    }
+    else if(promotion.choosenFigure=="Bishop" && button->font().bold() == true && currentFigureButton->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("B");
+    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == true ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("B");
+    }
+    else if(promotion.choosenFigure=="Bishop" && button->font().bold() == false && currentFigureButton->font().bold()==false){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("B");
+    }else if(promotion.choosenFigure=="Bishop" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Bishop-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("B");
+    }
+    else if(promotion.choosenFigure=="Knight" && button->font().bold() == true && currentFigureButton->font().bold()==true){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("N");
+    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == true ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-greenField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("N");
+    }
+    else if(promotion.choosenFigure=="Knight" && button->font().bold() == false && currentFigureButton->font().bold()==false){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+        button->setText("N");
+    }else if(promotion.choosenFigure=="Knight" && button->font().bold() == false ){
+        button->setStyleSheet("background-image: url(:/img/"+figureColor+"Knight-whiteField.png);");
+        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+        button->setText("N");
+    }
+
+    if(whiteMove){
+        for(int i=0; i<whiteFiguresButtons.size();i++)                      //replacing position of piece in vector
+        {
+            if(currentFigureButton == whiteFiguresButtons.at(i))
+            {
+                whiteFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<blackFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(requiredButton == blackFiguresButtons.at(j))
+            {
+                blackFiguresButtons.replace(j,ui->empty);                   //using replacing instead of deleting to avoid index changes
+                break;
+            }
+        }
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0; i<blackFiguresButtons.size();i++)
+        {
+            if(currentFigureButton == blackFiguresButtons.at(i))
+            {
+                blackFiguresButtons.replace(i,button);
+                break;
+            }
+        }
+
+        for(int j=0; j<whiteFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
+        {
+            if(requiredButton == whiteFiguresButtons.at(j))
+            {
+                whiteFiguresButtons.replace(j,ui->empty);                              //using replacing instead of deleting to avoid index changes
+                break;
+            }
+        }
+    }
+}
 void Widget::blockMove(QString keyword)
 {
     for(int i=0;i<possibleMoves.size();i++){
