@@ -24,7 +24,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
 {
     if(!action)                     //1st pressing
     {
-        if(numberOfMove == 4) qDebug()<<whiteFiguresButtons.at(8);
+        if(numberOfMove == 4) qDebug()<<whiteFiguresButtons;
         if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
             enableProtectingFigures();
@@ -48,7 +48,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
         } else if(currentFigure == "Rook"){
             rookMovement(button);
         } else if(currentFigure == "Queen"){
-           // queenMovement(button);
+            queenMovement(button);
         }
     }
     else if(action)                             //2nd pressing
@@ -117,6 +117,16 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
                }
            }
+           else if (currentFigure == "Queen")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"whiteQueen");
+                   switchPlayers(button);
+               }
+           }
        }
        else if(!whiteMove)
        {
@@ -175,6 +185,16 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
                else {
                    move(button,"blackRook");
+                   switchPlayers(button);
+               }
+           }
+           else if (currentFigure == "Queen")
+           {
+               if(currentFigureButton == button){
+                    goBack(button);
+               }
+               else {
+                   move(button,"blackQueen");
                    switchPlayers(button);
                }
            }

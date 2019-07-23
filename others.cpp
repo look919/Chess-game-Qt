@@ -142,7 +142,7 @@ void Widget::switchPlayers(QPushButton *button)
 {
     if(whiteMove)
     {
-        if(numberOfMove ==30 || numberOfMove == 60){
+        if(numberOfMove==1 || numberOfMove ==31 || numberOfMove == 61){
             ui->gameHistory_black->clear();
             ui->gameHistory_white->clear();
             ui->gameHistory_numberOfMove->clear();

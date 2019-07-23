@@ -940,3 +940,37 @@ void Widget::rookMovement(QPushButton *button)
     possibleMovesStorage.clear();
 }
 
+void Widget::queenMovement(QPushButton *button)
+{
+    disableAllButons();
+    QVector <QString> connectMoves;
+
+    bishopMovement(button);
+    for(int i=0;i<possibleMoves.size();i++){
+        connectMoves.push_back(possibleMoves.at(i));
+    }
+    possibleMoves.clear();
+    rookMovement(button);
+
+    for(int i=0;i<connectMoves.size();i++){
+        possibleMoves.push_back(connectMoves.at(i));
+    }
+
+    if(whiteMove)
+    {
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+    }
+    else if(!whiteMove)
+    {
+        button->setEnabled(true);
+        button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+    }
+
+    matchCoordinates();
+    possibleMovesStorage.clear();
+}
+void Widget::kingMovement(QPushButton *button)
+{
+
+}
