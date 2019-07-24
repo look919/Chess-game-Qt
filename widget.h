@@ -35,7 +35,7 @@ private:
 
 
     //figures.cpp
-    void getFigureName(QPushButton *button);
+    void getFigureName(QPushButton *button, bool enemyMoves = false);
     QString currentFigure;
 
     QVector <QString> possibleMoves;
@@ -43,8 +43,8 @@ private:
 
 
     QString coords;
-    void poonMovementWhite(QPushButton *button);    //seperating those two functions to make code cleaner
-    void poonMovementBlack(QPushButton *button);
+    void poonMovementWhite(QPushButton *button, bool enemyMoves=false);    //seperating those two functions to make code cleaner
+    void poonMovementBlack(QPushButton *button, bool enemyMoves=false);
     void poonColision(QPushButton *button);
     void poonTaking(QPushButton *button, QString color);
     void poonPromotion(QPushButton *button, QString figureColor);
@@ -54,11 +54,11 @@ private:
     QString enPassantRight;
 
 
-    void knightMovement(QPushButton *button);
-    void bishopMovement(QPushButton *button);
-    void rookMovement(QPushButton *button);
-    void queenMovement(QPushButton *button);
-    void kingMovement(QPushButton *button);
+    void knightMovement(QPushButton *button, bool enemyMoves=false);
+    void bishopMovement(QPushButton *button, bool enemyMoves=false);
+    void rookMovement(QPushButton *button, bool enemyMoves=false);
+    void queenMovement(QPushButton *button, bool enemyMoves=false);
+    void kingMovement(QPushButton *button, bool enemyMoves=false);
 
 
     //buttons-manipulations
@@ -73,6 +73,8 @@ private:
     QPushButton *currentFigureButton;       //cleaners
     QString currentFigureStyleSheet;
     void move(QPushButton *button, QString figure);
+    void allPossibleMovesFromOpponentSide();        //!!!!
+    QVector <QString> opponentPossibleMoves;
     void blockMove(QString keyword);
     void switchPlayers(QPushButton *button);
     QString matchHistory_white;

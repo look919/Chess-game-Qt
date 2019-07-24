@@ -25,6 +25,11 @@ void Widget::move(QPushButton *button, QString figure)
         {
             if(currentFigureButton == whiteFiguresButtons.at(i))
             {
+                if(currentFigureButton->text()!=""){
+                    QString txt=currentFigureButton->text();
+                    button->setText(txt);
+                    currentFigureButton->text().clear();
+                }
                 whiteFiguresButtons.replace(i,button);
                 break;
             }
@@ -45,6 +50,11 @@ void Widget::move(QPushButton *button, QString figure)
         {
             if(currentFigureButton == blackFiguresButtons.at(i))
             {
+                if(currentFigureButton->text()!=""){
+                    QString txt=currentFigureButton->text();
+                    button->setText(txt);
+                    currentFigureButton->text().clear();
+                }
                 blackFiguresButtons.replace(i,button);
                 break;
             }
@@ -60,6 +70,36 @@ void Widget::move(QPushButton *button, QString figure)
         }
     }
 
+}
+
+void Widget::allPossibleMovesFromOpponentSide()
+{
+    if(whiteMove)
+    {
+        for(int i=0; i<blackFiguresButtons.size();i++){
+            if(blackFiguresButtons.at(i)->objectName()!="empty"){
+                getFigureName(blackFiguresButtons.at(i),true);
+                if(currentFigure=="King"){
+                   kingMovement(blackFiguresButtons.at(i), true);
+                } else if(currentFigure == "poon"){
+                    poonMovementWhite(blackFiguresButtons.at(i), true);
+                } else if(currentFigure == "Knight"){
+                    knightMovement(blackFiguresButtons.at(i), true);
+                } else if(currentFigure == "Bishop"){
+                    bishopMovement(blackFiguresButtons.at(i), true);
+                } else if(currentFigure == "Rook"){
+                    rookMovement(blackFiguresButtons.at(i), true);
+                } else if(currentFigure == "Queen"){
+                    queenMovement(blackFiguresButtons.at(i), true);
+                }
+            }
+        }
+        qDebug()<<opponentPossibleMoves.size()<<opponentPossibleMoves;
+    }
+    if(!whiteMove)
+    {
+
+    }
 }
 
 void Widget::enPassantMove(QPushButton *button, QString figure, QString cordNumber)

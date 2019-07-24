@@ -1,9 +1,9 @@
 #include "widget.h"
 #include "ui_widget.h"
 
-void Widget::getFigureName(QPushButton *button)
+void Widget::getFigureName(QPushButton *button, bool enemyMoves)
 {
-    if(whiteMove){                                          //WHITE
+    if(whiteMove && enemyMoves == false){                                          //WHITE
         for(int i=0; i<whiteFiguresButtons.size();i++){
             if(button == whiteFiguresButtons.at(i)){
                 if(i<=7) {
@@ -22,7 +22,7 @@ void Widget::getFigureName(QPushButton *button)
             }
         }
     }
-    else{                                                   //BLACK
+    else if(!whiteMove && enemyMoves == false){                                                   //BLACK
         for(int i=0; i<blackFiguresButtons.size();i++){
             if(button == blackFiguresButtons.at(i)){
                 if(i<=7) {
@@ -41,15 +41,54 @@ void Widget::getFigureName(QPushButton *button)
             }
         }
     }
+    else if(whiteMove && enemyMoves == true){                                                   //BLACK
+        for(int i=0; i<blackFiguresButtons.size();i++){
+            if(button == blackFiguresButtons.at(i)){
+                if(i<=7) {
+                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
+                    else if(button->text()=="R") currentFigure = "Rook";
+                    else if(button->text()=="B") currentFigure = "Bishop";
+                    else if(button->text()=="N") currentFigure = "Knight";
+                    else currentFigure ="poon";
+                }
+                else if(i<=9) currentFigure = "Knight";
+                else if(i<=11) currentFigure = "Bishop";
+                else if(i<=13) currentFigure = "Rook";
+                else if(i<=14) currentFigure = "Queen";
+                else if(i<=15) currentFigure = "King";
+                break;
+            }
+        }
+    }
+    else if(!whiteMove && enemyMoves == true){                                          //WHITE
+        for(int i=0; i<whiteFiguresButtons.size();i++){
+            if(button == whiteFiguresButtons.at(i)){
+                if(i<=7) {
+                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
+                    else if(button->text()=="R") currentFigure = "Rook";
+                    else if(button->text()=="B") currentFigure = "Bishop";
+                    else if(button->text()=="N") currentFigure = "Knight";
+                    else currentFigure ="poon"; //to repiar
+                }
+                else if(i<=9) currentFigure = "Knight";
+                else if(i<=11) currentFigure = "Bishop";
+                else if(i<=13) currentFigure = "Rook";
+                else if(i<=14) currentFigure = "Queen";
+                else if(i<=15) currentFigure = "King";
+                break;
+            }
+        }
+    }
 }
 
-void Widget::poonMovementWhite(QPushButton *button)
+void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-
-    button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
-    button->setEnabled(true);
+    if(enemyMoves==false){
+        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
+        button->setEnabled(true);
+    }
 
     if(button->objectName()[1]=="2"){                   //FIRST MOVE
         possibleMoves.push_back(button->objectName()[0]+"3");
@@ -129,17 +168,24 @@ void Widget::poonMovementWhite(QPushButton *button)
         poonColision(button);
         poonTaking(button,"black");
     }
-
-    matchCoordinates();
+    if(enemyMoves==false){
+       matchCoordinates();
+    }
+    else if(enemyMoves==true){
+        for(int i=0;i<possibleMoves.size();i++){
+            opponentPossibleMoves.push_back(possibleMoves.at(i));
+        }
+    }
 }
 
-void Widget::poonMovementBlack(QPushButton *button)
+void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-
-    button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
-    button->setEnabled(true);
+    if(enemyMoves==false){
+        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
+        button->setEnabled(true);
+    }
 
     if(button->objectName()[1]=="7"){                   //FIRST MOVE
         possibleMoves.push_back(button->objectName()[0]+"6");
@@ -218,7 +264,15 @@ void Widget::poonMovementBlack(QPushButton *button)
         poonColision(button);
         poonTaking(button,"white");
     }
-    matchCoordinates();
+
+    if(enemyMoves==false){
+       matchCoordinates();
+    }
+    else if(enemyMoves==true){
+        for(int i=0;i<possibleMoves.size();i++){
+            opponentPossibleMoves.push_back(possibleMoves.at(i));
+        }
+    }
 }
 
 void Widget::poonColision(QPushButton *button)
@@ -375,7 +429,7 @@ void Widget::poonTaking(QPushButton *button, QString color)
 }
 
 
-void Widget::knightMovement(QPushButton *button)
+void Widget::knightMovement(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();
 
@@ -513,23 +567,37 @@ void Widget::knightMovement(QPushButton *button)
 
     if(whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
         colision(button,"white");
-        matchCoordinates();
+
+        if(enemyMoves==false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
+            matchCoordinates();
+        }
+        else if (enemyMoves == true) {
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
     }
     else if(!whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
         colision(button,"black");
-        matchCoordinates();
+
+        if(enemyMoves==false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
+            matchCoordinates();
+        }
+        else if (enemyMoves == true) {
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
     }
 
-
 }
-
-void Widget::bishopMovement(QPushButton *button)
+void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();
 
@@ -605,9 +673,6 @@ void Widget::bishopMovement(QPushButton *button)
 
     if(whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
-
         if(up!='x' && right!='x'){
             for(char i=right;i<='h';i++){
                 firstCord=i;
@@ -677,12 +742,22 @@ void Widget::bishopMovement(QPushButton *button)
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
             possibleMoves.push_back(possibleMovesStorage.at(i));
         }
+
+        if(enemyMoves == false) {
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
+
     }
     else if(!whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
-
         if(up!='x' && right!='x'){
             for(char i=right;i<='h';i++){
                 firstCord=i;
@@ -752,13 +827,22 @@ void Widget::bishopMovement(QPushButton *button)
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
             possibleMoves.push_back(possibleMovesStorage.at(i));
         }
+
+        if(enemyMoves == false) {
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
     }
 
-    matchCoordinates();
-    possibleMovesStorage.clear();
 }
-
-void Widget::rookMovement(QPushButton *button)
+void Widget::rookMovement(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();
 
@@ -828,11 +912,8 @@ void Widget::rookMovement(QPushButton *button)
         up='x';
     }
 
-
     if(whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/whiteRook-blueField.png);");
 
         if(up!='x'){
             for(char i=up;i<='8';i++){
@@ -870,11 +951,22 @@ void Widget::rookMovement(QPushButton *button)
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
             possibleMoves.push_back(possibleMovesStorage.at(i));
         }
-    }
+
+        if(enemyMoves == false) {
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/whiteRook-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
+
+    }    
     else if(!whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/blackRook-blueField.png);");
 
         if(up!='x'){
             for(char i=up;i<='8';i++){
@@ -912,13 +1004,21 @@ void Widget::rookMovement(QPushButton *button)
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
             possibleMoves.push_back(possibleMovesStorage.at(i));
         }
+
+        if(enemyMoves == false) {
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/blackRook-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
     }
-
-    matchCoordinates();
-    possibleMovesStorage.clear();
 }
-
-void Widget::queenMovement(QPushButton *button)
+void Widget::queenMovement(QPushButton *button, bool enemyMoves)
 {
     disableAllButons();
     QVector <QString> connectMoves;
@@ -936,19 +1036,153 @@ void Widget::queenMovement(QPushButton *button)
 
     if(whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+        if(enemyMoves == false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
     }
     else if(!whiteMove)
     {
-        button->setEnabled(true);
-        button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+        if(enemyMoves == false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+        possibleMovesStorage.clear();
+    }
+}
+void Widget::kingMovement(QPushButton *button, bool enemyMoves)
+{
+    disableAllButons();
+
+    QString up;
+    QString down;
+    QString left;
+    QString right;
+
+    if(button->objectName()[0]=='a'){
+        left="x";
+        right="b";
+    } else if(button->objectName()[0]=='b'){
+        left="a";
+        right="c";
+    } else if(button->objectName()[0]=='c'){
+        left="b";
+        right="d";
+    } else if(button->objectName()[0]=='d'){
+        left="c";
+        right="e";
+    } else if(button->objectName()[0]=='e'){
+        left="d";
+        right="f";
+    } else if(button->objectName()[0]=='f'){
+        left="e";
+        right="g";
+    } else if(button->objectName()[0]=='g'){
+        left="f";
+        right="h";
+    } else if(button->objectName()[0]=='h'){
+        left="g";
+        right="x";
     }
 
-    matchCoordinates();
-    possibleMovesStorage.clear();
-}
-void Widget::kingMovement(QPushButton *button)
-{
+    if(button->objectName()[1]=='1'){
+        down="x";
+        up="2";
+    } else if(button->objectName()[1]=='2'){
+        down="1";
+        up="3";
+    } else if(button->objectName()[1]=='3'){
+        down="2";
+        up="4";
+    } else if(button->objectName()[1]=='4'){
+        down="3";
+        up="5";
+    } else if(button->objectName()[1]=='5'){
+        down="4";
+        up="6";
+    } else if(button->objectName()[1]=='6'){
+        down="5";
+        up="7";
+    } else if(button->objectName()[1]=='7'){
+        down="6";
+        up="8";
+    } else if(button->objectName()[1]=='8'){
+        down="7";
+        up="x";
+    }
 
+    if(up!="x"){
+        coords = button->objectName()[0]+up;
+        possibleMoves.push_back(coords);
+    }
+    if(down!="x"){
+        coords = button->objectName()[0]+down;
+        possibleMoves.push_back(coords);
+    }
+    if(left!="x"){
+        coords = left+button->objectName()[1];
+        possibleMoves.push_back(coords);
+    }
+    if(right!="x"){
+        coords = right+button->objectName()[1];
+        possibleMoves.push_back(coords);
+    }
+    if(down!="x" && left!="x"){
+        coords = left+down;
+        possibleMoves.push_back(coords);
+    }
+    if(down!="x" && right!="x"){
+        coords = right+down;
+        possibleMoves.push_back(coords);
+    }
+    if(up!="x" && left!="x"){
+        coords = left+up;
+        possibleMoves.push_back(coords);
+    }
+    if(up!="x" && right!="x"){
+        coords = right+up;
+        possibleMoves.push_back(coords);
+
+    }
+    if(whiteMove)
+    {
+        colision(button,"white");
+        if(enemyMoves == false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/whiteKing-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+    }
+    else if(!whiteMove)
+    {
+        colision(button,"black");
+        if(enemyMoves == false){
+            button->setEnabled(true);
+            button->setStyleSheet("background-image: url(:/img/blackKing-blueField.png);");
+            matchCoordinates();
+        }
+        else if(enemyMoves == true){
+            for(int i=0;i<possibleMoves.size();i++){
+                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            }
+        }
+    }
 }

@@ -15,6 +15,8 @@ Widget::Widget(QWidget *parent) :
 }
 
 void Widget::on_startGameButton_clicked(){
+
+    allPossibleMovesFromOpponentSide();
     ui->startGameButton->setEnabled(false);
     enableWhiteButtons();
 }
@@ -24,7 +26,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
 {
     if(!action)                     //1st pressing
     {
-        if(numberOfMove == 4) qDebug()<<whiteFiguresButtons;
+        //qDebug()<<blackFiguresButtons;
         if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
             enableProtectingFigures();
@@ -37,7 +39,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
         getFigureName(button);              //setting currentFigure
 
         if(currentFigure=="King"){
-           // kingMovement(button);
+           kingMovement(button);
         } else if(currentFigure == "poon"){
             if(whiteMove) poonMovementWhite(button);
             else if(!whiteMove) poonMovementBlack(button);
@@ -64,8 +66,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
                     goBack(button);
                }
                else {
-                   //move(button,"whiteKing");
-                  // switchPlayers("black",button);
+                   move(button,"whiteKing");
+                   switchPlayers(button);
                }
            }
            else if(currentFigure == "poon")
@@ -136,9 +138,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
                     goBack(button);
                }
                else {
-                   //move(button,"whiteKing");
-                  // isKingChecked();
-                  // switchPlayers("black",button);
+                   move(button,"blackKing");
+                   switchPlayers(button);
                }
            }
            else if(currentFigure == "poon")
