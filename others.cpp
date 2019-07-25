@@ -259,11 +259,15 @@ void Widget::switchPlayers(QPushButton *button)
                ui->gameHistory_black->setAlignment(Qt::AlignCenter);
             }
 
+
+        allPossibleMovesFromOpponentSide();
+        whiteMove = true;
         ui->startGameButton->setText("White move!");
         numberOfMove++;
+
         disableAllButons();
         enableWhiteButtons();
-        whiteMove = true;
+
 
         possibleMoves.clear();
         possibleMovesStorage.clear();

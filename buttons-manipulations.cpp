@@ -73,8 +73,12 @@ void Widget::move(QPushButton *button, QString figure)
 }
 
 void Widget::allPossibleMovesFromOpponentSide()
-{
+{   
     if(whiteMove)
+    {
+
+    }
+    else if(!whiteMove)
     {
         for(int i=0; i<blackFiguresButtons.size();i++){
             if(blackFiguresButtons.at(i)->objectName()!="empty"){
@@ -82,7 +86,7 @@ void Widget::allPossibleMovesFromOpponentSide()
                 if(currentFigure=="King"){
                    kingMovement(blackFiguresButtons.at(i), true);
                 } else if(currentFigure == "poon"){
-                    poonMovementWhite(blackFiguresButtons.at(i), true);
+                    poonMovementBlack(blackFiguresButtons.at(i), true);
                 } else if(currentFigure == "Knight"){
                     knightMovement(blackFiguresButtons.at(i), true);
                 } else if(currentFigure == "Bishop"){
@@ -94,12 +98,33 @@ void Widget::allPossibleMovesFromOpponentSide()
                 }
             }
         }
+
+        for(int i=0;i<opponentPossibleMoves.size();i++){
+
+
+
+            for(int j=0;j<opponentPossibleMoves.size();j++){
+
+                if(i!=j && opponentPossibleMoves.at(i)==opponentPossibleMoves.at(j)){
+                    opponentPossibleMoves.remove(j);
+                    i=0; j=0;
+                }
+            }
+        }
+
+        for(int i=0;i<blackFiguresButtons.size();i++){
+            for(int j=0;j<opponentPossibleMoves.size();j++){
+
+                if(opponentPossibleMoves.at(j) == blackFiguresButtons.at(i)->objectName()){
+                    opponentPossibleMoves.remove(j);
+                    j=0;
+                }
+            }
+
+        }
         qDebug()<<opponentPossibleMoves.size()<<opponentPossibleMoves;
     }
-    if(!whiteMove)
-    {
 
-    }
 }
 
 void Widget::enPassantMove(QPushButton *button, QString figure, QString cordNumber)
