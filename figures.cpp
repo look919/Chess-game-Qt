@@ -1515,12 +1515,21 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
         possibleMoves.push_back(coords);
 
     }
+    kingCastle();
     if(whiteMove)
     {
         colision(button,"white");
         if(enemyMoves == false){
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteKing-blueField.png);");
+            for(int i=0;i<opponentPossibleMoves.size();i++){
+                for(int j=0;j<possibleMoves.size();j++){
+                    if(possibleMoves.at(j) == opponentPossibleMoves.at(i)) {
+                        possibleMoves.remove(j);
+                        j-=1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
@@ -1536,6 +1545,16 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false){
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackKing-blueField.png);");
+
+            for(int i=0;i<opponentPossibleMoves.size();i++){
+                for(int j=0;j<possibleMoves.size();j++){
+                    if(possibleMoves.at(j) == opponentPossibleMoves.at(i)){
+                        possibleMoves.remove(j);
+                         j-=1;
+                    }
+                }
+            }
+
             matchCoordinates();
         }
         else if(enemyMoves == true){
@@ -1543,6 +1562,83 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
             qDebug()<<"king"<<possibleMoves;
+        }
+    }
+}
+
+void Widget::isKingChecked()
+{
+    if(whiteMove){
+        isItCheck = false;
+        for(int i=0;i<opponentPossibleMoves.size();i++){
+            if(whiteFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
+                isItCheck = true;
+                break;
+            }
+        }
+        if(isItCheck){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-redField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()==false){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+        }
+
+
+        if(blackFiguresButtons[15]->font().bold()) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        else if(blackFiguresButtons[15]->font().bold()==false) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+    }
+    else if(!whiteMove){
+        isItCheck = false;
+        for(int i=0;i<opponentPossibleMoves.size();i++){
+            if(blackFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
+                isItCheck = true;
+                break;
+            }
+        }
+        if(isItCheck){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-redField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()==false){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+        }
+
+
+        if(whiteFiguresButtons[15]->font().bold()) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        else if(whiteFiguresButtons[15]->font().bold()==false) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+    }
+}
+void Widget::kingCastle()
+{
+    if(whiteMove){
+        if(whiteCastleShort){
+            if(ui->f1->styleSheet()=="background-color: #035623;\nborder: 1px solid black;" && ui->g1->styleSheet()=="background-color: white;\nborder: 1px solid black;"){
+                coords = "short";
+                possibleMoves.push_back("g1");
+            }
+        }
+        if(whiteCastleLong){
+            if (ui->d1->styleSheet()=="background-color: #035623;\nborder: 1px solid black;" && ui->c1->styleSheet()=="background-color: white;\nborder: 1px solid black;"
+                    && ui->b1->styleSheet()=="background-color: #035623;\nborder: 1px solid black;"){
+                coords = "long";
+                possibleMoves.push_back("c1");
+            }
+        }
+    }
+    else if(!whiteMove){
+        if(blackCastleShort){
+            if(ui->f8->styleSheet()=="background-color: white;\nborder: 1px solid black;" && ui->g8->styleSheet()=="background-color: #035623;\nborder: 1px solid black;"){
+                coords = "short";
+                possibleMoves.push_back("g8");
+            }
+        }
+        if(blackCastleLong){
+            if (ui->d8->styleSheet()=="background-color: white;\nborder: 1px solid black;" && ui->c8->styleSheet()=="background-color: #035623;\nborder: 1px solid black;"
+                    && ui->b8->styleSheet()=="background-color: white;\nborder: 1px solid black;"){
+                coords = "long";
+                possibleMoves.push_back("c8");
+            }
         }
     }
 }

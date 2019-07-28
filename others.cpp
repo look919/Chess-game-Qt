@@ -9,8 +9,10 @@ void Widget::setStartingParameters()
     isItCheck = false;
     isItCheckMate = false;
     enPassant = false;
-
-
+    whiteCastleShort = true;
+    whiteCastleLong = true;
+    blackCastleShort = true;
+    blackCastleLong = true;
 
 
     QString blackPoon_blueField = "background-image: url(:/img/blackPoon-blueField.png);";
@@ -220,7 +222,9 @@ void Widget::switchPlayers(QPushButton *button)
         }
         opponentPossibleMoves.clear();
         allPossibleMovesFromOpponentSide();
+
         whiteMove = false;
+        isKingChecked();
 
         ui->startGameButton->setText("Black move!");
         disableAllButons();
@@ -263,7 +267,9 @@ void Widget::switchPlayers(QPushButton *button)
 
         opponentPossibleMoves.clear();
         allPossibleMovesFromOpponentSide();
+
         whiteMove = true;
+        isKingChecked();
         ui->startGameButton->setText("White move!");
         numberOfMove++;
 

@@ -20,6 +20,7 @@ private:
     void setStartingParameters();
     void placePiecesOnBoard();
 
+    bool validMove;//not used just yer
     bool isItCheck;
     bool isItCheckMate;
 
@@ -59,6 +60,12 @@ private:
     void rookMovement(QPushButton *button, bool enemyMoves=false);
     void queenMovement(QPushButton *button, bool enemyMoves=false);
     void kingMovement(QPushButton *button, bool enemyMoves=false);
+    void isKingChecked();
+    void kingCastle();
+    bool whiteCastleShort;
+    bool whiteCastleLong;
+    bool blackCastleShort;
+    bool blackCastleLong;
 
 
     //buttons-manipulations
@@ -73,7 +80,8 @@ private:
     QPushButton *currentFigureButton;       //cleaners
     QString currentFigureStyleSheet;
     void move(QPushButton *button, QString figure);
-    void allPossibleMovesFromOpponentSide();        //!!!!
+    void castleMove(QString side);
+    void allPossibleMovesFromOpponentSide();
     QVector <QString> opponentPossibleMoves;
     void blockMove(QString keyword);
     void switchPlayers(QPushButton *button);

@@ -55,6 +55,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
     }
     else if(action)                             //2nd pressing
     {
+       validMove = true;
        action=false;
        cleanCoordinates();
 
@@ -63,9 +64,18 @@ void Widget::on_any_button_clicked(QPushButton *button)
            if(currentFigure == "King")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
+               }else if(button == ui->g1 && whiteCastleShort){
+                   castleMove("short");
+                   switchPlayers(button);
+               }else if(button == ui->c1 && whiteCastleLong){
+                   castleMove("long");
+                   switchPlayers(button);
                }
-               else {
+               else{
+                   whiteCastleLong = false;
+                   whiteCastleShort = false;
+
                    move(button,"whiteKing");
                    switchPlayers(button);
                }
@@ -102,7 +112,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Bishop")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
                    move(button,"whiteBishop");
@@ -112,9 +122,12 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Rook")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
+                   if(currentFigureButton == whiteFiguresButtons[12]) whiteCastleLong = false;
+                   else if(currentFigureButton == whiteFiguresButtons[13]) whiteCastleShort = false;
+
                    move(button,"whiteRook");
                    switchPlayers(button);
                }
@@ -122,7 +135,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Queen")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
                    move(button,"whiteQueen");
@@ -135,9 +148,18 @@ void Widget::on_any_button_clicked(QPushButton *button)
            if(currentFigure == "King")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
+               }else if(button == ui->g8 && blackCastleShort){
+                   castleMove("short");
+                   switchPlayers(button);
+               }else if(button == ui->c8 && blackCastleLong){
+                   castleMove("long");
+                   switchPlayers(button);
                }
-               else {
+               else{
+                   blackCastleLong = false;
+                   blackCastleShort = false;
+
                    move(button,"blackKing");
                    switchPlayers(button);
                }
@@ -186,6 +208,9 @@ void Widget::on_any_button_clicked(QPushButton *button)
                     goBack(button);
                }
                else {
+                   if(currentFigureButton == blackFiguresButtons[12]) blackCastleLong = false;
+                   else if(currentFigureButton == blackFiguresButtons[13]) blackCastleShort = false;
+
                    move(button,"blackRook");
                    switchPlayers(button);
                }

@@ -25,11 +25,6 @@ void Widget::move(QPushButton *button, QString figure)
         {
             if(currentFigureButton == whiteFiguresButtons.at(i))
             {
-                if(currentFigureButton->text()!=""){
-                    QString txt=currentFigureButton->text();
-                    button->setText(txt);
-                    currentFigureButton->text().clear();
-                }
                 whiteFiguresButtons.replace(i,button);
                 break;
             }
@@ -50,11 +45,6 @@ void Widget::move(QPushButton *button, QString figure)
         {
             if(currentFigureButton == blackFiguresButtons.at(i))
             {
-                if(currentFigureButton->text()!=""){
-                    QString txt=currentFigureButton->text();
-                    button->setText(txt);
-                    currentFigureButton->text().clear();
-                }
                 blackFiguresButtons.replace(i,button);
                 break;
             }
@@ -70,6 +60,58 @@ void Widget::move(QPushButton *button, QString figure)
         }
     }
 
+}
+
+void Widget::castleMove(QString side)
+{
+    if(whiteMove){
+        if(side == "short"){
+            ui->f1->setStyleSheet("background-image: url(:/img/whiteRook-greenField.png);");
+            ui->g1->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+            ui->h1->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+            ui->e1->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+
+            whiteFiguresButtons[15] = ui->g1;
+            whiteFiguresButtons[13] = ui->f1;
+        }
+        else if(side == "long"){
+            ui->a1->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+            ui->b1->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+            ui->c1->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+            ui->d1->setStyleSheet("background-image: url(:/img/whiteRook-greenField.png);");
+            ui->e1->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+
+            whiteFiguresButtons[15] = ui->c1;
+            whiteFiguresButtons[12] = ui->d1;
+        }
+
+        whiteCastleLong = false;
+        whiteCastleShort = false;
+    }
+    else if(!whiteMove){
+        if(side == "short"){
+            ui->f8->setStyleSheet("background-image: url(:/img/blackRook-whiteField.png);");
+            ui->g8->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+            ui->h8->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+            ui->e8->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+
+            blackFiguresButtons[15] = ui->g8;
+            blackFiguresButtons[13] = ui->f8;
+        }
+        else if(side == "long"){
+            ui->a8->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+            ui->b8->setStyleSheet("background-color: white;\nborder: 1px solid black;");
+            ui->c8->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+            ui->d8->setStyleSheet("background-image: url(:/img/blackRook-whiteField.png);");
+            ui->e8->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
+
+            blackFiguresButtons[15] = ui->c8;
+            blackFiguresButtons[12] = ui->d8;
+        }
+
+        blackCastleLong = false;
+        blackCastleShort = false;
+    }
 }
 
 void Widget::allPossibleMovesFromOpponentSide()
