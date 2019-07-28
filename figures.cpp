@@ -6,13 +6,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
     if(whiteMove && enemyMoves == false){                                          //WHITE
         for(int i=0; i<whiteFiguresButtons.size();i++){
             if(button == whiteFiguresButtons.at(i)){
-                if(i<=7) {
-                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
-                    else if(button->text()=="R") currentFigure = "Rook";
-                    else if(button->text()=="B") currentFigure = "Bishop";
-                    else if(button->text()=="N") currentFigure = "Knight";
-                    else currentFigure ="poon"; //to repiar
-                }
+                if(i<=7) currentFigure = "poon";
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
@@ -25,13 +19,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
     else if(!whiteMove && enemyMoves == false){                                                   //BLACK
         for(int i=0; i<blackFiguresButtons.size();i++){
             if(button == blackFiguresButtons.at(i)){
-                if(i<=7) {
-                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
-                    else if(button->text()=="R") currentFigure = "Rook";
-                    else if(button->text()=="B") currentFigure = "Bishop";
-                    else if(button->text()=="N") currentFigure = "Knight";
-                    else currentFigure ="poon";
-                }
+                if(i<=7) currentFigure = "poon";
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
@@ -41,35 +29,10 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
             }
         }
     }
-    else if(whiteMove && enemyMoves == true){                                                   //BLACK
-        for(int i=0; i<blackFiguresButtons.size();i++){
-            if(button == blackFiguresButtons.at(i)){
-                if(i<=7) {
-                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
-                    else if(button->text()=="R") currentFigure = "Rook";
-                    else if(button->text()=="B") currentFigure = "Bishop";
-                    else if(button->text()=="N") currentFigure = "Knight";
-                    else currentFigure ="poon";
-                }
-                else if(i<=9) currentFigure = "Knight";
-                else if(i<=11) currentFigure = "Bishop";
-                else if(i<=13) currentFigure = "Rook";
-                else if(i<=14) currentFigure = "Queen";
-                else if(i<=15) currentFigure = "King";
-                break;
-            }
-        }
-    }
-    else if(!whiteMove && enemyMoves == true){                                          //WHITE
+    else if(whiteMove && enemyMoves == true){                                          //WHITE figures
         for(int i=0; i<whiteFiguresButtons.size();i++){
             if(button == whiteFiguresButtons.at(i)){
-                if(i<=7) {
-                    if(button->text()=="Q") currentFigure = "Queen";        //after promotion
-                    else if(button->text()=="R") currentFigure = "Rook";
-                    else if(button->text()=="B") currentFigure = "Bishop";
-                    else if(button->text()=="N") currentFigure = "Knight";
-                    else currentFigure ="poon"; //to repiar
-                }
+                if(i<=7) currentFigure = "poon";
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
@@ -79,10 +42,25 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
             }
         }
     }
+    else if(!whiteMove && enemyMoves == true){                                                   //BLACK figures
+        for(int i=0; i<blackFiguresButtons.size();i++){
+            if(button == blackFiguresButtons.at(i)){
+                if(i<=7) currentFigure = "poon";
+                else if(i<=9) currentFigure = "Knight";
+                else if(i<=11) currentFigure = "Bishop";
+                else if(i<=13) currentFigure = "Rook";
+                else if(i<=14) currentFigure = "Queen";
+                else if(i<=15) currentFigure = "King";
+                break;
+            }
+        }
+    }
+
 }
 
 void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
     if(enemyMoves==false){
@@ -175,11 +153,13 @@ void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
         for(int i=0;i<possibleMoves.size();i++){
             opponentPossibleMoves.push_back(possibleMoves.at(i));
         }
+         qDebug()<<"poon"<<possibleMoves;
     }
 }
 
 void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
     if(enemyMoves==false){
@@ -271,6 +251,7 @@ void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
         for(int i=0;i<possibleMoves.size();i++){
             opponentPossibleMoves.push_back(possibleMoves.at(i));
         }
+        qDebug()<<"poon"<<possibleMoves;
     }
 }
 
@@ -430,6 +411,7 @@ void Widget::poonTaking(QPushButton *button, QString color)
 
 void Widget::knightMovement(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();
 
     QString left;                           //tracking position
@@ -577,6 +559,7 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"knight"<<possibleMoves;
         }
     }
     else if(!whiteMove)
@@ -592,12 +575,14 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"knight"<<possibleMoves;
         }
     }
 
 }
 void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();
 
     char up;
@@ -751,6 +736,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"bishop"<<possibleMoves;
         }
         possibleMovesStorage.clear();
 
@@ -836,6 +822,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+             qDebug()<<"bishop"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
@@ -843,6 +830,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
 }
 void Widget::rookMovement(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();
 
     char up;
@@ -960,6 +948,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+             qDebug()<<"rook"<<possibleMoves;
         }
         possibleMovesStorage.clear();
 
@@ -1013,12 +1002,14 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+             qDebug()<<"rook"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
 }
 void Widget::queenMovement(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();
     QVector <QString> connectMoves;
 
@@ -1409,6 +1400,7 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+             qDebug()<<"queen"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
@@ -1423,12 +1415,14 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"queen"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
 }
 void Widget::kingMovement(QPushButton *button, bool enemyMoves)
 {
+    possibleMoves.clear();
     disableAllButons();
 
     QString up;
@@ -1533,6 +1527,7 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"king"<<possibleMoves;
         }
     }
     else if(!whiteMove)
@@ -1547,6 +1542,7 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
             for(int i=0;i<possibleMoves.size();i++){
                 opponentPossibleMoves.push_back(possibleMoves.at(i));
             }
+            qDebug()<<"king"<<possibleMoves;
         }
     }
 }

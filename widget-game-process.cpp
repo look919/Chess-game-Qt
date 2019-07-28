@@ -16,7 +16,6 @@ Widget::Widget(QWidget *parent) :
 
 void Widget::on_startGameButton_clicked(){
 
-    allPossibleMovesFromOpponentSide();
     ui->startGameButton->setEnabled(false);
     enableWhiteButtons();
 }

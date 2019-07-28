@@ -64,7 +64,7 @@ private:
     //buttons-manipulations
     void matchCoordinates();
     void showPermittedMoves(QPushButton *button);
-    void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false);
+    void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false, bool KingPinned = false);
     void checkIfThereIsAPiece(QPushButton *button, QString color="none");
     bool ifExist;
     void cleanCoordinates();
