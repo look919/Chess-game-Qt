@@ -282,6 +282,49 @@ void Widget::switchPlayers(QPushButton *button)
     }
 }
 
+void Widget::isKingChecked()
+{
+    if(whiteMove){
+        isItCheck = false;
+        for(int i=0;i<opponentPossibleMoves.size();i++){
+            if(whiteFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
+                isItCheck = true;
+                break;
+            }
+        }
+        if(isItCheck){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-redField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()==false){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+        }
+
+
+        if(blackFiguresButtons[15]->font().bold()) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        else if(blackFiguresButtons[15]->font().bold()==false) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+    }
+    else if(!whiteMove){
+        isItCheck = false;
+        for(int i=0;i<opponentPossibleMoves.size();i++){
+            if(blackFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
+                isItCheck = true;
+                break;
+            }
+        }
+        if(isItCheck){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-redField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()==false){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+        }
+
+
+        if(whiteFiguresButtons[15]->font().bold()) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        else if(whiteFiguresButtons[15]->font().bold()==false) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+    }
+}
 
 Widget::~Widget()
 {

@@ -63,23 +63,14 @@ void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
     possibleMoves.clear();
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-    if(enemyMoves==false){
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
-        button->setEnabled(true);
-    }
 
     if(button->objectName()[1]=="2"){                   //FIRST MOVE
         possibleMoves.push_back(button->objectName()[0]+"3");
         possibleMoves.push_back(button->objectName()[0]+"4");
 
-        poonColision(button);
-        poonTaking(button,"black");
 
     } else if(button->objectName()[1]=="5"){            //EN PASSANT
         possibleMoves.push_back(button->objectName()[0]+"6");
-        poonColision(button);
-        poonTaking(button,"black");
-
 
         QChar poonCanTakeOnLeft = button->objectName()[0];
         QString left;
@@ -143,17 +134,26 @@ void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
         else if(button->objectName()[1]=="7") secondChar='8';
 
         possibleMoves.push_back(button->objectName()[0]+secondChar);
-        poonColision(button);
-        poonTaking(button,"black");
+
     }
     if(enemyMoves==false){
-       matchCoordinates();
+        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/whitePoon-blueField.png);"));
+        button->setEnabled(true);
+
+        poonColision(button);
+        poonTaking(button,"black");
+
+        matchCoordinates();
     }
     else if(enemyMoves==true){
-        for(int i=0;i<possibleMoves.size();i++){
+        possibleMoves.clear();
+        poonTaking(button);
+
+        qDebug()<<"poon"<<possibleMoves;
+
+        for(int i=0; i<possibleMoves.size();i++){
             opponentPossibleMoves.push_back(possibleMoves.at(i));
         }
-         qDebug()<<"poon"<<possibleMoves;
     }
 }
 
@@ -162,22 +162,13 @@ void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
     possibleMoves.clear();
     disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
-    if(enemyMoves==false){
-        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
-        button->setEnabled(true);
-    }
 
     if(button->objectName()[1]=="7"){                   //FIRST MOVE
         possibleMoves.push_back(button->objectName()[0]+"6");
         possibleMoves.push_back(button->objectName()[0]+"5");
 
-        poonColision(button);
-        poonTaking(button,"white");
     } else if(button->objectName()[1]=="4"){         //EN PASSANT
         possibleMoves.push_back(button->objectName()[0]+"3");
-        poonColision(button);
-        poonTaking(button,"white");
-
 
         QChar poonCanTakeOnLeft = button->objectName()[0];
         QString left;
@@ -241,17 +232,26 @@ void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
         else if(button->objectName()[1]=="2") secondChar='1';
 
         possibleMoves.push_back(button->objectName()[0]+secondChar);
-        poonColision(button);
-        poonTaking(button,"white");
+
     }
     if(enemyMoves==false){
-       matchCoordinates();
+        button->setStyleSheet(QString::fromUtf8("background-image: url(:/img/blackPoon-blueField.png);"));
+        button->setEnabled(true);
+
+        poonColision(button);
+        poonTaking(button,"white");
+
+        matchCoordinates();
     }
     else if(enemyMoves==true){
-        for(int i=0;i<possibleMoves.size();i++){
+        possibleMoves.clear();
+        poonTaking(button);
+
+        qDebug()<<"poon"<<possibleMoves;
+
+        for(int i=0; i<possibleMoves.size();i++){
             opponentPossibleMoves.push_back(possibleMoves.at(i));
         }
-        qDebug()<<"poon"<<possibleMoves;
     }
 }
 
@@ -387,22 +387,35 @@ void Widget::poonTaking(QPushButton *button, QString color)
         else if(button->objectName()[1]=="3") secondCord='2';
         else if(button->objectName()[1]=="2") secondCord='1';
     }
-
-    coords = poonCanTakeOnLeft+secondCord;
-    if(coords[0] != 'x' && coords[1] != 'x') {
-        convertStringToButton(coords);
-        checkIfThereIsAPiece(requiredButton,color);
-        if(ifExist==true) {
-            ifExist=false;
-            possibleMoves.push_back(coords);
+    if(color != "none")
+    {
+        coords = poonCanTakeOnLeft+secondCord;
+        if(coords[0] != 'x' && coords[1] != 'x') {
+            convertStringToButton(coords);
+            checkIfThereIsAPiece(requiredButton,color);
+            if(ifExist==true) {
+                ifExist=false;
+                possibleMoves.push_back(coords);
+            }
+        }
+        coords = poonCanTakeOnRight+secondCord;
+        if(coords[0] != 'x' && coords[1] != 'x') {
+            convertStringToButton(coords);
+            checkIfThereIsAPiece(requiredButton,color);
+            if(ifExist==true) {
+                ifExist=false;
+                possibleMoves.push_back(coords);
+            }
         }
     }
-    coords = poonCanTakeOnRight+secondCord;
-    if(coords[0] != 'x' && coords[1] != 'x') {
-        convertStringToButton(coords);
-        checkIfThereIsAPiece(requiredButton,color);
-        if(ifExist==true) {
-            ifExist=false;
+    else            //moves from opponent side
+    {
+        coords = poonCanTakeOnLeft+secondCord;
+        if(coords[0] != 'x' && coords[1] != 'x'){
+            possibleMoves.push_back(coords);
+        }
+        coords = poonCanTakeOnRight+secondCord;
+        if(coords[0] != 'x' && coords[1] != 'x'){
             possibleMoves.push_back(coords);
         }
     }
@@ -547,10 +560,9 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
     }
 
     if(whiteMove)
-    {
-        colision(button,"white");
-
+    {      
         if(enemyMoves==false){
+            colision(button,"white");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
             matchCoordinates();
@@ -564,9 +576,8 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
     }
     else if(!whiteMove)
     {
-        colision(button,"black");
-
         if(enemyMoves==false){
+            colision(button,"black");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
             matchCoordinates();
@@ -1518,15 +1529,17 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
     kingCastle();
     if(whiteMove)
     {
-        colision(button,"white");
+
         if(enemyMoves == false){
+            colision(button,"white");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteKing-blueField.png);");
+
             for(int i=0;i<opponentPossibleMoves.size();i++){
                 for(int j=0;j<possibleMoves.size();j++){
                     if(possibleMoves.at(j) == opponentPossibleMoves.at(i)) {
                         possibleMoves.remove(j);
-                        j-=1;
+                        j= -1;
                     }
                 }
             }
@@ -1541,8 +1554,9 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
     }
     else if(!whiteMove)
     {
-        colision(button,"black");
+
         if(enemyMoves == false){
+            colision(button,"black");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackKing-blueField.png);");
 
@@ -1550,7 +1564,7 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
                 for(int j=0;j<possibleMoves.size();j++){
                     if(possibleMoves.at(j) == opponentPossibleMoves.at(i)){
                         possibleMoves.remove(j);
-                         j-=1;
+                         j= -1;
                     }
                 }
             }
@@ -1566,49 +1580,7 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
     }
 }
 
-void Widget::isKingChecked()
-{
-    if(whiteMove){
-        isItCheck = false;
-        for(int i=0;i<opponentPossibleMoves.size();i++){
-            if(whiteFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
-                isItCheck = true;
-                break;
-            }
-        }
-        if(isItCheck){
-            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-redField.png);");
-        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()){
-            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
-        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()==false){
-            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
-        }
 
-
-        if(blackFiguresButtons[15]->font().bold()) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
-        else if(blackFiguresButtons[15]->font().bold()==false) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
-    }
-    else if(!whiteMove){
-        isItCheck = false;
-        for(int i=0;i<opponentPossibleMoves.size();i++){
-            if(blackFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
-                isItCheck = true;
-                break;
-            }
-        }
-        if(isItCheck){
-            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-redField.png);");
-        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()){
-            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
-        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()==false){
-            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
-        }
-
-
-        if(whiteFiguresButtons[15]->font().bold()) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
-        else if(whiteFiguresButtons[15]->font().bold()==false) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
-    }
-}
 void Widget::kingCastle()
 {
     if(whiteMove){

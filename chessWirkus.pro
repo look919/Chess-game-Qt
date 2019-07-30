@@ -31,7 +31,8 @@ SOURCES += \
     others.cpp \
     main.cpp \
     figures.cpp \
-    promotepawn.cpp
+    promotepawn.cpp \
+    moves.cpp
 
 HEADERS += \
         widget.h \

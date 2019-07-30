@@ -1,6 +1,10 @@
 #ifndef WIDGET_H
 #define WIDGET_H
-
+//pinning
+//clocks
+//poon promotion
+//checkmate
+//what if check
 #include <QWidget>
 #include "promotepawn.h"
 #include <QPushButton>
@@ -47,7 +51,7 @@ private:
     void poonMovementWhite(QPushButton *button, bool enemyMoves=false);    //seperating those two functions to make code cleaner
     void poonMovementBlack(QPushButton *button, bool enemyMoves=false);
     void poonColision(QPushButton *button);
-    void poonTaking(QPushButton *button, QString color);
+    void poonTaking(QPushButton *button, QString color="none");
     void poonPromotion(QPushButton *button, QString figureColor);
     void enPassantMove(QPushButton *button, QString figure, QString cordNumber);
     bool enPassant;
