@@ -3,7 +3,7 @@
 
 
 
-void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces, bool kingPinned)     //add kingPinned functionality later
+void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces, bool enemyMoves)
 {
     if(currentFigure=="Knight"|| currentFigure=="King"){
         for(int i=0; i<possibleMoves.size();i++){
@@ -19,14 +19,14 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
         }
         button->setEnabled(true);
     }
-    else if((currentFigure=="Bishop"|| currentFigure=="Rook" || currentFigure=="Queen") && kingPinned == false)
+    else if((currentFigure=="Bishop"|| currentFigure=="Rook" || currentFigure=="Queen"))
     {
         bool blocking=false;
 
         for(int i=0; i<possibleMoves.size();i++){
             if(blocking==false){
                 convertStringToButton(possibleMoves.at(i));
-                checkIfThereIsAPiece(requiredButton,color);
+                if(enemyMoves == false) checkIfThereIsAPiece(requiredButton,color);
 
                 if(ifExist==true){
                     possibleMoves.remove(i);
@@ -35,25 +35,44 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                     ifExist=false;
                 }else{
                     if(colisionWithOpponentPieces==true){
-                        if(color=="white"){
+                        if(color == "white"){
 
                             checkIfThereIsAPiece(requiredButton,"black");                      //WHITE
+
                             if(ifExist==true){
                                 blocking=true;
                                 ifExist=false;
                             }
-                        } else {
-                            checkIfThereIsAPiece(requiredButton,"white");                      //BLACK
+                            if(enemyMoves == true){
+                                checkIfThereIsAPiece(requiredButton,"white");
+
+                                if(ifExist==true){
+                                    blocking=true;
+                                    ifExist=false;
+                                }
+                            }
+                        } else if(color == "black"){
+
+                            checkIfThereIsAPiece(requiredButton,"white");                      //WHITE
 
                             if(ifExist==true){
                                 blocking=true;
                                 ifExist=false;
+                            }
+                            if(enemyMoves == true){
+                                checkIfThereIsAPiece(requiredButton,"black");
+
+                                if(ifExist==true){
+                                    blocking=true;
+                                    ifExist=false;
+                                }
                             }
                         }
                     }
                }
 
-            } else{
+            }
+            else{
 
                 if(coords=="up" || coords == "down"){
                         while(possibleMoves.at(i)[1]!='1' && possibleMoves.at(i)[1]!='8'){
@@ -77,6 +96,85 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
             possibleMovesStorage.push_back(possibleMoves.at(i));           //coping valid moves to memory
         }
         possibleMoves.clear();
+    }
+
+}
+
+void Widget::abstractColision(QPushButton *button)
+{
+    bool enemyKing = false;
+    int pinnedCounter =0;
+
+    if(whiteMove)
+    {
+        for(int i=0;i<abstractPossibleMoves.size();i++){
+            convertStringToButton(abstractPossibleMoves.at(i));
+            if(requiredButton == blackFiguresButtons[15]){
+                enemyKing = true;
+                break;
+            }
+        }
+
+        if(enemyKing){
+            for(int i=0;i<abstractPossibleMoves.size();i++){
+                convertStringToButton(abstractPossibleMoves.at(i));
+
+                if(requiredButton != blackFiguresButtons[15]){                          // if abstract move is diffrent than enemy king position
+                    for(int j=0; j<blackFiguresButtons.size();j++){
+                        if(requiredButton == blackFiguresButtons.at(j)){
+                            if(pinnedCounter == 0){
+                                pinnedCounter++;
+                                pinnedFigures.push_back(blackFiguresButtons.at(j));
+                                attackingFigures.push_back(button);
+                            }
+                            else if(pinnedCounter != 0){
+                                attackingFigures.pop_back();                            //deleting element that was added trought this loop
+                                pinnedFigures.pop_back();
+                            }
+                        }
+                    }
+                }
+                else{                                                                   //if we achieve king - break the loop
+                    break;
+                }
+            }
+        }
+
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0;i<abstractPossibleMoves.size();i++){
+            convertStringToButton(abstractPossibleMoves.at(i));
+            if(requiredButton == whiteFiguresButtons[15]){
+                enemyKing = true;
+                break;
+            }
+        }
+
+        if(enemyKing){
+            for(int i=0;i<abstractPossibleMoves.size();i++){
+                convertStringToButton(abstractPossibleMoves.at(i));
+
+                if(requiredButton != whiteFiguresButtons[15]){                          // if abstract move is diffrent than enemy king position
+                    for(int j=0; j<whiteFiguresButtons.size();j++){
+                        if(requiredButton == whiteFiguresButtons.at(j)){
+                            if(pinnedCounter == 0){
+                                pinnedCounter++;
+                                pinnedFigures.push_back(whiteFiguresButtons.at(j));
+                                attackingFigures.push_back(button);
+                            }
+                            else if(pinnedCounter != 0){
+                                attackingFigures.pop_back();                            //deleting element that was added trought this loop
+                                pinnedFigures.pop_back();
+                            }
+                        }
+                    }
+                }
+                else{                                                                   //if we achieve king - break the loop
+                    break;
+                }
+            }
+        }
     }
 
 }

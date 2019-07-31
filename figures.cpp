@@ -156,7 +156,6 @@ void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
         }
     }
 }
-
 void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
 {
     possibleMoves.clear();
@@ -254,7 +253,6 @@ void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
         }
     }
 }
-
 void Widget::poonColision(QPushButton *button)
 {
     if(whiteMove)
@@ -420,7 +418,6 @@ void Widget::poonTaking(QPushButton *button, QString color)
         }
     }
 }
-
 
 void Widget::knightMovement(QPushButton *button, bool enemyMoves)
 {
@@ -674,11 +671,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="right";
                 if(up=='9') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -690,11 +693,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="right";
                 if(down=='0') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -706,11 +715,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="left";
                 if(up=='9') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -723,11 +738,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="left";
                 if(down=='0') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -741,6 +762,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false) {
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+
             matchCoordinates();
         }
         else if(enemyMoves == true){
@@ -750,6 +772,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
             qDebug()<<"bishop"<<possibleMoves;
         }
         possibleMovesStorage.clear();
+        abstractPossibleMoves.clear();
 
     }
     else if(!whiteMove)
@@ -760,11 +783,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="right";
                 if(up=='9') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -776,11 +805,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="right";
                 if(down=='0') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -792,11 +827,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="left";
                 if(up=='9') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -809,11 +850,17 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="left";
                 if(down=='0') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -917,33 +964,57 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
             for(char i=up;i<='8';i++){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -966,38 +1037,61 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
     }    
     else if(!whiteMove)
     {
-
         if(up!='x'){
             for(char i=up;i<='8';i++){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -1103,11 +1197,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="right";
                 if(up=='9') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1119,11 +1219,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="right";
                 if(down=='0') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1135,11 +1241,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="left";
                 if(up=='9') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1152,11 +1264,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="left";
                 if(down=='0') break;
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1175,11 +1293,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="right";
                 if(up=='9') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1191,11 +1315,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="right";
                 if(down=='0') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1207,11 +1337,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=up;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 up++;
                 coords="left";
                 if(up=='9') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1224,11 +1360,17 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
                 secondCord=down;
                 coords=firstCord+secondCord;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 down--;
                 coords="left";
                 if(down=='0') break;
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1319,33 +1461,57 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
             for(char i=up;i<='8';i++){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            colision(button,"white",true);
+            if(enemyMoves == false) colision(button,"white",true);
+            else {
+                colision(button,"white",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -1358,33 +1524,57 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
             for(char i=up;i<='8';i++){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
                 coords=firstCordButton+i;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
                 coords=i+secondCordButton;
                 possibleMoves.push_back(coords);
+                if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            colision(button,"black",true);
+            if(enemyMoves == false) colision(button,"black",true);
+            else {
+                colision(button,"black",true,enemyMoves);
+                abstractColision(button);
+                abstractPossibleMoves.clear();
+            }
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -1579,8 +1769,6 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
         }
     }
 }
-
-
 void Widget::kingCastle()
 {
     if(whiteMove){

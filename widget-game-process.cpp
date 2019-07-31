@@ -17,6 +17,7 @@ Widget::Widget(QWidget *parent) :
 void Widget::on_startGameButton_clicked(){
 
     ui->startGameButton->setEnabled(false);
+    ui->startGameButton->setText("White move!");
     enableWhiteButtons();
 }
 

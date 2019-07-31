@@ -45,6 +45,8 @@ private:
 
     QVector <QString> possibleMoves;
     QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
+    QVector <QString> abstractPossibleMoves;
+    QVector <QString> abstractPossibleMovesStorage;
 
 
     QString coords;
@@ -75,7 +77,10 @@ private:
     //buttons-manipulations
     void matchCoordinates();
     void showPermittedMoves(QPushButton *button);
-    void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false, bool KingPinned = false);
+    void colision(QPushButton *button, QString color="none", bool colisionWithOpponentPieces = false, bool isenemyMove = false);
+    void abstractColision(QPushButton *button);
+    QVector <QPushButton*> pinnedFigures;
+    QVector <QPushButton*> attackingFigures;
     void checkIfThereIsAPiece(QPushButton *button, QString color="none");
     bool ifExist;
     void cleanCoordinates();
@@ -95,8 +100,12 @@ private:
     QString text;                                   //needed for match history and en passant move
 
 
-    QPushButton *requiredButton;
+
+
+
+
     void convertStringToButton(QString coords);
+    QPushButton *requiredButton;
     void disableAllButons();
     void enableWhiteButtons();
     void enableBlackButtons();
@@ -105,10 +114,17 @@ private:
     void enableProtectingFigures();
 
 
-    void on_any_button_clicked(QPushButton *button);    //line 107
+
+
+
+
+
+
+
+    void on_any_button_clicked(QPushButton *button);
 
 private slots:
-    void on_startGameButton_clicked();
+    void on_startGameButton_clicked();      //others.cpp
 
     //buttons-on-board.cpp
     //void on_any_button_clicked(QPushButton *button);

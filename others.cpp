@@ -220,8 +220,12 @@ void Widget::switchPlayers(QPushButton *button)
             ui->gameHistory_white->setText(matchHistory_white);
             ui->gameHistory_white->setAlignment(Qt::AlignCenter);
         }
+        pinnedFigures.clear();                  //clearing pinned figures and opponent possible moves from previous move
+        attackingFigures.clear();
         opponentPossibleMoves.clear();
+
         allPossibleMovesFromOpponentSide();
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
 
         whiteMove = false;
         isKingChecked();
@@ -264,9 +268,12 @@ void Widget::switchPlayers(QPushButton *button)
                ui->gameHistory_black->setText(matchHistory_black);
                ui->gameHistory_black->setAlignment(Qt::AlignCenter);
             }
-
+        pinnedFigures.clear();
+        attackingFigures.clear();
         opponentPossibleMoves.clear();
+
         allPossibleMovesFromOpponentSide();
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
 
         whiteMove = true;
         isKingChecked();
