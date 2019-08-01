@@ -46,14 +46,13 @@ private:
     QVector <QString> possibleMoves;
     QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
     QVector <QString> abstractPossibleMoves;
-    QVector <QString> abstractPossibleMovesStorage;
 
 
     QString coords;
     void poonMovementWhite(QPushButton *button, bool enemyMoves=false);    //seperating those two functions to make code cleaner
     void poonMovementBlack(QPushButton *button, bool enemyMoves=false);
     void poonColision(QPushButton *button);
-    void poonTaking(QPushButton *button, QString color="none");
+    void poonTaking(QPushButton *button, QString color="none",bool abstract = false);
     void poonPromotion(QPushButton *button, QString figureColor);
     void enPassantMove(QPushButton *button, QString figure, QString cordNumber);
     bool enPassant;
@@ -73,6 +72,11 @@ private:
     bool blackCastleShort;
     bool blackCastleLong;
 
+    void pinnedMovement(QPushButton *button,QString color, bool enemyMoves);
+    bool pinned;
+    bool pinnedPoonStraight;
+    int index;
+
 
     //buttons-manipulations
     void matchCoordinates();
@@ -81,6 +85,7 @@ private:
     void abstractColision(QPushButton *button);
     QVector <QPushButton*> pinnedFigures;
     QVector <QPushButton*> attackingFigures;
+    void pinnedFigues();
     void checkIfThereIsAPiece(QPushButton *button, QString color="none");
     bool ifExist;
     void cleanCoordinates();
@@ -94,6 +99,8 @@ private:
     QVector <QString> opponentPossibleMoves;
     void blockMove(QString keyword);
     void switchPlayers(QPushButton *button);
+    void whiteHistory(QPushButton *button);
+    void blackHistory(QPushButton *button);
     QString matchHistory_white;
     QString matchHistory_black;
     QString matchHistory_numberOfMove;

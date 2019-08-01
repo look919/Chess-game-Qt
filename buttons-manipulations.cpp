@@ -178,6 +178,46 @@ void Widget::abstractColision(QPushButton *button)
     }
 
 }
+
+void Widget::pinnedFigues()
+{
+    for(int i=0; i<pinnedFigures.size(); i++){
+        getFigureName(pinnedFigures.at(i));
+
+        if(currentFigure == "poon"){
+            index = i;
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+            else{
+                if(whiteMove) poonTaking(pinnedFigures.at(i),"black",true);
+                else          poonTaking(pinnedFigures.at(i),"white",true);
+
+                if(pinned) pinnedFigures.at(i)->setEnabled(true);
+                else  pinnedFigures.at(i)->setEnabled(false);
+            }
+
+        } else if(currentFigure == "Knight"){
+            pinnedFigures.at(i)->setEnabled(false);
+        } else if(currentFigure == "Bishop"){
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(false);
+            }
+            else{
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+        } else if(currentFigure == "Rook"){
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+            else{
+                pinnedFigures.at(i)->setEnabled(false);
+            }
+        } else if(currentFigure == "Queen"){
+            pinnedFigures.at(i)->setEnabled(true);
+        }
+    }
+}
 void Widget::checkIfThereIsAPiece(QPushButton *button, QString color)
 {
     ifExist = false;

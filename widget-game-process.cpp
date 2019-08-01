@@ -27,6 +27,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
     if(!action)                     //1st pressing
     {
         possibleMoves.clear();
+
+
         //qDebug()<<blackFiguresButtons;
         if(isItCheck){                      //GOTTA MOVE THAT LATER
             disableAllButons();
