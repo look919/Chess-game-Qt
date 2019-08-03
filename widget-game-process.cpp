@@ -27,13 +27,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
     if(!action)                     //1st pressing
     {
         possibleMoves.clear();
-
-
         //qDebug()<<blackFiguresButtons;
-        if(isItCheck){                      //GOTTA MOVE THAT LATER
-            disableAllButons();
-            enableProtectingFigures();
-        }
 
         action=true;
         currentFigureButton=button;          //needed to clean the field after move
@@ -58,7 +52,6 @@ void Widget::on_any_button_clicked(QPushButton *button)
     }
     else if(action)                             //2nd pressing
     {
-       validMove = true;
        action=false;
        cleanCoordinates();
 
@@ -229,5 +222,71 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
            }
        }
+    }
+}
+
+void Widget::switchPlayers(QPushButton *button)
+{
+    if(whiteMove)
+    {
+        whiteHistory(button);
+        isItCheck = false;
+
+        pinnedFigures.clear();                  //clearing pinned figures and opponent possible moves from previous move
+        attackingFigures.clear();
+        opponentPossibleMoves.clear();
+        checkingMoves.clear();
+
+        allPossibleMovesFromOpponentSide();
+
+
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
+        qDebug()<<"checking"<<checkingMoves;
+
+        whiteMove = false;
+        ui->startGameButton->setText("Black move!");
+        disableAllButons();
+
+        if(isItCheck) enableProtectingFigures();
+        else enableBlackButtons();
+        markKings();
+
+        pinnedFigues();
+
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
+    }
+    else if(!whiteMove)
+    {
+        blackHistory(button);    
+        numberOfMove++;
+        isItCheck = false;
+
+        pinnedFigures.clear();
+        attackingFigures.clear();
+        opponentPossibleMoves.clear();
+        checkingMoves.clear();
+
+        allPossibleMovesFromOpponentSide();
+
+
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
+        qDebug()<<"checking"<<checkingMoves;
+
+        whiteMove = true;
+        ui->startGameButton->setText("White move!");
+        disableAllButons();
+
+        if(isItCheck) enableProtectingFigures();
+        else enableWhiteButtons();
+
+        markKings();
+
+        pinnedFigues();
+
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
     }
 }

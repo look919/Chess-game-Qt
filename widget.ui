@@ -2245,7 +2245,7 @@ border: 1px solid black;</string>
        </font>
       </property>
       <property name="cursor">
-       <cursorShape>ForbiddenCursor</cursorShape>
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: #035623;

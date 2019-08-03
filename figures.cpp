@@ -58,10 +58,10 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
 
 }
 
-void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
+void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();                                      //disable all buttons in order to enable only permitted moves
+    if(!check) disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
     pinned = false;
     pinnedPoonStraight = false;
@@ -158,23 +158,45 @@ void Widget::poonMovementWhite(QPushButton *button, bool enemyMoves)
         poonColision(button);
         if(!pinned || !pinnedPoonStraight) poonTaking(button,"black");
 
+        if(isItCheck){
+            for(int i=0; i<possibleMoves.size();i++){
+                bool validMove = false;
+                for(int j=0;j<checkingMoves.size();j++){
+                    if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                }
+                if(validMove) validMove=false;
+                else {
+                    blockMove(possibleMoves.at(i));
+                    i=-1;
+                }
+            }
+        }
         matchCoordinates();
     }
     else if(enemyMoves==true){
-        possibleMoves.clear();
-        poonTaking(button);
+       if(!check) {
+           possibleMoves.clear();
+           poonTaking(button);
+       }
+       else {
+           poonColision(button);
+           poonTaking(button,"black");
+       }
 
-        qDebug()<<"poon"<<possibleMoves;
+       if(!check) qDebug()<<"poon"<<possibleMoves;
 
         for(int i=0; i<possibleMoves.size();i++){
-            opponentPossibleMoves.push_back(possibleMoves.at(i));
+            if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+            else protectingMoves.push_back(possibleMoves.at(i));
         }
+
+        if(!check) isKingChecked(button);
     }
 }
-void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
+void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();                                      //disable all buttons in order to enable only permitted moves
+    if(!check) disableAllButons();                                      //disable all buttons in order to enable only permitted moves
 
     pinned = false;
     pinnedPoonStraight = false;
@@ -271,17 +293,41 @@ void Widget::poonMovementBlack(QPushButton *button, bool enemyMoves)
         poonColision(button);
         if(!pinned || !pinnedPoonStraight) poonTaking(button,"white");
 
+        if(isItCheck){
+            for(int i=0; i<possibleMoves.size();i++){
+                bool validMove = false;
+                for(int j=0;j<checkingMoves.size();j++){
+                    if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                }
+                if(validMove) validMove=false;
+                else {
+                    blockMove(possibleMoves.at(i));
+                    i=-1;
+                }
+            }
+        }
+
         matchCoordinates();
     }
     else if(enemyMoves==true){
-        possibleMoves.clear();
-        poonTaking(button);
+        if(!check) {
+            possibleMoves.clear();
+            poonTaking(button);
 
-        qDebug()<<"poon"<<possibleMoves;
+        }
+        else {
+            poonColision(button);
+            poonTaking(button,"white");
+        }
+
+        if(!check) qDebug()<<"poon"<<possibleMoves;
 
         for(int i=0; i<possibleMoves.size();i++){
-            opponentPossibleMoves.push_back(possibleMoves.at(i));
+            if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+            else protectingMoves.push_back(possibleMoves.at(i));
         }
+
+        if(!check) isKingChecked(button);
     }
 }
 void Widget::poonColision(QPushButton *button)
@@ -467,10 +513,10 @@ void Widget::poonTaking(QPushButton *button, QString color, bool abstract)
 
 }
 
-void Widget::knightMovement(QPushButton *button, bool enemyMoves)
+void Widget::knightMovement(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();
+    if(!check) disableAllButons();
 
     QString left;                           //tracking position
     QString right;
@@ -565,42 +611,34 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
 
     coords=left+down_further;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=left_further+down;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=left_further+up;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=left+up_further;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=right+down_further;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=right_further+down;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=right_further+up;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
     coords=right+up_further;
     if(coords[0]!='x' && coords[1]!='x'){
-        //if pinned function
         possibleMoves.push_back(coords);
     }
 
@@ -610,13 +648,31 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
             colision(button,"white");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteKnight-blueField.png);");
+
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
+
             matchCoordinates();
         }
         else if (enemyMoves == true) {
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+               if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+               else protectingMoves.push_back(possibleMoves.at(i));
             }
-            qDebug()<<"knight"<<possibleMoves;
+           if(!check) isKingChecked(button);
+
+           if(!check) qDebug()<<"knight"<<possibleMoves;
         }
     }
     else if(!whiteMove)
@@ -625,21 +681,37 @@ void Widget::knightMovement(QPushButton *button, bool enemyMoves)
             colision(button,"black");
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackKnight-blueField.png);");
+
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if (enemyMoves == true) {
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-            qDebug()<<"knight"<<possibleMoves;
+           if(!check) isKingChecked(button);
+            if(!check) qDebug()<<"knight"<<possibleMoves;
         }
     }
 
 }
-void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
+void Widget::bishopMovement(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();
+    if(!check) disableAllButons();
 
     char up;
     char down;
@@ -725,7 +797,8 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 coords="right";
                 if(up=='9') break;
             }
-            pinnedMovement(button,"white",enemyMoves);
+           pinnedMovement(button,"white",enemyMoves);
+
 
             up=storageUp;
             down=storageDown;
@@ -743,7 +816,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 coords="right";
                 if(down=='0') break;
             }
-            pinnedMovement(button,"white",enemyMoves);
+           pinnedMovement(button,"white",enemyMoves);
 
             up=storageUp;
             down=storageDown;
@@ -794,14 +867,28 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false) {
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteBishop-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
 
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-            qDebug()<<"bishop"<<possibleMoves;
+          if(!check)  qDebug()<<"bishop"<<possibleMoves;
         }
         possibleMovesStorage.clear();
         abstractPossibleMoves.clear();
@@ -856,7 +943,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 coords="left";
                 if(up=='9') break;
             }
-            pinnedMovement(button,"black",enemyMoves);
+           pinnedMovement(button,"black",enemyMoves);
 
             up=storageUp;
             down=storageDown;
@@ -875,7 +962,7 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
                 coords="left";
                 if(down=='0') break;
             }
-            pinnedMovement(button,"black",enemyMoves);
+           pinnedMovement(button,"black",enemyMoves);
 
             up=storageUp;
             down=storageDown;
@@ -890,22 +977,36 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false) {
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackBishop-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-             qDebug()<<"bishop"<<possibleMoves;
+           if(!check)  qDebug()<<"bishop"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
 
 }
-void Widget::rookMovement(QPushButton *button, bool enemyMoves)
+void Widget::rookMovement(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();
+    if(!check) disableAllButons();
 
     char up;
     char down;
@@ -983,7 +1084,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            pinnedMovement(button,"white",enemyMoves);
+           pinnedMovement(button,"white",enemyMoves);
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
@@ -992,7 +1093,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            pinnedMovement(button,"white",enemyMoves);
+          pinnedMovement(button,"white",enemyMoves);
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
@@ -1001,7 +1102,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            pinnedMovement(button,"white",enemyMoves);
+           pinnedMovement(button,"white",enemyMoves);
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
@@ -1010,7 +1111,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            pinnedMovement(button,"white",enemyMoves);
+          pinnedMovement(button,"white",enemyMoves);
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -1020,13 +1121,27 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false) {
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteRook-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-             qDebug()<<"rook"<<possibleMoves;
+           if(!check)  qDebug()<<"rook"<<possibleMoves;
         }
         possibleMovesStorage.clear();
 
@@ -1040,7 +1155,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="up";
             }
-            pinnedMovement(button,"black",enemyMoves);
+          pinnedMovement(button,"black",enemyMoves);
         }
         if(down!='x'){
             for(char i=down;i>='1';i--){
@@ -1049,7 +1164,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="down";
             }
-            pinnedMovement(button,"black",enemyMoves);
+          pinnedMovement(button,"black",enemyMoves);
         }
         if(right!='x'){
             for(char i=right;i<='h';i++){
@@ -1058,7 +1173,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="right";
             }
-            pinnedMovement(button,"black",enemyMoves);
+           pinnedMovement(button,"black",enemyMoves);
         }
         if(left!='x'){
             for(char i=left;i>='a';i--){
@@ -1067,7 +1182,7 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
                 if(enemyMoves == true) abstractPossibleMoves.push_back(coords);
                 coords="left";
             }
-            pinnedMovement(button,"black",enemyMoves);
+          pinnedMovement(button,"black",enemyMoves);
         }
 
         for(int i=0;i<possibleMovesStorage.size();i++){         // taking avaiable moves from memory, that sets in colision function
@@ -1077,21 +1192,35 @@ void Widget::rookMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false) {
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackRook-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-             qDebug()<<"rook"<<possibleMoves;
+           if(!check)  qDebug()<<"rook"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
 }
-void Widget::queenMovement(QPushButton *button, bool enemyMoves)
+void Widget::queenMovement(QPushButton *button, bool enemyMoves, bool check)
 {
     possibleMoves.clear();
-    disableAllButons();
+    if(!check) disableAllButons();
     QVector <QString> connectMoves;
 
     //BISHOP
@@ -1499,13 +1628,27 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false){
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/whiteQueen-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-             qDebug()<<"queen"<<possibleMoves;
+           if(!check)  qDebug()<<"queen"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
@@ -1514,21 +1657,35 @@ void Widget::queenMovement(QPushButton *button, bool enemyMoves)
         if(enemyMoves == false){
             button->setEnabled(true);
             button->setStyleSheet("background-image: url(:/img/blackQueen-blueField.png);");
+            if(isItCheck){
+                for(int i=0; i<possibleMoves.size();i++){
+                    bool validMove = false;
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(checkingMoves.at(j) == possibleMoves.at(i)) validMove = true;
+                    }
+                    if(validMove) validMove=false;
+                    else {
+                        blockMove(possibleMoves.at(i));
+                        i=-1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-            qDebug()<<"queen"<<possibleMoves;
+         if(!check)   qDebug()<<"queen"<<possibleMoves;
         }
         possibleMovesStorage.clear();
     }
 }
-void Widget::kingMovement(QPushButton *button, bool enemyMoves)
+void Widget::kingMovement(QPushButton *button, bool enemyMoves,bool check)
 {
     possibleMoves.clear();
-    disableAllButons();
+    if(!check) disableAllButons();
 
     QString up;
     QString down;
@@ -1640,10 +1797,25 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
             matchCoordinates();
         }
         else if(enemyMoves == true){
-            for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+            if(check) {
+                colision(button,"white");
+
+                for(int i=0;i<opponentPossibleMoves.size();i++){
+                    for(int j=0;j<possibleMoves.size();j++){
+                        if(possibleMoves.at(j) == opponentPossibleMoves.at(i)) {
+                            possibleMoves.remove(j);
+                            j= -1;
+                        }
+                    }
+                }
+
+
             }
-            qDebug()<<"king"<<possibleMoves;
+            for(int i=0;i<possibleMoves.size();i++){
+               if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+               else protectingMoves.push_back(possibleMoves.at(i));
+            }
+         if(!check)   qDebug()<<"king"<<possibleMoves;
         }
     }
     else if(!whiteMove)
@@ -1667,9 +1839,10 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves)
         }
         else if(enemyMoves == true){
             for(int i=0;i<possibleMoves.size();i++){
-                opponentPossibleMoves.push_back(possibleMoves.at(i));
+                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+                else protectingMoves.push_back(possibleMoves.at(i));
             }
-            qDebug()<<"king"<<possibleMoves;
+          if(!check)  qDebug()<<"king"<<possibleMoves;
         }
     }
 }
@@ -1707,7 +1880,7 @@ void Widget::kingCastle()
     }
 }
 
-void Widget::pinnedMovement(QPushButton *button,QString color, bool enemyMoves)
+void Widget::pinnedMovement(QPushButton *button,QString color, bool enemyMoves, bool check)
 {
     pinned = false;
     index = 0;
@@ -1738,9 +1911,12 @@ void Widget::pinnedMovement(QPushButton *button,QString color, bool enemyMoves)
     else if(!pinned){
         if(enemyMoves == false) colision(button,color,true);
         else {
+
             colision(button,color,true,enemyMoves);
             abstractColision(button);
+            if(!check) isKingChecked(button);
             abstractPossibleMoves.clear();
+            possibleMoves.clear();
         }
     }
 

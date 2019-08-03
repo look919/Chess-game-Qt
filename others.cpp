@@ -140,58 +140,7 @@ void Widget::setFiguresPosition()
         blackFiguresButtons.push_back(ui->e8);
 }
 
-void Widget::switchPlayers(QPushButton *button)
-{
-    if(whiteMove)
-    {
-        whiteHistory(button);
 
-
-        pinnedFigures.clear();                  //clearing pinned figures and opponent possible moves from previous move
-        attackingFigures.clear();
-        opponentPossibleMoves.clear();
-
-        allPossibleMovesFromOpponentSide();
-        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
-
-        whiteMove = false;
-        isKingChecked();
-
-        ui->startGameButton->setText("Black move!");
-        disableAllButons();
-        enableBlackButtons();
-        pinnedFigues();
-
-
-        possibleMoves.clear();
-        possibleMovesStorage.clear();
-    }
-    else if(!whiteMove)
-    {
-        blackHistory(button);
-
-
-        pinnedFigures.clear();
-        attackingFigures.clear();
-        opponentPossibleMoves.clear();
-
-        allPossibleMovesFromOpponentSide();
-        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
-
-        whiteMove = true;
-        isKingChecked();
-        ui->startGameButton->setText("White move!");
-        numberOfMove++;
-
-        disableAllButons();
-        enableWhiteButtons();
-        pinnedFigues();
-
-
-        possibleMoves.clear();
-        possibleMovesStorage.clear();
-    }
-}
 
 void Widget::whiteHistory(QPushButton *button)
 {
@@ -305,16 +254,63 @@ void Widget::blackHistory(QPushButton *button)
         }
 }
 
-void Widget::isKingChecked()
+void Widget::isKingChecked(QPushButton *button)
 {
-    if(whiteMove){
-        isItCheck = false;
-        for(int i=0;i<opponentPossibleMoves.size();i++){
-            if(whiteFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
+    if(!whiteMove){
+        for(int i=0;i<possibleMoves.size();i++){
+            if(whiteFiguresButtons[15]->objectName() == possibleMoves.at(i)){
                 isItCheck = true;
+                if(currentFigure == "Knight" || currentFigure == "poon") checkingMoves.push_back(button->objectName());
+                else if(currentFigure == "Bishop" || currentFigure == "Rook" || currentFigure == "Queen") {
+
+                    checkingMoves.push_back(button->objectName());
+                    for(int j=0;j<possibleMoves.size();j++){
+                        checkingMoves.push_back(possibleMoves.at(j));
+                    }
+                }
+
                 break;
             }
         }
+
+    }
+    else if(whiteMove){
+        for(int i=0;i<possibleMoves.size();i++){
+            if(blackFiguresButtons[15]->objectName() == possibleMoves.at(i)){
+                isItCheck = true;
+
+                if(currentFigure == "Knight" || currentFigure == "poon") checkingMoves.push_back(button->objectName());
+                else if(currentFigure == "Bishop" || currentFigure == "Rook" || currentFigure == "Queen") {
+
+                    checkingMoves.push_back(button->objectName());
+                    for(int j=0;j<possibleMoves.size();j++){
+                        checkingMoves.push_back(possibleMoves.at(j));
+                    }
+                }
+
+                break;
+            }
+        }
+
+    }
+}
+
+void Widget::isKingMated()
+{
+    qDebug()<<"GGGGGG";
+    if(whiteMove)
+    {
+
+    }
+    else if(!whiteMove)
+    {
+
+    }
+}
+
+void Widget::markKings()
+{
+    if(whiteMove){
         if(isItCheck){
             whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-redField.png);");
         }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()){
@@ -323,18 +319,11 @@ void Widget::isKingChecked()
             whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
         }
 
-
         if(blackFiguresButtons[15]->font().bold()) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
         else if(blackFiguresButtons[15]->font().bold()==false) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
     }
-    else if(!whiteMove){
-        isItCheck = false;
-        for(int i=0;i<opponentPossibleMoves.size();i++){
-            if(blackFiguresButtons[15]->objectName() == opponentPossibleMoves.at(i)){
-                isItCheck = true;
-                break;
-            }
-        }
+    else if(!whiteMove)
+    {
         if(isItCheck){
             blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-redField.png);");
         }else if(!isItCheck && blackFiguresButtons[15]->font().bold()){
@@ -342,7 +331,6 @@ void Widget::isKingChecked()
         }else if(!isItCheck && blackFiguresButtons[15]->font().bold()==false){
             blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
         }
-
 
         if(whiteFiguresButtons[15]->font().bold()) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
         else if(whiteFiguresButtons[15]->font().bold()==false) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");

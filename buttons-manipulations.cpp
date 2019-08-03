@@ -95,7 +95,6 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
         for(int i=0; i<possibleMoves.size();i++){
             possibleMovesStorage.push_back(possibleMoves.at(i));           //coping valid moves to memory
         }
-        possibleMoves.clear();
     }
 
 }
@@ -608,7 +607,9 @@ void Widget::cleanCoordinates_shorter(QPushButton *button)
 void Widget::goBack(QPushButton *button)
 {
     disableAllButons();
-    if(whiteMove) enableWhiteButtons();
+    if(whiteMove && isItCheck) enableProtectingFigures();
+    else if(whiteMove) enableWhiteButtons();
+    else if(!whiteMove && isItCheck) enableProtectingFigures();
     else if(!whiteMove) enableBlackButtons();
 
     possibleMoves.clear();
@@ -619,6 +620,95 @@ void Widget::goBack(QPushButton *button)
 }
 
 
+void Widget::enableProtectingFigures()
+{
+    defendersCounter =0;
+    if(whiteMove)
+    {
+        for(int i=0;i<whiteFiguresButtons.size();i++){
+            if(whiteFiguresButtons.at(i)->objectName()!="empty"){
+
+                getFigureName(whiteFiguresButtons.at(i),true);
+
+                if(currentFigure == "poon"){
+                    poonMovementWhite(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Knight"){
+                    knightMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Bishop"){
+                    bishopMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Rook"){
+                    rookMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Queen"){
+                    queenMovement(whiteFiguresButtons.at(i), true,true);
+                }
+
+                bool canItDefend = false;
+
+                for(int k=0;k<protectingMoves.size();k++){
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(protectingMoves.at(k) == checkingMoves.at(j)){
+                            canItDefend = true;
+                            break;
+                        }
+                    }
+                    if(protectingMoves.at(k) == whiteFiguresButtons[15]->objectName()){
+                        protectingMoves.remove(k);
+                        k=-1;
+                    }
+                }
+
+                if(canItDefend) whiteFiguresButtons.at(i)->setEnabled(true);
+                else whiteFiguresButtons.at(i)->setEnabled(false);
+
+                //qDebug()<<currentFigure<<canItDefend<<protectingMoves<<attackingFigures; i dont know what it doesnt work/ didnt make anything for black
+                if(whiteFiguresButtons.at(i)->isEnabled() && i!=15) defendersCounter++;
+                protectingMoves.clear();
+            }
+        }
+        whiteFiguresButtons[15]->setEnabled(true);
+        kingMovement(whiteFiguresButtons.at(15), true,true);
+
+        if(defendersCounter == 0 && protectingMoves.size()==0) isKingMated();
+        protectingMoves.clear();
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0;i<blackFiguresButtons.size();i++){
+            if(blackFiguresButtons.at(i)->objectName()!="empty"){
+
+                getFigureName(blackFiguresButtons.at(i),true);
+
+                if(currentFigure == "poon"){
+                    poonMovementBlack(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Knight"){
+                    knightMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Bishop"){
+                    bishopMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Rook"){
+                    rookMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Queen"){
+                    queenMovement(blackFiguresButtons.at(i), true,true);
+                }
+
+                bool canItDefend = false;
+                for(int k=0;k<protectingMoves.size();k++){
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(protectingMoves.at(k) == checkingMoves.at(j)){
+                            canItDefend = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(canItDefend) blackFiguresButtons.at(i)->setEnabled(true);
+                else blackFiguresButtons.at(i)->setEnabled(false);
+
+                protectingMoves.clear();
+            }
+        }
+        blackFiguresButtons[15]->setEnabled(true);
+    }
+}
 
 
 void Widget::disableAllButons()
@@ -841,10 +931,6 @@ void Widget::enableBlackButtons_shorter(QPushButton *button)
     }
 }
 
-void Widget::enableProtectingFigures()
-{
-
-}
 
 
 void Widget::matchCoordinates()                             //function that enable permitted moves buttons
