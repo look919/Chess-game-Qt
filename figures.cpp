@@ -799,7 +799,6 @@ void Widget::bishopMovement(QPushButton *button, bool enemyMoves, bool check)
             }
            pinnedMovement(button,"white",enemyMoves);
 
-
             up=storageUp;
             down=storageDown;
             left=storageLeft;
@@ -1912,13 +1911,13 @@ void Widget::pinnedMovement(QPushButton *button,QString color, bool enemyMoves, 
         if(enemyMoves == false) colision(button,color,true);
         else {
 
-            colision(button,color,true,enemyMoves);
+            colision(button,color,true,true);
             abstractColision(button);
             if(!check) isKingChecked(button);
             abstractPossibleMoves.clear();
-            possibleMoves.clear();
+
         }
+        possibleMoves.clear();
     }
 
-    pinned = false;
 }

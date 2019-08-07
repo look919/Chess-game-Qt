@@ -38,6 +38,7 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                         if(color == "white"){
 
                             checkIfThereIsAPiece(requiredButton,"black");                      //WHITE
+                            if(requiredButton == blackFiguresButtons[15] && enemyMoves == true) ifExist = false;
 
                             if(ifExist==true){
                                 blocking=true;
@@ -45,6 +46,7 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                             }
                             if(enemyMoves == true){
                                 checkIfThereIsAPiece(requiredButton,"white");
+
 
                                 if(ifExist==true){
                                     blocking=true;
@@ -54,6 +56,7 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                         } else if(color == "black"){
 
                             checkIfThereIsAPiece(requiredButton,"white");                      //WHITE
+                            if(requiredButton == whiteFiguresButtons[15] && enemyMoves == true) ifExist = false;
 
                             if(ifExist==true){
                                 blocking=true;
@@ -72,7 +75,7 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                }
 
             }
-            else{
+            else if(blocking == true){
 
                 if(coords=="up" || coords == "down"){
                         while(possibleMoves.at(i)[1]!='1' && possibleMoves.at(i)[1]!='8'){
