@@ -5,6 +5,7 @@
 
 void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces, bool enemyMoves)
 {
+    bool checkProperty = false;
     if(currentFigure=="Knight"|| currentFigure=="King"){
         for(int i=0; i<possibleMoves.size();i++){
 
@@ -38,7 +39,9 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                         if(color == "white"){
 
                             checkIfThereIsAPiece(requiredButton,"black");                      //WHITE
-                            if(requiredButton == blackFiguresButtons[15] && enemyMoves == true) ifExist = false;
+                            if(requiredButton == blackFiguresButtons[15] && enemyMoves == true) {
+                                checkProperty = true;
+                            }
 
                             if(ifExist==true){
                                 blocking=true;
@@ -56,8 +59,9 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                         } else if(color == "black"){
 
                             checkIfThereIsAPiece(requiredButton,"white");                      //WHITE
-                            if(requiredButton == whiteFiguresButtons[15] && enemyMoves == true) ifExist = false;
-
+                            if(requiredButton == whiteFiguresButtons[15] && enemyMoves == true) {
+                                checkProperty = true;
+                            }
                             if(ifExist==true){
                                 blocking=true;
                                 ifExist=false;
@@ -77,6 +81,7 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
             }
             else if(blocking == true){
 
+                if(checkProperty) opponentPossibleMovesStorage.push_back(possibleMoves.at(i));
                 if(coords=="up" || coords == "down"){
                         while(possibleMoves.at(i)[1]!='1' && possibleMoves.at(i)[1]!='8'){
                             possibleMoves.remove(i);
@@ -647,30 +652,34 @@ void Widget::enableProtectingFigures()
 
                 bool canItDefend = false;
 
+
                 for(int k=0;k<protectingMoves.size();k++){
+                    if(protectingMoves.at(k) == whiteFiguresButtons[15]->objectName()){
+                        protectingMoves.remove(k);
+                        k=-1;
+                        continue;
+                    }
                     for(int j=0;j<checkingMoves.size();j++){
                         if(protectingMoves.at(k) == checkingMoves.at(j)){
                             canItDefend = true;
                             break;
                         }
-                    }
-                    if(protectingMoves.at(k) == whiteFiguresButtons[15]->objectName()){
-                        protectingMoves.remove(k);
-                        k=-1;
-                    }
+                    }                  
                 }
 
-                if(canItDefend) whiteFiguresButtons.at(i)->setEnabled(true);
+                if(canItDefend) {
+                    whiteFiguresButtons.at(i)->setEnabled(true);
+                    defendersCounter++;
+                }
                 else whiteFiguresButtons.at(i)->setEnabled(false);
 
-                //qDebug()<<currentFigure<<canItDefend<<protectingMoves<<attackingFigures; i dont know what it doesnt work/ didnt make anything for black
-                if(whiteFiguresButtons.at(i)->isEnabled() && i!=15) defendersCounter++;
                 protectingMoves.clear();
             }
         }
         whiteFiguresButtons[15]->setEnabled(true);
         kingMovement(whiteFiguresButtons.at(15), true,true);
 
+        qDebug()<<"Report:"<<defendersCounter<<protectingMoves.size();
         if(defendersCounter == 0 && protectingMoves.size()==0) isKingMated();
         protectingMoves.clear();
     }
@@ -694,7 +703,14 @@ void Widget::enableProtectingFigures()
                 }
 
                 bool canItDefend = false;
+
+
                 for(int k=0;k<protectingMoves.size();k++){
+                    if(protectingMoves.at(k) == blackFiguresButtons[15]->objectName()){
+                        protectingMoves.remove(k);
+                        k=-1;
+                        continue;
+                    }
                     for(int j=0;j<checkingMoves.size();j++){
                         if(protectingMoves.at(k) == checkingMoves.at(j)){
                             canItDefend = true;
@@ -703,13 +719,21 @@ void Widget::enableProtectingFigures()
                     }
                 }
 
-                if(canItDefend) blackFiguresButtons.at(i)->setEnabled(true);
+                if(canItDefend) {
+                    blackFiguresButtons.at(i)->setEnabled(true);
+                    defendersCounter++;
+                }
                 else blackFiguresButtons.at(i)->setEnabled(false);
 
                 protectingMoves.clear();
             }
         }
         blackFiguresButtons[15]->setEnabled(true);
+        kingMovement(blackFiguresButtons.at(15), true,true);
+
+        qDebug()<<"Report:"<<defendersCounter<<protectingMoves.size()<<protectingMoves;
+        if(defendersCounter == 0 && (protectingMoves.size()==0 || (protectingMoves.size() == 1 && opponentPossibleMovesStorage == protectingMoves))) isKingMated();
+        protectingMoves.clear();
     }
 }
 

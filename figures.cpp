@@ -1776,7 +1776,7 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves,bool check)
         possibleMoves.push_back(coords);
 
     }
-    kingCastle();
+    if(checkingMoves.size() == 0) kingCastle();
     if(whiteMove)
     {
 
@@ -1788,6 +1788,15 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves,bool check)
             for(int i=0;i<opponentPossibleMoves.size();i++){
                 for(int j=0;j<possibleMoves.size();j++){
                     if(possibleMoves.at(j) == opponentPossibleMoves.at(i)) {
+                        possibleMoves.remove(j);
+                        j= -1;
+                    }
+                }
+            }
+
+            for(int i=0;i<opponentPossibleMovesStorage.size();i++){
+                for(int j=0;j<possibleMoves.size();j++){
+                    if(possibleMoves.at(j) == opponentPossibleMovesStorage.at(i)) {
                         possibleMoves.remove(j);
                         j= -1;
                     }
@@ -1819,7 +1828,6 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves,bool check)
     }
     else if(!whiteMove)
     {
-
         if(enemyMoves == false){
             colision(button,"black");
             button->setEnabled(true);
@@ -1834,14 +1842,34 @@ void Widget::kingMovement(QPushButton *button, bool enemyMoves,bool check)
                 }
             }
 
+            for(int i=0;i<opponentPossibleMovesStorage.size();i++){
+                for(int j=0;j<possibleMoves.size();j++){
+                    if(possibleMoves.at(j) == opponentPossibleMovesStorage.at(i)) {
+                        possibleMoves.remove(j);
+                        j= -1;
+                    }
+                }
+            }
             matchCoordinates();
         }
         else if(enemyMoves == true){
-            for(int i=0;i<possibleMoves.size();i++){
-                if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
-                else protectingMoves.push_back(possibleMoves.at(i));
+            if(check) {
+                colision(button,"black");
+
+                for(int i=0;i<opponentPossibleMoves.size();i++){
+                    for(int j=0;j<possibleMoves.size();j++){
+                        if(possibleMoves.at(j) == opponentPossibleMoves.at(i)) {
+                            possibleMoves.remove(j);
+                            j= -1;
+                        }
+                    }
+                }
             }
-          if(!check)  qDebug()<<"king"<<possibleMoves;
+            for(int i=0;i<possibleMoves.size();i++){
+               if(!check) opponentPossibleMoves.push_back(possibleMoves.at(i));
+               else protectingMoves.push_back(possibleMoves.at(i));
+            }
+         if(!check)   qDebug()<<"king"<<possibleMoves;
         }
     }
 }

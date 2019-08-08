@@ -235,7 +235,9 @@ void Widget::switchPlayers(QPushButton *button)
         pinnedFigures.clear();                  //clearing pinned figures and opponent possible moves from previous move
         attackingFigures.clear();
         opponentPossibleMoves.clear();
+        opponentPossibleMovesStorage.clear();
         checkingMoves.clear();
+        protectingMoves.clear();
 
         allPossibleMovesFromOpponentSide();
 
@@ -266,7 +268,9 @@ void Widget::switchPlayers(QPushButton *button)
         pinnedFigures.clear();
         attackingFigures.clear();
         opponentPossibleMoves.clear();
+        opponentPossibleMovesStorage.clear();
         checkingMoves.clear();
+        protectingMoves.clear();
 
         allPossibleMovesFromOpponentSide();
 

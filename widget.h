@@ -81,6 +81,7 @@ private:
 
     void allPossibleMovesFromOpponentSide();
     QVector <QString> opponentPossibleMoves;
+    QVector <QString> opponentPossibleMovesStorage;
 
     void blockMove(QString keyword);
     void goBack(QPushButton *button);

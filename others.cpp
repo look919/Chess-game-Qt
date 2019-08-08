@@ -44,7 +44,6 @@ void Widget::setStartingParameters()
 
 
 }
-
 void Widget::placePiecesOnBoard()
 {
     //white poons
@@ -98,7 +97,6 @@ void Widget::placePiecesOnBoard()
 
 
 }
-
 void Widget::setFiguresPosition()
 {
         whiteFiguresButtons.clear();
@@ -221,7 +219,6 @@ void Widget::whiteHistory(QPushButton *button)
         ui->gameHistory_white->setAlignment(Qt::AlignCenter);
     }
 }
-
 void Widget::blackHistory(QPushButton *button)
 {
     if(currentFigure == "poon"){                                                        //Setting information about last move on the board
@@ -267,6 +264,7 @@ void Widget::isKingChecked(QPushButton *button)
                     for(int j=0;j<possibleMoves.size();j++){
                         checkingMoves.push_back(possibleMoves.at(j));
                     }
+
                 }
 
                 break;
@@ -298,13 +296,16 @@ void Widget::isKingChecked(QPushButton *button)
 void Widget::isKingMated()
 {
     qDebug()<<"GGGGGG";
+    disableAllButons();
     if(whiteMove)
     {
-
+        ui->startGameButton->setStyleSheet("background-color: red;color:white;border: 1px solid blue; border-radius: 25px;");
+        ui->startGameButton->setText("Black Won!");
     }
     else if(!whiteMove)
     {
-
+        ui->startGameButton->setStyleSheet("background-color: red;color:white;border: 1px solid blue; border-radius: 25px;");
+        ui->startGameButton->setText("White Won!");
     }
 }
 
