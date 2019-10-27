@@ -27,7 +27,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
     if(!action)                     //1st pressing
     {
         possibleMoves.clear();
-        //qDebug()<<blackFiguresButtons;
+        qDebug()<<whiteFiguresButtons;
 
         action=true;
         currentFigureButton=button;          //needed to clean the field after move

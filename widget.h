@@ -5,7 +5,6 @@
 //checkmate
 //what if check
 #include <QWidget>
-#include "promotepawn.h"
 #include <QPushButton>
 #include <QList>
 #include <QDebug>

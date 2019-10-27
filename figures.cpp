@@ -10,7 +10,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
-                else if(i<=14) currentFigure = "Queen";
+                else if(i<=14 || i>15) currentFigure = "Queen";
                 else if(i<=15) currentFigure = "King";
                 break;
             }
@@ -23,7 +23,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
-                else if(i<=14) currentFigure = "Queen";
+                else if(i<=14 || i>15) currentFigure = "Queen";
                 else if(i<=15) currentFigure = "King";
                 break;
             }
@@ -36,7 +36,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
-                else if(i<=14) currentFigure = "Queen";
+                else if(i<=14 || i>15) currentFigure = "Queen";
                 else if(i<=15) currentFigure = "King";
                 break;
             }
@@ -49,7 +49,7 @@ void Widget::getFigureName(QPushButton *button, bool enemyMoves)
                 else if(i<=9) currentFigure = "Knight";
                 else if(i<=11) currentFigure = "Bishop";
                 else if(i<=13) currentFigure = "Rook";
-                else if(i<=14) currentFigure = "Queen";
+                else if(i<=14 || i>15) currentFigure = "Queen";
                 else if(i<=15) currentFigure = "King";
                 break;
             }
