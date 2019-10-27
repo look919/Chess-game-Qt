@@ -1,2 +1,0 @@
-This is the 2nd version of my chess game,
-i decided to start from beginning because previous version wasnt working as i expected, from now on i will copy the most imporant files/functions from previous version
