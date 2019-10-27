@@ -1,8 +1,10 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+//poon promotion
+//checkmate
+//what if check
 #include <QWidget>
-#include "promotepawn.h"
 #include <QPushButton>
 #include <QList>
 #include <QDebug>
@@ -17,72 +19,95 @@ public:
     ~Widget();
 private:
     Ui::Widget *ui;
+    //PIECES
+    QVector <QString> blueFigures;              //blue figures used for showing possbile moves and colision system
+    QVector <QPushButton*> whiteFiguresButtons;
+    QVector <QPushButton*> blackFiguresButtons;
+
     void setStartingParameters();
     void placePiecesOnBoard();
+    void setFiguresPosition();
+
 
     bool isItCheck;
     bool isItCheckMate;
-
-    //PIECES
-    QVector <QString> blueFigures;      //blue figures used for showing possbile moves and colision system
-    QVector <QPushButton*> whiteFiguresButtons;
-    QVector <QPushButton*> blackFiguresButtons;
-    void setFiguresPosition();
-
     bool whiteMove;       //checking whether its white or black time to play
     int numberOfMove;
     bool action;          //checking whether player click on the button for the first time(choosing figure) or for the second time(choosing place to move)
 
 
     //figures.cpp
-    void getFigureName(QPushButton *button);
-    QString currentFigure;
+    void getFigureName(QPushButton *button, bool enemyMoves = false);
+    QString currentFigure; 
+    void poonMovementWhite(QPushButton *button, bool enemyMoves=false,bool check=false);    //seperating those two functions to make code cleaner
+    void poonMovementBlack(QPushButton *button, bool enemyMoves=false, bool check=false);
+    void poonColision(QPushButton *button);
+    void poonTaking(QPushButton *button, QString color="none",bool abstract = false);
 
-    QVector <QString> possibleMoves;
-    QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
 
+    void knightMovement(QPushButton *button, bool enemyMoves=false,bool check=false);
+    void bishopMovement(QPushButton *button, bool enemyMoves=false,bool check=false);
+    void rookMovement(QPushButton *button, bool enemyMoves=false,bool check=false);
+    void queenMovement(QPushButton *button, bool enemyMoves=false,bool check=false);
+    void kingMovement(QPushButton *button, bool enemyMoves=false,bool check=false);
+    void kingCastle();
+    bool whiteCastleShort;
+    bool whiteCastleLong;
+    bool blackCastleShort;
+    bool blackCastleLong;
 
     QString coords;
-    void poonMovementWhite(QPushButton *button);    //seperating those two functions to make code cleaner
-    void poonMovementBlack(QPushButton *button);
-    void poonColision(QPushButton *button);
-    void poonTaking(QPushButton *button, QString color);
+    QVector <QString> possibleMoves;
+    QVector <QString> possibleMovesStorage;       // using in rook,queen and bishop functions to allow colision
+    QVector <QString> abstractPossibleMoves;
+    QVector <QString> protectingMoves;
+
+    void pinnedMovement(QPushButton *button,QString color, bool enemyMoves, bool check= false);
+    bool pinned;
+    bool pinnedPoonStraight;
+    int index;
+
+
+
+    //moves
+    void move(QPushButton *button, QString figure);
+    void castleMove(QString side);
     void poonPromotion(QPushButton *button, QString figureColor);
     void enPassantMove(QPushButton *button, QString figure, QString cordNumber);
     bool enPassant;
     QString enPassantLeft;
     QString enPassantRight;
 
+    void allPossibleMovesFromOpponentSide();
+    QVector <QString> opponentPossibleMoves;
+    QVector <QString> opponentPossibleMovesStorage;
 
-    void knightMovement(QPushButton *button);
-    void bishopMovement(QPushButton *button);
-    void rookMovement(QPushButton *button);
-    void queenMovement(QPushButton *button);
-    void kingMovement(QPushButton *button);
+    void blockMove(QString keyword);
+    void goBack(QPushButton *button);
+    QPushButton *currentFigureButton;       //cleaners
+    QString currentFigureStyleSheet;
+
 
 
     //buttons-manipulations
+    void pinnedFigues();
+    QVector <QPushButton*> pinnedFigures;
+    QVector <QPushButton*> attackingFigures;
+    void isKingChecked(QPushButton *button);
+    void isKingMated();
+    int defendersCounter;
+    void markKings();
+    QVector <QString> checkingMoves;
+    void colision(QPushButton *button, QString color="none", bool colisionWithOpponentPieces = false, bool isenemyMove = false);
+    void abstractColision(QPushButton *button);
     void matchCoordinates();
     void showPermittedMoves(QPushButton *button);
-    void colision(QPushButton *button, QString color, bool colisionWithOpponentPieces = false);
+    void convertStringToButton(QString coords);
+    QPushButton *requiredButton;
     void checkIfThereIsAPiece(QPushButton *button, QString color="none");
     bool ifExist;
     void cleanCoordinates();
     void cleanCoordinates_shorter(QPushButton *button);
-    void goBack(QPushButton *button);
-    QPushButton *currentFigureButton;       //cleaners
-    QString currentFigureStyleSheet;
-    void move(QPushButton *button, QString figure);
-    void blockMove(QString keyword);
-    void switchPlayers(QPushButton *button);
-    QString matchHistory_white;
-    QString matchHistory_black;
-    QString matchHistory_numberOfMove;
-    QString text;                                   //needed for match history and en passant move
-
-
-    QPushButton *requiredButton;
-    void convertStringToButton(QString coords);
     void disableAllButons();
     void enableWhiteButtons();
     void enableBlackButtons();
@@ -91,10 +116,25 @@ private:
     void enableProtectingFigures();
 
 
-    void on_any_button_clicked(QPushButton *button);    //line 107
+
+
+    void switchPlayers(QPushButton *button);
+
+
+    void whiteHistory(QPushButton *button);
+    void blackHistory(QPushButton *button);
+    QString matchHistory_white;
+    QString matchHistory_black;
+    QString matchHistory_numberOfMove;
+    QString text;                                   //needed for match history and en passant move
+
+
+
+
+    void on_any_button_clicked(QPushButton *button);
 
 private slots:
-    void on_startGameButton_clicked();
+    void on_startGameButton_clicked();      //others.cpp
 
     //buttons-on-board.cpp
     //void on_any_button_clicked(QPushButton *button);

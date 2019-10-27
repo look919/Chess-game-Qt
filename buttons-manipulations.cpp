@@ -1,149 +1,11 @@
 #include "widget.h"
 #include "ui_widget.h"
 
-void Widget::move(QPushButton *button, QString figure)
+
+
+void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces, bool enemyMoves)
 {
-    if(button->font().bold() == true && currentFigureButton->font().bold() == true){                               //CASUAL MOVES
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == false && currentFigureButton->font().bold() == true){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == true && currentFigureButton->font().bold() == false){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == false && currentFigureButton->font().bold() == false){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }
-
-    if(whiteMove){
-        for(int i=0; i<whiteFiguresButtons.size();i++)                      //replacing position of piece in vector
-        {
-            if(currentFigureButton == whiteFiguresButtons.at(i))
-            {
-                whiteFiguresButtons.replace(i,button);
-                break;
-            }
-        }
-
-        for(int j=0; j<blackFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
-        {
-            if(button== blackFiguresButtons.at(j))
-            {
-                blackFiguresButtons.replace(j,ui->empty);                   //using replacing instead of deleting to avoid index changes
-                break;
-            }
-        }
-    }
-    else if(!whiteMove)
-    {
-        for(int i=0; i<blackFiguresButtons.size();i++)
-        {
-            if(currentFigureButton == blackFiguresButtons.at(i))
-            {
-                blackFiguresButtons.replace(i,button);
-                break;
-            }
-        }
-
-        for(int j=0; j<whiteFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
-        {
-            if(button== whiteFiguresButtons.at(j))
-            {
-                whiteFiguresButtons.replace(j,ui->empty);                              //using replacing instead of deleting to avoid index changes
-                break;
-            }
-        }
-    }
-
-}
-
-void Widget::enPassantMove(QPushButton *button, QString figure, QString cordNumber)
-{
-    if(button->font().bold() == true && currentFigureButton->font().bold() == true){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-        convertStringToButton(button->objectName()[0]+cordNumber);
-        requiredButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == false && currentFigureButton->font().bold() == true){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-        convertStringToButton(button->objectName()[0]+cordNumber);
-        requiredButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == true && currentFigureButton->font().bold() == false){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-greenField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-        convertStringToButton(button->objectName()[0]+cordNumber);
-        requiredButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }
-    else if(button->font().bold() == false && currentFigureButton->font().bold() == false){
-        button->setStyleSheet("background-image: url(:/img/"+figure+"-whiteField.png);");
-        currentFigureButton->setStyleSheet("background-color: white;\nborder: 1px solid black;");
-        convertStringToButton(button->objectName()[0]+cordNumber);
-        requiredButton->setStyleSheet("background-color: #035623;\nborder: 1px solid black;");
-    }
-
-
-    if(whiteMove){
-        for(int i=0; i<whiteFiguresButtons.size();i++)                      //replacing position of piece in vector
-        {
-            if(currentFigureButton == whiteFiguresButtons.at(i))
-            {
-                whiteFiguresButtons.replace(i,button);
-                break;
-            }
-        }
-
-        for(int j=0; j<blackFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
-        {
-            if(requiredButton == blackFiguresButtons.at(j))
-            {
-                blackFiguresButtons.replace(j,ui->empty);                   //using replacing instead of deleting to avoid index changes
-                break;
-            }
-        }
-    }
-    else if(!whiteMove)
-    {
-        for(int i=0; i<blackFiguresButtons.size();i++)
-        {
-            if(currentFigureButton == blackFiguresButtons.at(i))
-            {
-                blackFiguresButtons.replace(i,button);
-                break;
-            }
-        }
-
-        for(int j=0; j<whiteFiguresButtons.size();j++)                      //deleting piece from opponent vector if piece was taken
-        {
-            if(requiredButton == whiteFiguresButtons.at(j))
-            {
-                whiteFiguresButtons.replace(j,ui->empty);                              //using replacing instead of deleting to avoid index changes
-                break;
-            }
-        }
-    }
-
-    enPassantLeft = "";
-    enPassantRight = "";
-}
-void Widget::blockMove(QString keyword)
-{
-    for(int i=0;i<possibleMoves.size();i++){
-        if(possibleMoves.at(i)==keyword){
-            possibleMoves.remove(i);
-        }
-    }
-}
-
-void Widget::colision(QPushButton *button, QString color, bool colisionWithOpponentPieces)
-{
+    bool checkProperty = false;
     if(currentFigure=="Knight"|| currentFigure=="King"){
         for(int i=0; i<possibleMoves.size();i++){
 
@@ -158,14 +20,14 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
         }
         button->setEnabled(true);
     }
-    else if(currentFigure=="Bishop"|| currentFigure=="Rook" || currentFigure=="Queen")
+    else if((currentFigure=="Bishop"|| currentFigure=="Rook" || currentFigure=="Queen"))
     {
         bool blocking=false;
 
         for(int i=0; i<possibleMoves.size();i++){
             if(blocking==false){
                 convertStringToButton(possibleMoves.at(i));
-                checkIfThereIsAPiece(requiredButton,color);
+                if(enemyMoves == false) checkIfThereIsAPiece(requiredButton,color);
 
                 if(ifExist==true){
                     possibleMoves.remove(i);
@@ -174,26 +36,52 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
                     ifExist=false;
                 }else{
                     if(colisionWithOpponentPieces==true){
-                        if(color=="white"){
+                        if(color == "white"){
 
                             checkIfThereIsAPiece(requiredButton,"black");                      //WHITE
+                            if(requiredButton == blackFiguresButtons[15] && enemyMoves == true) {
+                                checkProperty = true;
+                            }
+
                             if(ifExist==true){
                                 blocking=true;
                                 ifExist=false;
                             }
-                        } else {
-                            checkIfThereIsAPiece(requiredButton,"white");                      //BLACK
+                            if(enemyMoves == true){
+                                checkIfThereIsAPiece(requiredButton,"white");
 
+
+                                if(ifExist==true){
+                                    blocking=true;
+                                    ifExist=false;
+                                }
+                            }
+                        } else if(color == "black"){
+
+                            checkIfThereIsAPiece(requiredButton,"white");                      //WHITE
+                            if(requiredButton == whiteFiguresButtons[15] && enemyMoves == true) {
+                                checkProperty = true;
+                            }
                             if(ifExist==true){
                                 blocking=true;
                                 ifExist=false;
+                            }
+                            if(enemyMoves == true){
+                                checkIfThereIsAPiece(requiredButton,"black");
+
+                                if(ifExist==true){
+                                    blocking=true;
+                                    ifExist=false;
+                                }
                             }
                         }
                     }
                }
 
-            } else{
+            }
+            else if(blocking == true){
 
+                if(checkProperty) opponentPossibleMovesStorage.push_back(possibleMoves.at(i));
                 if(coords=="up" || coords == "down"){
                         while(possibleMoves.at(i)[1]!='1' && possibleMoves.at(i)[1]!='8'){
                             possibleMoves.remove(i);
@@ -215,7 +103,126 @@ void Widget::colision(QPushButton *button, QString color, bool colisionWithOppon
         for(int i=0; i<possibleMoves.size();i++){
             possibleMovesStorage.push_back(possibleMoves.at(i));           //coping valid moves to memory
         }
-        possibleMoves.clear();
+    }
+
+}
+
+void Widget::abstractColision(QPushButton *button)
+{
+    bool enemyKing = false;
+    int pinnedCounter =0;
+
+    if(whiteMove)
+    {
+        for(int i=0;i<abstractPossibleMoves.size();i++){
+            convertStringToButton(abstractPossibleMoves.at(i));
+            if(requiredButton == blackFiguresButtons[15]){
+                enemyKing = true;
+                break;
+            }
+        }
+
+        if(enemyKing){
+            for(int i=0;i<abstractPossibleMoves.size();i++){
+                convertStringToButton(abstractPossibleMoves.at(i));
+
+                if(requiredButton != blackFiguresButtons[15]){                          // if abstract move is diffrent than enemy king position
+                    for(int j=0; j<blackFiguresButtons.size();j++){
+                        if(requiredButton == blackFiguresButtons.at(j)){
+                            if(pinnedCounter == 0){
+                                pinnedCounter++;
+                                pinnedFigures.push_back(blackFiguresButtons.at(j));
+                                attackingFigures.push_back(button);
+                            }
+                            else if(pinnedCounter != 0){
+                                attackingFigures.pop_back();                            //deleting element that was added trought this loop
+                                pinnedFigures.pop_back();
+                            }
+                        }
+                    }
+                }
+                else{                                                                   //if we achieve king - break the loop
+                    break;
+                }
+            }
+        }
+
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0;i<abstractPossibleMoves.size();i++){
+            convertStringToButton(abstractPossibleMoves.at(i));
+            if(requiredButton == whiteFiguresButtons[15]){
+                enemyKing = true;
+                break;
+            }
+        }
+
+        if(enemyKing){
+            for(int i=0;i<abstractPossibleMoves.size();i++){
+                convertStringToButton(abstractPossibleMoves.at(i));
+
+                if(requiredButton != whiteFiguresButtons[15]){                          // if abstract move is diffrent than enemy king position
+                    for(int j=0; j<whiteFiguresButtons.size();j++){
+                        if(requiredButton == whiteFiguresButtons.at(j)){
+                            if(pinnedCounter == 0){
+                                pinnedCounter++;
+                                pinnedFigures.push_back(whiteFiguresButtons.at(j));
+                                attackingFigures.push_back(button);
+                            }
+                            else if(pinnedCounter != 0){
+                                attackingFigures.pop_back();                            //deleting element that was added trought this loop
+                                pinnedFigures.pop_back();
+                            }
+                        }
+                    }
+                }
+                else{                                                                   //if we achieve king - break the loop
+                    break;
+                }
+            }
+        }
+    }
+
+}
+
+void Widget::pinnedFigues()
+{
+    for(int i=0; i<pinnedFigures.size(); i++){
+        getFigureName(pinnedFigures.at(i));
+
+        if(currentFigure == "poon"){
+            index = i;
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+            else{
+                if(whiteMove) poonTaking(pinnedFigures.at(i),"black",true);
+                else          poonTaking(pinnedFigures.at(i),"white",true);
+
+                if(pinned) pinnedFigures.at(i)->setEnabled(true);
+                else  pinnedFigures.at(i)->setEnabled(false);
+            }
+
+        } else if(currentFigure == "Knight"){
+            pinnedFigures.at(i)->setEnabled(false);
+        } else if(currentFigure == "Bishop"){
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(false);
+            }
+            else{
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+        } else if(currentFigure == "Rook"){
+            if(attackingFigures.at(i)->objectName()[0] == pinnedFigures.at(i)->objectName()[0] || attackingFigures.at(i)->objectName()[1] == pinnedFigures.at(i)->objectName()[1]){
+                pinnedFigures.at(i)->setEnabled(true);
+            }
+            else{
+                pinnedFigures.at(i)->setEnabled(false);
+            }
+        } else if(currentFigure == "Queen"){
+            pinnedFigures.at(i)->setEnabled(true);
+        }
     }
 }
 void Widget::checkIfThereIsAPiece(QPushButton *button, QString color)
@@ -608,7 +615,9 @@ void Widget::cleanCoordinates_shorter(QPushButton *button)
 void Widget::goBack(QPushButton *button)
 {
     disableAllButons();
-    if(whiteMove) enableWhiteButtons();
+    if(whiteMove && isItCheck) enableProtectingFigures();
+    else if(whiteMove) enableWhiteButtons();
+    else if(!whiteMove && isItCheck) enableProtectingFigures();
     else if(!whiteMove) enableBlackButtons();
 
     possibleMoves.clear();
@@ -619,6 +628,114 @@ void Widget::goBack(QPushButton *button)
 }
 
 
+void Widget::enableProtectingFigures()
+{
+    defendersCounter =0;
+    if(whiteMove)
+    {
+        for(int i=0;i<whiteFiguresButtons.size();i++){
+            if(whiteFiguresButtons.at(i)->objectName()!="empty"){
+
+                getFigureName(whiteFiguresButtons.at(i),true);
+
+                if(currentFigure == "poon"){
+                    poonMovementWhite(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Knight"){
+                    knightMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Bishop"){
+                    bishopMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Rook"){
+                    rookMovement(whiteFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Queen"){
+                    queenMovement(whiteFiguresButtons.at(i), true,true);
+                }
+
+                bool canItDefend = false;
+
+
+                for(int k=0;k<protectingMoves.size();k++){
+                    if(protectingMoves.at(k) == whiteFiguresButtons[15]->objectName()){
+                        protectingMoves.remove(k);
+                        k=-1;
+                        continue;
+                    }
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(protectingMoves.at(k) == checkingMoves.at(j)){
+                            canItDefend = true;
+                            break;
+                        }
+                    }                  
+                }
+
+                if(canItDefend) {
+                    whiteFiguresButtons.at(i)->setEnabled(true);
+                    defendersCounter++;
+                }
+                else whiteFiguresButtons.at(i)->setEnabled(false);
+
+                protectingMoves.clear();
+            }
+        }
+        whiteFiguresButtons[15]->setEnabled(true);
+        kingMovement(whiteFiguresButtons.at(15), true,true);
+
+        qDebug()<<"Report:"<<defendersCounter<<protectingMoves.size();
+        if(defendersCounter == 0 && protectingMoves.size()==0) isKingMated();
+        protectingMoves.clear();
+    }
+    else if(!whiteMove)
+    {
+        for(int i=0;i<blackFiguresButtons.size();i++){
+            if(blackFiguresButtons.at(i)->objectName()!="empty"){
+
+                getFigureName(blackFiguresButtons.at(i),true);
+
+                if(currentFigure == "poon"){
+                    poonMovementBlack(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Knight"){
+                    knightMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Bishop"){
+                    bishopMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Rook"){
+                    rookMovement(blackFiguresButtons.at(i), true,true);
+                } else if(currentFigure == "Queen"){
+                    queenMovement(blackFiguresButtons.at(i), true,true);
+                }
+
+                bool canItDefend = false;
+
+
+                for(int k=0;k<protectingMoves.size();k++){
+                    if(protectingMoves.at(k) == blackFiguresButtons[15]->objectName()){
+                        protectingMoves.remove(k);
+                        k=-1;
+                        continue;
+                    }
+                    for(int j=0;j<checkingMoves.size();j++){
+                        if(protectingMoves.at(k) == checkingMoves.at(j)){
+                            canItDefend = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(canItDefend) {
+                    blackFiguresButtons.at(i)->setEnabled(true);
+                    defendersCounter++;
+                }
+                else blackFiguresButtons.at(i)->setEnabled(false);
+
+                protectingMoves.clear();
+            }
+        }
+        blackFiguresButtons[15]->setEnabled(true);
+        kingMovement(blackFiguresButtons.at(15), true,true);
+
+        qDebug()<<"Report:"<<defendersCounter<<protectingMoves.size()<<protectingMoves;
+        if(defendersCounter == 0 && (protectingMoves.size()==0 || (protectingMoves.size() == 1 && opponentPossibleMovesStorage == protectingMoves))) isKingMated();
+        protectingMoves.clear();
+    }
+}
 
 
 void Widget::disableAllButons()
@@ -841,10 +958,6 @@ void Widget::enableBlackButtons_shorter(QPushButton *button)
     }
 }
 
-void Widget::enableProtectingFigures()
-{
-
-}
 
 
 void Widget::matchCoordinates()                             //function that enable permitted moves buttons

@@ -9,8 +9,10 @@ void Widget::setStartingParameters()
     isItCheck = false;
     isItCheckMate = false;
     enPassant = false;
-
-
+    whiteCastleShort = true;
+    whiteCastleLong = true;
+    blackCastleShort = true;
+    blackCastleLong = true;
 
 
     QString blackPoon_blueField = "background-image: url(:/img/blackPoon-blueField.png);";
@@ -42,7 +44,6 @@ void Widget::setStartingParameters()
 
 
 }
-
 void Widget::placePiecesOnBoard()
 {
     //white poons
@@ -96,7 +97,6 @@ void Widget::placePiecesOnBoard()
 
 
 }
-
 void Widget::setFiguresPosition()
 {
         whiteFiguresButtons.clear();
@@ -138,138 +138,205 @@ void Widget::setFiguresPosition()
         blackFiguresButtons.push_back(ui->e8);
 }
 
-void Widget::switchPlayers(QPushButton *button)
+
+
+void Widget::whiteHistory(QPushButton *button)
 {
-    if(whiteMove)
-    {
-        if(numberOfMove==1 || numberOfMove ==31 || numberOfMove == 61){
-            ui->gameHistory_black->clear();
-            ui->gameHistory_white->clear();
-            ui->gameHistory_numberOfMove->clear();
-            matchHistory_black.clear();
-            matchHistory_white.clear();
-            matchHistory_numberOfMove.clear();
+    if(numberOfMove==1 || numberOfMove ==31 || numberOfMove == 61){
+        ui->gameHistory_black->clear();
+        ui->gameHistory_white->clear();
+        ui->gameHistory_numberOfMove->clear();
+        matchHistory_black.clear();
+        matchHistory_white.clear();
+        matchHistory_numberOfMove.clear();
 
-            text ="\n";
-            matchHistory_black+=text;
-            ui->gameHistory_black->setText(matchHistory_black);
-            ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+        text ="\n";
+        matchHistory_black+=text;
+        ui->gameHistory_black->setText(matchHistory_black);
+        ui->gameHistory_black->setAlignment(Qt::AlignCenter);
 
-            matchHistory_white+=text;
-            ui->gameHistory_white->setText(matchHistory_white);
-            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+        matchHistory_white+=text;
+        ui->gameHistory_white->setText(matchHistory_white);
+        ui->gameHistory_white->setAlignment(Qt::AlignCenter);
 
-            matchHistory_numberOfMove+=text;
-            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
-            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
-        }
-
-        if(currentFigure == "poon"){                                                        //Setting information about last move on the board
-                text=QString("%1.\n").arg(numberOfMove);
-
-                matchHistory_numberOfMove +=text;
-                ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
-                ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
-
-                text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
-                matchHistory_white+= text;
-                ui->gameHistory_white->setText(matchHistory_white);
-                ui->gameHistory_white->setAlignment(Qt::AlignCenter);
-
-
-            }
-        else if(currentFigure == "Knight"){
-
-                text=QString("%1.\n").arg(numberOfMove);
-                matchHistory_numberOfMove+=text;
-                ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
-                ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
-
-                text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
-                matchHistory_white+=text;
-                ui->gameHistory_white->setText(matchHistory_white);
-                ui->gameHistory_white->setAlignment(Qt::AlignCenter);
-
-            }
-        else if(currentFigure == "King" && (coords=="short" || coords == "long")){
-
-            text=QString("%1.\n").arg(numberOfMove);
-
-            matchHistory_numberOfMove+=text;
-            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
-            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
-
-            if(coords=="short") text = QString("O-O\n");
-            if(coords=="long") text = QString("O-O-O\n");
-
-            matchHistory_white+=text;
-            ui->gameHistory_white->setText(matchHistory_white);
-            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
-        }
-        else
-        {
-            text=QString("%1.\n").arg(numberOfMove);
-            matchHistory_numberOfMove+=text;
-            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
-            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
-
-            text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
-            matchHistory_white+=text;
-            ui->gameHistory_white->setText(matchHistory_white);
-            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
-        }
-
-        ui->startGameButton->setText("Black move!");
-
-        disableAllButons();
-        enableBlackButtons();
-        whiteMove = false;
-
-        possibleMoves.clear();
-        possibleMovesStorage.clear();
+        matchHistory_numberOfMove+=text;
+        ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+        ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
     }
-    else if(!whiteMove)
-    {
-        if(currentFigure == "poon"){                                                        //Setting information about last move on the board
-               text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
-               matchHistory_black+=text;
-               ui->gameHistory_black->setText(matchHistory_black);
-               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
-            }
-        else if(currentFigure == "Knight"){
-               text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
-               matchHistory_black+=text;
-               ui->gameHistory_black->setText(matchHistory_black);
-               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
-            }
-        else if(currentFigure == "King" && (coords=="short" || coords == "long")){
 
-            if(coords=="short") text = "O-O\n";
-            if(coords=="long") text = "O-O-O\n";
+    if(currentFigure == "poon"){                                                        //Setting information about last move on the board
+            text=QString("%1.\n").arg(numberOfMove);
 
-            matchHistory_black+=text;
-            ui->gameHistory_black->setText(matchHistory_black);
-            ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+            matchHistory_numberOfMove +=text;
+            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+            text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+            matchHistory_white+= text;
+            ui->gameHistory_white->setText(matchHistory_white);
+            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+
+
         }
-        else
-            {
-               text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
-               matchHistory_black+=text;
-               ui->gameHistory_black->setText(matchHistory_black);
-               ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+    else if(currentFigure == "Knight"){
+
+            text=QString("%1.\n").arg(numberOfMove);
+            matchHistory_numberOfMove+=text;
+            ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+            ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+            text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+            matchHistory_white+=text;
+            ui->gameHistory_white->setText(matchHistory_white);
+            ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+
+        }
+    else if(currentFigure == "King" && (coords=="short" || coords == "long")){
+
+        text=QString("%1.\n").arg(numberOfMove);
+
+        matchHistory_numberOfMove+=text;
+        ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+        ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+        if(coords=="short") text = QString("O-O\n");
+        if(coords=="long") text = QString("O-O-O\n");
+
+        matchHistory_white+=text;
+        ui->gameHistory_white->setText(matchHistory_white);
+        ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+    }
+    else
+    {
+        text=QString("%1.\n").arg(numberOfMove);
+        matchHistory_numberOfMove+=text;
+        ui->gameHistory_numberOfMove->setText(matchHistory_numberOfMove);
+        ui->gameHistory_numberOfMove->setAlignment(Qt::AlignCenter);
+
+        text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
+        matchHistory_white+=text;
+        ui->gameHistory_white->setText(matchHistory_white);
+        ui->gameHistory_white->setAlignment(Qt::AlignCenter);
+    }
+}
+void Widget::blackHistory(QPushButton *button)
+{
+    if(currentFigure == "poon"){                                                        //Setting information about last move on the board
+           text = QString("%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+           matchHistory_black+=text;
+           ui->gameHistory_black->setText(matchHistory_black);
+           ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+        }
+    else if(currentFigure == "Knight"){
+           text = QString("N%1-%2 \n").arg(currentFigureButton->objectName()).arg(button->objectName());
+           matchHistory_black+=text;
+           ui->gameHistory_black->setText(matchHistory_black);
+           ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+        }
+    else if(currentFigure == "King" && (coords=="short" || coords == "long")){
+
+        if(coords=="short") text = "O-O\n";
+        if(coords=="long") text = "O-O-O\n";
+
+        matchHistory_black+=text;
+        ui->gameHistory_black->setText(matchHistory_black);
+        ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+    }
+    else
+        {
+           text = QString("%1%2-%3 \n").arg(currentFigure[0]).arg(currentFigureButton->objectName()).arg(button->objectName());
+           matchHistory_black+=text;
+           ui->gameHistory_black->setText(matchHistory_black);
+           ui->gameHistory_black->setAlignment(Qt::AlignCenter);
+        }
+}
+
+void Widget::isKingChecked(QPushButton *button)
+{
+    if(!whiteMove){
+        for(int i=0;i<possibleMoves.size();i++){
+            if(whiteFiguresButtons[15]->objectName() == possibleMoves.at(i)){
+                isItCheck = true;
+                if(currentFigure == "Knight" || currentFigure == "poon") checkingMoves.push_back(button->objectName());
+                else if(currentFigure == "Bishop" || currentFigure == "Rook" || currentFigure == "Queen") {
+
+                    checkingMoves.push_back(button->objectName());
+                    for(int j=0;j<possibleMoves.size();j++){
+                        checkingMoves.push_back(possibleMoves.at(j));
+                    }
+
+                }
+
+                break;
             }
+        }
 
-        ui->startGameButton->setText("White move!");
-        numberOfMove++;
-        disableAllButons();
-        enableWhiteButtons();
-        whiteMove = true;
+    }
+    else if(whiteMove){
+        for(int i=0;i<possibleMoves.size();i++){
+            if(blackFiguresButtons[15]->objectName() == possibleMoves.at(i)){
+                isItCheck = true;
 
-        possibleMoves.clear();
-        possibleMovesStorage.clear();
+                if(currentFigure == "Knight" || currentFigure == "poon") checkingMoves.push_back(button->objectName());
+                else if(currentFigure == "Bishop" || currentFigure == "Rook" || currentFigure == "Queen") {
+
+                    checkingMoves.push_back(button->objectName());
+                    for(int j=0;j<possibleMoves.size();j++){
+                        checkingMoves.push_back(possibleMoves.at(j));
+                    }
+                }
+
+                break;
+            }
+        }
+
     }
 }
 
+void Widget::isKingMated()
+{
+    qDebug()<<"GGGGGG";
+    disableAllButons();
+    if(whiteMove)
+    {
+        ui->startGameButton->setStyleSheet("background-color: red;color:white;border: 1px solid blue; border-radius: 25px;");
+        ui->startGameButton->setText("Black Won!");
+    }
+    else if(!whiteMove)
+    {
+        ui->startGameButton->setStyleSheet("background-color: red;color:white;border: 1px solid blue; border-radius: 25px;");
+        ui->startGameButton->setText("White Won!");
+    }
+}
+
+void Widget::markKings()
+{
+    if(whiteMove){
+        if(isItCheck){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-redField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        }else if(!isItCheck && whiteFiguresButtons[15]->font().bold()==false){
+            whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+        }
+
+        if(blackFiguresButtons[15]->font().bold()) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        else if(blackFiguresButtons[15]->font().bold()==false) blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+    }
+    else if(!whiteMove)
+    {
+        if(isItCheck){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-redField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-greenField.png);");
+        }else if(!isItCheck && blackFiguresButtons[15]->font().bold()==false){
+            blackFiguresButtons[15]->setStyleSheet("background-image: url(:/img/blackKing-whiteField.png);");
+        }
+
+        if(whiteFiguresButtons[15]->font().bold()) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-greenField.png);");
+        else if(whiteFiguresButtons[15]->font().bold()==false) whiteFiguresButtons[15]->setStyleSheet("background-image: url(:/img/whiteKing-whiteField.png);");
+    }
+}
 
 Widget::~Widget()
 {

@@ -15,7 +15,9 @@ Widget::Widget(QWidget *parent) :
 }
 
 void Widget::on_startGameButton_clicked(){
+
     ui->startGameButton->setEnabled(false);
+    ui->startGameButton->setText("White move!");
     enableWhiteButtons();
 }
 
@@ -24,11 +26,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
 {
     if(!action)                     //1st pressing
     {
-        if(numberOfMove == 4) qDebug()<<whiteFiguresButtons;
-        if(isItCheck){                      //GOTTA MOVE THAT LATER
-            disableAllButons();
-            enableProtectingFigures();
-        }
+        possibleMoves.clear();
+        qDebug()<<whiteFiguresButtons;
 
         action=true;
         currentFigureButton=button;          //needed to clean the field after move
@@ -37,7 +36,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
         getFigureName(button);              //setting currentFigure
 
         if(currentFigure=="King"){
-           // kingMovement(button);
+           kingMovement(button);
         } else if(currentFigure == "poon"){
             if(whiteMove) poonMovementWhite(button);
             else if(!whiteMove) poonMovementBlack(button);
@@ -61,11 +60,20 @@ void Widget::on_any_button_clicked(QPushButton *button)
            if(currentFigure == "King")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
+               }else if(button == ui->g1 && whiteCastleShort){
+                   castleMove("short");
+                   switchPlayers(button);
+               }else if(button == ui->c1 && whiteCastleLong){
+                   castleMove("long");
+                   switchPlayers(button);
                }
-               else {
-                   //move(button,"whiteKing");
-                  // switchPlayers("black",button);
+               else{
+                   whiteCastleLong = false;
+                   whiteCastleShort = false;
+
+                   move(button,"whiteKing");
+                   switchPlayers(button);
                }
            }
            else if(currentFigure == "poon")
@@ -79,7 +87,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
                }
                else if (button->objectName()[1]=="8") {
-                   poonPromotion(button,"white");//to repair
+                   poonPromotion(button,"white");
                    switchPlayers(button);
                }
                else{
@@ -100,7 +108,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Bishop")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
                    move(button,"whiteBishop");
@@ -110,9 +118,12 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Rook")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
+                   if(currentFigureButton == whiteFiguresButtons[12]) whiteCastleLong = false;
+                   else if(currentFigureButton == whiteFiguresButtons[13]) whiteCastleShort = false;
+
                    move(button,"whiteRook");
                    switchPlayers(button);
                }
@@ -120,7 +131,7 @@ void Widget::on_any_button_clicked(QPushButton *button)
            else if (currentFigure == "Queen")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
                }
                else {
                    move(button,"whiteQueen");
@@ -133,12 +144,20 @@ void Widget::on_any_button_clicked(QPushButton *button)
            if(currentFigure == "King")
            {
                if(currentFigureButton == button){
-                    goBack(button);
+                   goBack(button);
+               }else if(button == ui->g8 && blackCastleShort){
+                   castleMove("short");
+                   switchPlayers(button);
+               }else if(button == ui->c8 && blackCastleLong){
+                   castleMove("long");
+                   switchPlayers(button);
                }
-               else {
-                   //move(button,"whiteKing");
-                  // isKingChecked();
-                  // switchPlayers("black",button);
+               else{
+                   blackCastleLong = false;
+                   blackCastleShort = false;
+
+                   move(button,"blackKing");
+                   switchPlayers(button);
                }
            }
            else if(currentFigure == "poon")
@@ -151,7 +170,8 @@ void Widget::on_any_button_clicked(QPushButton *button)
                    switchPlayers(button);
               }
                else if (button->objectName()[1]=="1") {
-                  //todo
+                   poonPromotion(button,"black");
+                   switchPlayers(button);
                }
                else {
                    move(button,"blackPoon");
@@ -184,6 +204,9 @@ void Widget::on_any_button_clicked(QPushButton *button)
                     goBack(button);
                }
                else {
+                   if(currentFigureButton == blackFiguresButtons[12]) blackCastleLong = false;
+                   else if(currentFigureButton == blackFiguresButtons[13]) blackCastleShort = false;
+
                    move(button,"blackRook");
                    switchPlayers(button);
                }
@@ -199,5 +222,75 @@ void Widget::on_any_button_clicked(QPushButton *button)
                }
            }
        }
+    }
+}
+
+void Widget::switchPlayers(QPushButton *button)
+{
+    if(whiteMove)
+    {
+        whiteHistory(button);
+        isItCheck = false;
+
+        pinnedFigures.clear();                  //clearing pinned figures and opponent possible moves from previous move
+        attackingFigures.clear();
+        opponentPossibleMoves.clear();
+        opponentPossibleMovesStorage.clear();
+        checkingMoves.clear();
+        protectingMoves.clear();
+
+        allPossibleMovesFromOpponentSide();
+
+
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
+        qDebug()<<"checking"<<checkingMoves;
+
+        whiteMove = false;
+        ui->startGameButton->setText("Black move!");
+        disableAllButons();
+
+        if(isItCheck) enableProtectingFigures();
+        else enableBlackButtons();
+        markKings();
+
+        pinnedFigues();
+
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
+    }
+    else if(!whiteMove)
+    {
+        blackHistory(button);    
+        numberOfMove++;
+        isItCheck = false;
+
+        pinnedFigures.clear();
+        attackingFigures.clear();
+        opponentPossibleMoves.clear();
+        opponentPossibleMovesStorage.clear();
+        checkingMoves.clear();
+        protectingMoves.clear();
+
+        allPossibleMovesFromOpponentSide();
+
+
+        qDebug()<<"pinned"<<pinnedFigures<<"attacking"<<attackingFigures;
+        qDebug()<<"checking"<<checkingMoves;
+
+        whiteMove = true;
+        ui->startGameButton->setText("White move!");
+        disableAllButons();
+
+        if(isItCheck) enableProtectingFigures();
+        else enableWhiteButtons();
+
+        markKings();
+
+        pinnedFigues();
+
+
+        possibleMoves.clear();
+        possibleMovesStorage.clear();
     }
 }
